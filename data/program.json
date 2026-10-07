@@ -303,7 +303,7 @@
   "kw": "ai-driven architecture attacks autonomous defence eleven impact little machine-speed minutes needed reaching soc"
  },
  {
-  "title": "Security by design in practice - How early choices made our SaaS platform easier to build and run",
+  "title": "Security by design in practice - how early choices made our SaaS platform easier to build and run",
   "format": "Breakout",
   "day": "14 Oct",
   "start": "11:10 am",
@@ -464,7 +464,7 @@
   "kw": "agents ai argues autonomous controls ethics hard human-in-the-loop instead limits reviews runtime statements"
  },
  {
-  "title": "People, Process, Technology - Who done it? A security architecture investigation",
+  "title": "People, process, technology - who done it? A security architecture investigation",
   "format": "Think Tank",
   "day": "14 Oct",
   "start": "11:10 am",
@@ -944,7 +944,7 @@
   "kw": "covers cyber incidents intense place preparing pressure psychological recovering responders stress supporting teams"
  },
  {
-  "title": "Two views, one SOC. Real world insights from both a CISO & an engineer on building trust with Agentic AI",
+  "title": "Two views, one SOC. Real world insights from both a CISO & an engineer on building trust with agentic AI",
   "format": "Breakout",
   "day": "14 Oct",
   "start": "12:00 pm",
@@ -1332,7 +1332,7 @@
   "kw": "abstract conference covers entries evaluate guide insider panels proposal selection submitting topic winning writing"
  },
  {
-  "title": "AI is ruining our future workforce – So what do we do?",
+  "title": "AI is ruining our future workforce – so what do we do?",
   "format": "Panel",
   "day": "14 Oct",
   "start": "1:40 pm",
@@ -1562,7 +1562,7 @@
   "kw": "dressing experience good improve low-cost offers requirement security technical test tooling user window"
  },
  {
-  "title": "Zero to compliant: One person, two frameworks, zero burnout; a practitioner's playbook for ISO 27001 and essential eight",
+  "title": "Zero to compliant: One person, two frameworks, zero burnout; a practitioner's playbook for ISO 27001 and Essential Eight",
   "format": "Breakout",
   "day": "14 Oct",
   "start": "1:40 pm",
@@ -1839,6 +1839,25 @@
   "kw": "ahead ai ambition close enterprise gap governance measure question readiness running scale"
  },
  {
+  "title": "Opening doors: AISA - building the next generation of cyber talent",
+  "format": "Careers Village",
+  "day": "14 Oct",
+  "start": "2:30 pm",
+  "finish": "3:10 pm",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Paige Crabtree & Emily Zhang"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101414301030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-wjkudfn7vh",
+  "kw": "30pm building careers crabtree cyber emily exhibition generation hall lead paige talent village wednesday zhang"
+ },
+ {
   "title": "Turning IEC 62443 into action: A practical path to critical infrastructure resilience",
   "format": "Breakout",
   "day": "14 Oct",
@@ -1862,7 +1881,7 @@
   "kw": "asset checklist compliance governance iec incident prioritised resilience response roadmap sequence spanning tested turns visibility"
  },
  {
-  "title": "The code you didn't write - Invisible threats in modern software development",
+  "title": "The code you didn't write - invisible threats in modern software development",
   "format": "Breakout",
   "day": "14 Oct",
   "start": "2:30 pm",
@@ -1906,6 +1925,25 @@
   "sortkey": "26101414302105",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-ol1vw9jut3",
   "kw": "awareness behaviour champions cyber grew institution lifted measurably program security staff university-wide"
+ },
+ {
+  "title": "Activating CyberPath - Australia’s next step toward a world‑leading cyber workforce",
+  "format": "Panel",
+  "day": "14 Oct",
+  "start": "2:30 pm",
+  "finish": "3:10 pm",
+  "location": "Room 203",
+  "speakers": [
+   "Jakub Zverina, Monica Millar & Scarlett McDermott"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101414302203",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-0emwbrnbv4",
+  "kw": "covering cyber cyberpath differs employers global industry-led initiative means panel schemes workforce"
  },
  {
   "title": "Hidden harm, delayed response: What AI whistleblowing cases reveal about oversight gaps",
@@ -1998,25 +2036,6 @@
   "sortkey": "26101414302209",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-hp05necpbn",
   "kw": "attackers australian built data exactly exfiltrate fake financial firm left negotiate online reconnoitre reveals services synthetic"
- },
- {
-  "title": "Activating CyberPath - Australia’s next step toward a world‑leading cyber workforce",
-  "format": "Panel",
-  "day": "14 Oct",
-  "start": "2:30 pm",
-  "finish": "3:10 pm",
-  "location": "Room 209",
-  "speakers": [
-   "Jakub Zverina, Monica Millar & Scarlett McDermott"
-  ],
-  "summary": "",
-  "theme": [],
-  "topic": [],
-  "audience": "",
-  "sponsor": "",
-  "sortkey": "26101414302209",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-0emwbrnbv4",
-  "kw": "covering cyber cyberpath differs employers global industry-led initiative means panel schemes workforce"
  },
  {
   "title": "Learning from the wreckage: Post incident analysis of cyber attacks on critical infrastructure",
@@ -2223,7 +2242,7 @@
   "sponsor": "",
   "sortkey": "26101414303030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-m3kyzkhokm",
-  "kw": "anu awareness built cheatsheet coffee cyber home one-page powerpoint program tips trending-news vouchers work"
+  "kw": "anu awareness coffee cyber dora engaging interesting people scams star taught wars"
  },
  {
   "title": "Employment is dead: Why the cyber workforce crisis demands a new model for careers",
@@ -2319,6 +2338,25 @@
   "kw": "alert attack context dark fix four-level framework gap hand intelligence maturity offered surface threat triage web"
  },
  {
+  "title": "The human firewall: How to ace your next interview",
+  "format": "Careers Village",
+  "day": "14 Oct",
+  "start": "3:50 pm",
+  "finish": "4:30 pm",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Ben Rogalsky & Jacob Bywater"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101415501030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-pwqnecj1lt",
+  "kw": "argue ben bywater communication decisions engineering hiring interviews jacob likening rogalsky skill social technical trust turn"
+ },
+ {
   "title": "Fighting fire with fire: Securing the AI DevSecOps factory",
   "format": "Breakout",
   "day": "14 Oct",
@@ -2342,7 +2380,7 @@
   "kw": "accelerates ai code devsecops exposes maps points production quality review strengthens trust weak"
  },
  {
-  "title": "Re-engineering Supply Chain risk management: From compliance engine to risk-adaptive control",
+  "title": "Re-engineering supply chain risk management: From compliance engine to risk-adaptive control",
   "format": "Breakout",
   "day": "14 Oct",
   "start": "3:50 pm",
@@ -2572,29 +2610,6 @@
   "kw": "anonymised case delayed dfir escalation executive incident manageable misaligned priorities routinely studies turn worse"
  },
  {
-  "title": "What happens if we’re wrong? Scenario analysis and the future of cyber security services",
-  "format": "Think Tank",
-  "day": "14 Oct",
-  "start": "3:50 pm",
-  "finish": "4:30 pm",
-  "location": "Room 216",
-  "speakers": [
-   "Ivano Bongiovanni"
-  ],
-  "summary": "",
-  "theme": [
-   "Leadership, Governance and Accountability"
-  ],
-  "topic": [
-   "Aligning Cyber Investment to Organisational Outcomes"
-  ],
-  "audience": "Intermediate",
-  "sponsor": "",
-  "sortkey": "26101415502216",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-cvd0bgb23z",
-  "kw": "ai analysis cyber four future geopolitical models prepare scenario security service shifts social stress-tests unpredictable"
- },
- {
   "title": "Are we secure? Empowering the enterprise through continuous, validated defense",
   "format": "Breakout",
   "day": "14 Oct",
@@ -2687,6 +2702,29 @@
   "kw": "breach built bypass commodity defence economics infostealer kits mfa phishing routine tiered"
  },
  {
+  "title": "What happens if we’re wrong? Scenario analysis and the future of cyber security services",
+  "format": "Think Tank",
+  "day": "14 Oct",
+  "start": "3:50 pm",
+  "finish": "4:30 pm",
+  "location": "Think Tank 2",
+  "speakers": [
+   "Ivano Bongiovanni"
+  ],
+  "summary": "",
+  "theme": [
+   "Leadership, Governance and Accountability"
+  ],
+  "topic": [
+   "Aligning Cyber Investment to Organisational Outcomes"
+  ],
+  "audience": "Intermediate",
+  "sponsor": "",
+  "sortkey": "26101415503020",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-cvd0bgb23z",
+  "kw": "ai analysis cyber four future geopolitical models prepare scenario security service shifts social stress-tests unpredictable"
+ },
+ {
   "title": "AI compliance basics: Moving from policy to real-world implementation",
   "format": "Think Tank",
   "day": "14 Oct",
@@ -2733,6 +2771,27 @@
   "kw": "adversary alerts behaviour-led built constrain detect fire helps ics model movement observe ot pursue signature-based teams"
  },
  {
+  "title": "Ask me about leadership, governance and accountability",
+  "format": "Ask an Expert",
+  "day": "14 Oct",
+  "start": "3:50 pm",
+  "finish": "4:30 pm",
+  "location": "Ask an Expert 1",
+  "speakers": [
+   "Dan Maslin"
+  ],
+  "summary": "",
+  "theme": [
+   "Leadership, Governance and Accountability"
+  ],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101415504010",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-av0vucchwu",
+  "kw": "50pm accountability ask bring dan expert governance leadership maslin october questions wednesday"
+ },
+ {
   "title": "The Elephant in the SOC: Why No One Sees Identity Whole",
   "format": "Knowledge Hub",
   "day": "14 Oct",
@@ -2750,7 +2809,7 @@
   "kw": "argument attackers identity log privilege siloed simply starting teams tools work"
  },
  {
-  "title": "Keynote with Keren Elazari",
+  "title": "Confessions of a Friendly Hacker: Why Attacker Thinking Is Our Best Defense in the AI Era",
   "format": "Keynote",
   "day": "14 Oct",
   "start": "4:40 pm",
@@ -2786,11 +2845,11 @@
   "kw": ""
  },
  {
-  "title": "Movie Night",
+  "title": "Movie Night | \"Midnight in the War Room\" & \"WarGames\"",
   "format": "Networking",
   "day": "14 Oct",
   "start": "6:45 pm",
-  "finish": "8:45 pm",
+  "finish": "10:15 pm",
   "location": "Plenary Theatre",
   "speakers": [],
   "summary": "",
@@ -2890,7 +2949,7 @@
   "kw": ""
  },
  {
-  "title": "Featured Speaker with Taher Elgamal",
+  "title": "Featured speaker with Taher Elgamal",
   "format": "Featured",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -2916,7 +2975,7 @@
   "finish": "11:35 am",
   "location": "Melbourne Room 1",
   "speakers": [
-   "Huon Curtis, Min Livanidis, Jen Stockwell & Adam Robens"
+   "Huon Curtis, Min Livanidis, Jen Stockwell & Adam Makarucha"
   ],
   "summary": "",
   "theme": [
@@ -2932,7 +2991,7 @@
   "kw": "capability critical debates defence following infrastructure legislated mandatory panel review slay sovereign threat turn"
  },
  {
-  "title": "Not if, but when: The Cyber Civilian Reserve — From concept to capability",
+  "title": "Not if, but when: The Cyber Civilian Reserve - from concept to capability",
   "format": "Panel",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -3129,7 +3188,7 @@
   "kw": "agricultural connected data depend equipment exposed farms foreign increasingly integrity leaving operator risk satellite security single"
  },
  {
-  "title": "Analysing Geopolitical Flashpoints and the Evolution of the Global Cyber Threat Landscape",
+  "title": "Analysing geopolitical flashpoints and the evolution of the global cyber threat landscape",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -3221,7 +3280,7 @@
   "kw": "closes decisions destroy dfir escalation evidence forensic gap handover investigators soc triage"
  },
  {
-  "title": "Developing detection models through real world applications of threat intelligence & threat hunting",
+  "title": "Developing detection models through real-world applications of threat intelligence & threat hunting",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -3405,7 +3464,7 @@
   "kw": "ai beyond blind designed devsecops extends fatigue human needing overrides phishing pressure psychological risk safety teams trust"
  },
  {
-  "title": "Sydney to Seoul: An Aussie lass has a wild ride in K-Cyber, Soju, and Survival",
+  "title": "Sydney to Seoul: An Aussie lass has a wild ride in K-Cyber, soju, and survival",
   "format": "Think Tank",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -3428,31 +3487,12 @@
   "kw": "barriers cyber defending e-commerce fortune frontline geopolitics giant korean language reveal security shaped two years"
  },
  {
-  "title": "Ask me about law, policy and global power",
-  "format": "Ask an Expert",
-  "day": "15 Oct",
-  "start": "10:55 am",
-  "finish": "11:35 am",
-  "location": "Ask an Expert 1",
-  "speakers": [
-   "Patrick Fair"
-  ],
-  "summary": "",
-  "theme": [],
-  "topic": [],
-  "audience": "",
-  "sponsor": "",
-  "sortkey": "26101510554010",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-rue2udhlyz",
-  "kw": "55am ask associates brief expert fair global law managing partner patrick policy power thursday"
- },
- {
   "title": "Ask me about leadership, governance and accountability and law, policy and global power",
   "format": "Ask an Expert",
   "day": "15 Oct",
   "start": "10:55 am",
   "finish": "11:35 am",
-  "location": "Ask an Expert 2",
+  "location": "Ask an Expert 1",
   "speakers": [
    "Dan Goldberg"
   ],
@@ -3461,7 +3501,7 @@
   "topic": [],
   "audience": "",
   "sponsor": "",
-  "sortkey": "26101510554020",
+  "sortkey": "26101510554010",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-vokx1ewanv",
   "kw": "55am accountability ask dan expert global goldberg governance law leadership october omnicom policy power thursday"
  },
@@ -4101,7 +4141,7 @@
   "kw": ""
  },
  {
-  "title": "Shadow IT, shadow AI and Insider risk: Why controls fail, and culture matters more",
+  "title": "Shadow IT, shadow AI and insider risk: Why controls fail, and culture matters more",
   "format": "Panel",
   "day": "15 Oct",
   "start": "1:30 pm",
@@ -4124,7 +4164,7 @@
   "kw": "actual ai argues behaviour controls cross-disciplinary expected gap insider panel persist risk shadow weak"
  },
  {
-  "title": "Vibing your AI Governance - A recipe for a breach of Director's Duties",
+  "title": "Vibing your AI governance - a recipe for a breach of director's duties",
   "format": "Panel",
   "day": "15 Oct",
   "start": "1:30 pm",
@@ -4298,7 +4338,7 @@
   "kw": "cost cyber examines experience imposter individuals percent profession professionals syndrome teams"
  },
  {
-  "title": "\"Know your room - same truth, different language\" How one technical update gets translated into 2 different conversations and why it's leadership",
+  "title": "\"Know your room - same truth, different language\" How one technical update gets translated into two different conversations and why it's leadership",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "1:30 pm",
@@ -4574,6 +4614,29 @@
   "kw": "alternative covering cyber-informed engineering environments frameworks iec ot pha reviews risk security standard"
  },
  {
+  "title": "Conference ROI for busy people: A playbook for learning, networking, and bringing back the goods",
+  "format": "Breakout",
+  "day": "15 Oct",
+  "start": "1:30 pm",
+  "finish": "2:10 pm",
+  "location": "Think Tank 3",
+  "speakers": [
+   "Simon Gribble"
+  ],
+  "summary": "",
+  "theme": [
+   "People, Culture and Workforce"
+  ],
+  "topic": [
+   "Workforce Pathways, Skills and Career Sustainability"
+  ],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101513303030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-rglcjzoaai",
+  "kw": "ask big conference cyber draws employer events gribble las pay return simon trip vegas week"
+ },
+ {
   "title": "An auditor's guide to arguing with your auditor or how to tell your auditor they're full of it (professionally)",
   "format": "Think Tank",
   "day": "15 Oct",
@@ -4749,7 +4812,7 @@
   "finish": "3:00 pm",
   "location": "Melbourne Room 2",
   "speakers": [
-   "Paul Flatt, Maryam Shoraka, Sharin Yeoh, Peter Dowley & Az Ismail"
+   "Paul Flatt, Maryam Shoraka, Sharin Yeoh, Peter Dowley & Az Ismail-Sparrow"
   ],
   "summary": "",
   "theme": [
@@ -4893,7 +4956,7 @@
   "kw": "career complement distinct formed groups learning mentoring network offer peer professional security-industry stage traditional"
  },
  {
-  "title": "Sales Is a CISO superpower (whether you like it or not)",
+  "title": "Sales is a CISO superpower (whether you like it or not)",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "2:20 pm",
@@ -4962,7 +5025,7 @@
   "kw": "access actors behavioural detect financially gain hires leaving motivated nation-state posing remote system teams technical traces"
  },
  {
-  "title": "Intelligence at scale: Engineering the AI-Driven CTI pipeline",
+  "title": "Intelligence at scale: Engineering the AI-driven CTI pipeline",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "2:20 pm",
@@ -5274,7 +5337,7 @@
   "kw": "agents ai-driven already autonomous decisions executives governing human incidents lessons minimal oversight security"
  },
  {
-  "title": "Navigating cyber insurance in uncertain times – Wars, systemic events, AI and beyond",
+  "title": "Navigating cyber insurance in uncertain times - wars, systemic events, AI and beyond",
   "format": "Panel",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5379,7 +5442,7 @@
   "kw": "actions attractive chain github guidance hardening increasingly misconfigured offers pipelines practical supply target"
  },
  {
-  "title": "Phishing isn't an awareness strategy: The behavioural science behind why your human risk program Is broken",
+  "title": "Phishing isn't an awareness strategy: The behavioural science behind why your human risk program is broken",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5540,7 +5603,7 @@
   "kw": "analysts breaking detection hunts logic pipe potentially query-language security siems silos sql syntax usable"
  },
  {
-  "title": "When the victim panics: the missing layer in cyber incident response",
+  "title": "When the victim panics: The missing layer in cyber incident response",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5609,7 +5672,7 @@
   "kw": "activity busy controls dashboards expanding failure genuine mask reduction risk separate strategic well-organised"
  },
  {
-  "title": "Build your own potato - An exploration of how Windows authentication abuse \"actually works\"",
+  "title": "Build your own potato - an exploration of how Windows authentication abuse \"actually works\"",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5835,7 +5898,7 @@
   "kw": "actually architecture context large llm mcp open-source outside responses returning spooling stores summary tool window work"
  },
  {
-  "title": "SANS Institute Workshop - Hands-on agentic AI for digital forensics and incident response",
+  "title": "SANS Institute Workshop - Hands-on Agentic AI for digital forensics and incident response",
   "format": "Workshop",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5875,14 +5938,14 @@
   "kw": "answer board know long metrics operational predict security standard wants"
  },
  {
-  "title": "Featured speaker with Tane Hunter",
+  "title": "Featured speaker with Tané Hunter",
   "format": "Featured",
   "day": "15 Oct",
   "start": "4:40 pm",
   "finish": "5:20 pm",
   "location": "Plenary Theatre",
   "speakers": [
-   "Tane Hunter"
+   "Tané Hunter"
   ],
   "summary": "",
   "theme": [],
@@ -5953,7 +6016,7 @@
   "kw": "automated candidates decisions draws entry-level explain hires hiring judgement lose moeini rezza work"
  },
  {
-  "title": "From prompt to payment - securing Agentic commerce",
+  "title": "From prompt to payment - securing agentic commerce",
   "format": "Breakout",
   "day": "15 Oct",
   "start": "4:40 pm",
@@ -6089,29 +6152,6 @@
   "sortkey": "26101516402207",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-5m2juwfihz",
   "kw": "adversaries already break building capability data decrypt ecc encrypted harvesting later q-day quantum rsa sovereign"
- },
- {
-  "title": "SOCI in orbit: Why your risk management plan just hit Mach 25",
-  "format": "Breakout",
-  "day": "15 Oct",
-  "start": "4:40 pm",
-  "finish": "5:20 pm",
-  "location": "Room 208",
-  "speakers": [
-   "Sandeep Taileng"
-  ],
-  "summary": "",
-  "theme": [
-   "Law, Policy and Global Power"
-  ],
-  "topic": [
-   "Cyber Law, Regulation and Compliance"
-  ],
-  "audience": "General",
-  "sponsor": "",
-  "sortkey": "26101516402208",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-gltjqohlap",
-  "kw": "act assets australia cisos critical extends factor infrastructure management orbital plans risk soci space technology"
  },
  {
   "title": "Your AI threat intelligence is broken. Here is what works",
@@ -6390,6 +6430,25 @@
   "kw": "australia building curriculum cyber design fixing genuine industry input national problem rto shortage skills training"
  },
  {
+  "title": "Ask me about law, policy and global power",
+  "format": "Ask an Expert",
+  "day": "15 Oct",
+  "start": "4:40 pm",
+  "finish": "5:20 pm",
+  "location": "Ask an Expert 1",
+  "speakers": [
+   "Patrick Fair"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101516404010",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-rue2udhlyz",
+  "kw": "55am ask associates brief expert fair global law managing partner patrick policy power thursday"
+ },
+ {
   "title": "Networking Drinks",
   "format": "Networking",
   "day": "15 Oct",
@@ -6518,7 +6577,7 @@
   "finish": "11:35 am",
   "location": "Plenary Theatre",
   "speakers": [
-   "Leon Poggioli, Michael Carmody, Bruce Large, Pippa Flanagan, Patrick Gleadhill, Daniel Castillo & Walter Baxter"
+   "Leon Poggioli, Michael Carmody, Bruce Large, Pippa Flanagan, Patrick Gleadhill, Daniel Castillo, Walter Baxter & Gareth Smith"
   ],
   "summary": "",
   "theme": [
@@ -6620,7 +6679,7 @@
   "kw": "ai depends designed directability human isn't keeping loop nominally observability safer security system work"
  },
  {
-  "title": "Terraforming the blast radius: building secure, scalable cloud foundations with policy and automation",
+  "title": "Terraforming the blast radius: Building secure, scalable cloud foundations with policy and automation",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6666,7 +6725,7 @@
   "kw": "amelia applied architecture day disappearance earhart framework modelling reconstruct sabsa security trust went wrong"
  },
  {
-  "title": "Maximising value through partnership - Transforming customer-vendor dynamics",
+  "title": "Maximising value through partnership - transforming customer-vendor dynamics",
   "format": "Panel",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6827,6 +6886,29 @@
   "kw": "ai-enabled cyber decisions depends factor genuine inclusive leadership neurodiversity resilience risk safeguarding shapes systems"
  },
  {
+  "title": "Four years in the AI trenches: a practitioner's honest field notes from 2022 to 2026",
+  "format": "Breakout",
+  "day": "16 Oct",
+  "start": "10:55 am",
+  "finish": "11:35 am",
+  "location": "Room 212/213",
+  "speakers": [
+   "Martin Leung"
+  ],
+  "summary": "",
+  "theme": [
+   "Running Secure Operations"
+  ],
+  "topic": [
+   "Operational Limits and Failure Modes of AI-Assisted Security"
+  ],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101610552212",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-ihz0mepliv",
+  "kw": "agentic ai ask cves early ending five hallucinated leaders leung martin questions security senior teams tools traces work"
+ },
+ {
   "title": "From hallucinations to deepfakes: Four real AI failures and the governance gap behind them",
   "format": "Breakout",
   "day": "16 Oct",
@@ -6919,7 +7001,7 @@
   "kw": "accelerating ageing assumptions chain closes gap pre-release provenance registries reviews risk signed supply trusted verified"
  },
  {
-  "title": "Refactoring the law - Why ignoring legal requirements turns in a technical debt",
+  "title": "Refactoring the law - why ignoring legal requirements turns into technical debt",
   "format": "Think Tank",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6942,7 +7024,7 @@
   "kw": "blockers builds debt embedding later legal privacy quietly requirements stories surfaces technical treating user"
  },
  {
-  "title": "From compliance to conviction — Leading cyber security as a business imperative",
+  "title": "From compliance to conviction - leading cyber security as a business imperative",
   "format": "Think Tank",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6965,7 +7047,7 @@
   "kw": "accountability business core cyber embedding governance leaders management model ownership process security shifts"
  },
  {
-  "title": "Facial recognition technology and privacy law in Australia: lessons from the Bunnings decision",
+  "title": "Facial recognition technology and privacy law in Australia: Lessons from the Bunnings decision",
   "format": "Think Tank",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -7180,7 +7262,7 @@
  },
  {
   "title": "LLM-driven autonomous and process aware industrial control system threat detection",
-  "format": "Think Tank",
+  "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
   "finish": "12:25 pm",
@@ -7225,7 +7307,7 @@
   "kw": "attack barely chain covers eight essential half malicious modern package solarwinds supply surface testing utils"
  },
  {
-  "title": "The human factor - An aviation lense on cyber security",
+  "title": "The human factor - an aviation lens on cyber security",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7271,7 +7353,7 @@
   "kw": "age-verification aml asks biometric collection ctf data force honeypots identity legal liable mass panel rules technical"
  },
  {
-  "title": "You’re fired! (not quite) - How to thrive in a security operations career in the age of AI",
+  "title": "You’re fired! (not quite) - how to thrive in a security operations career in the age of AI",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7294,7 +7376,7 @@
   "kw": "ai analysts chain lose move roles siem soar tier transforming two value workflows"
  },
  {
-  "title": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030 : The dual threat: A nation-state with a P&L",
+  "title": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7363,7 +7445,7 @@
   "kw": "automating detection didn't error human logic nobody operations relocated remove revisits security tier-one triage upstream"
  },
  {
-  "title": "Incident response under pressure: parallels between firefighting and cyber attacks",
+  "title": "Incident response under pressure: Parallels between firefighting and cyber attacks",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -8008,7 +8090,7 @@
   "kw": "access agentic ai attackers automation browsers crawlers distinguish framework generative surge trustworthy websites"
  },
  {
-  "title": "Experts as a service: Crowd based forecasting for cyber risk quantificaiton",
+  "title": "Experts as a service: Crowd-based forecasting for cyber risk quantification",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "12:35 pm",
@@ -8233,5 +8315,29 @@
   "sortkey": "26101615051000",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-y54qieq3zd",
   "kw": "berners-lee co-founder data foundation founder heading institute online open privacy sir tim web wide world"
+ },
+ {
+  "title": "SOCI in orbit: Why your risk management plan just hit Mach 25",
+  "format": "Breakout",
+  "day": "15 Oct",
+  "start": "4:40 pm",
+  "finish": "5:20 pm",
+  "location": "Room 208",
+  "speakers": [
+   "Sandeep Taileng"
+  ],
+  "summary": "",
+  "theme": [
+   "Law, Policy and Global Power"
+  ],
+  "topic": [
+   "Cyber Law, Regulation and Compliance"
+  ],
+  "audience": "General",
+  "sponsor": "",
+  "sortkey": "26101516402208",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-gltjqohlap",
+  "kw": "act assets australia cisos critical extends factor infrastructure management orbital plans risk soci space technology",
+  "cancelled": true
  }
 ]

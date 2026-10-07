@@ -5,5 +5,320 @@
   "was": "\"I would kill a human being to exist\" What happened when I pushed AI past its guardrails for 15 hours straight",
   "now": "\"I would kill a human being to exist\": What happened when I pushed AI past its guardrails for 15 hours straight",
   "date": "6 Oct 2026"
+ },
+ {
+  "id": "session-kbo7woo35y",
+  "kind": "retitled",
+  "was": "Security by design in practice - How early choices made our SaaS platform easier to build and run",
+  "now": "Security by design in practice - how early choices made our SaaS platform easier to build and run",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-inhjiuxpzu",
+  "kind": "retitled",
+  "was": "People, Process, Technology - Who done it? A security architecture investigation",
+  "now": "People, process, technology - who done it? A security architecture investigation",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-ho3rzeyskr",
+  "kind": "retitled",
+  "was": "Two views, one SOC. Real world insights from both a CISO & an engineer on building trust with Agentic AI",
+  "now": "Two views, one SOC. Real world insights from both a CISO & an engineer on building trust with agentic AI",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-p7y5xw9wea",
+  "kind": "retitled",
+  "was": "AI is ruining our future workforce – So what do we do?",
+  "now": "AI is ruining our future workforce – so what do we do?",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-qhqptynzje",
+  "kind": "retitled",
+  "was": "Zero to compliant: One person, two frameworks, zero burnout; a practitioner's playbook for ISO 27001 and essential eight",
+  "now": "Zero to compliant: One person, two frameworks, zero burnout; a practitioner's playbook for ISO 27001 and Essential Eight",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-wjkudfn7vh",
+  "kind": "new",
+  "was": "",
+  "now": "Opening doors: AISA - building the next generation of cyber talent",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-lrkcmrcpdr",
+  "kind": "retitled",
+  "was": "The code you didn't write - Invisible threats in modern software development",
+  "now": "The code you didn't write - invisible threats in modern software development",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-0emwbrnbv4",
+  "kind": "moved",
+  "was": "Room 209",
+  "now": "Room 203",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-pwqnecj1lt",
+  "kind": "new",
+  "was": "",
+  "now": "The human firewall: How to ace your next interview",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-dcqba3qmec",
+  "kind": "retitled",
+  "was": "Re-engineering Supply Chain risk management: From compliance engine to risk-adaptive control",
+  "now": "Re-engineering supply chain risk management: From compliance engine to risk-adaptive control",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-cvd0bgb23z",
+  "kind": "moved",
+  "was": "Room 216",
+  "now": "Think Tank 2",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-av0vucchwu",
+  "kind": "new",
+  "was": "",
+  "now": "Ask me about leadership, governance and accountability",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-nnsp0oqf5x",
+  "kind": "retitled",
+  "was": "Keynote with Keren Elazari",
+  "now": "Confessions of a Friendly Hacker: Why Attacker Thinking Is Our Best Defense in the AI Era",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-cqmkpnytrm",
+  "kind": "retitled",
+  "was": "Featured Speaker with Taher Elgamal",
+  "now": "Featured speaker with Taher Elgamal",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-jbx1oov9oh",
+  "kind": "retitled",
+  "was": "Not if, but when: The Cyber Civilian Reserve — From concept to capability",
+  "now": "Not if, but when: The Cyber Civilian Reserve - from concept to capability",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-ossjaz90zv",
+  "kind": "retitled",
+  "was": "Analysing Geopolitical Flashpoints and the Evolution of the Global Cyber Threat Landscape",
+  "now": "Analysing geopolitical flashpoints and the evolution of the global cyber threat landscape",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-l1ttj1xcxe",
+  "kind": "retitled",
+  "was": "Developing detection models through real world applications of threat intelligence & threat hunting",
+  "now": "Developing detection models through real-world applications of threat intelligence & threat hunting",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-ffroqudc8i",
+  "kind": "retitled",
+  "was": "Sydney to Seoul: An Aussie lass has a wild ride in K-Cyber, Soju, and Survival",
+  "now": "Sydney to Seoul: An Aussie lass has a wild ride in K-Cyber, soju, and survival",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-vokx1ewanv",
+  "kind": "moved",
+  "was": "Ask an Expert 2",
+  "now": "Ask an Expert 1",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-qnbn0xif5o",
+  "kind": "retitled",
+  "was": "Shadow IT, shadow AI and Insider risk: Why controls fail, and culture matters more",
+  "now": "Shadow IT, shadow AI and insider risk: Why controls fail, and culture matters more",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-lblovukeeq",
+  "kind": "retitled",
+  "was": "Vibing your AI Governance - A recipe for a breach of Director's Duties",
+  "now": "Vibing your AI governance - a recipe for a breach of director's duties",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-rktgiko1wo",
+  "kind": "retitled",
+  "was": "\"Know your room - same truth, different language\" How one technical update gets translated into 2 different conversations and why it's leadership",
+  "now": "\"Know your room - same truth, different language\" How one technical update gets translated into two different conversations and why it's leadership",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-rglcjzoaai",
+  "kind": "new",
+  "was": "",
+  "now": "Conference ROI for busy people: A playbook for learning, networking, and bringing back the goods",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-jqmcmb4gku",
+  "kind": "retitled",
+  "was": "Sales Is a CISO superpower (whether you like it or not)",
+  "now": "Sales is a CISO superpower (whether you like it or not)",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-1ywhntvbgp",
+  "kind": "retitled",
+  "was": "Intelligence at scale: Engineering the AI-Driven CTI pipeline",
+  "now": "Intelligence at scale: Engineering the AI-driven CTI pipeline",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-89mhjcsqi8",
+  "kind": "retitled",
+  "was": "Navigating cyber insurance in uncertain times – Wars, systemic events, AI and beyond",
+  "now": "Navigating cyber insurance in uncertain times - wars, systemic events, AI and beyond",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-cyuzo078oy",
+  "kind": "retitled",
+  "was": "Phishing isn't an awareness strategy: The behavioural science behind why your human risk program Is broken",
+  "now": "Phishing isn't an awareness strategy: The behavioural science behind why your human risk program is broken",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-n3s95jraom",
+  "kind": "retitled",
+  "was": "When the victim panics: the missing layer in cyber incident response",
+  "now": "When the victim panics: The missing layer in cyber incident response",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-jtlckxykif",
+  "kind": "retitled",
+  "was": "Build your own potato - An exploration of how Windows authentication abuse \"actually works\"",
+  "now": "Build your own potato - an exploration of how Windows authentication abuse \"actually works\"",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-sgxat3tv3h",
+  "kind": "retitled",
+  "was": "SANS Institute Workshop - Hands-on agentic AI for digital forensics and incident response",
+  "now": "SANS Institute Workshop - Hands-on Agentic AI for digital forensics and incident response",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-wbivdwgdci",
+  "kind": "retitled",
+  "was": "Featured speaker with Tane Hunter",
+  "now": "Featured speaker with Tané Hunter",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-dsfeb9xx15",
+  "kind": "retitled",
+  "was": "From prompt to payment - securing Agentic commerce",
+  "now": "From prompt to payment - securing agentic commerce",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-rue2udhlyz",
+  "kind": "time",
+  "was": "15 Oct 10:55 am–11:35 am",
+  "now": "15 Oct 4:40 pm–5:20 pm",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-nh4xs8lp7h",
+  "kind": "retitled",
+  "was": "Terraforming the blast radius: building secure, scalable cloud foundations with policy and automation",
+  "now": "Terraforming the blast radius: Building secure, scalable cloud foundations with policy and automation",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-2dgkbtpadk",
+  "kind": "retitled",
+  "was": "Maximising value through partnership - Transforming customer-vendor dynamics",
+  "now": "Maximising value through partnership - transforming customer-vendor dynamics",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-ihz0mepliv",
+  "kind": "new",
+  "was": "",
+  "now": "Four years in the AI trenches: a practitioner's honest field notes from 2022 to 2026",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-bbwd646flb",
+  "kind": "retitled",
+  "was": "Refactoring the law - Why ignoring legal requirements turns in a technical debt",
+  "now": "Refactoring the law - why ignoring legal requirements turns into technical debt",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-wek0lgmzan",
+  "kind": "retitled",
+  "was": "From compliance to conviction — Leading cyber security as a business imperative",
+  "now": "From compliance to conviction - leading cyber security as a business imperative",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-8a1b2qt2yh",
+  "kind": "retitled",
+  "was": "Facial recognition technology and privacy law in Australia: lessons from the Bunnings decision",
+  "now": "Facial recognition technology and privacy law in Australia: Lessons from the Bunnings decision",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-p1itviowrx",
+  "kind": "retitled",
+  "was": "The human factor - An aviation lense on cyber security",
+  "now": "The human factor - an aviation lens on cyber security",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-drdebu0p6i",
+  "kind": "retitled",
+  "was": "You’re fired! (not quite) - How to thrive in a security operations career in the age of AI",
+  "now": "You’re fired! (not quite) - how to thrive in a security operations career in the age of AI",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-kjcwkfnqju",
+  "kind": "retitled",
+  "was": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030 : The dual threat: A nation-state with a P&L",
+  "now": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-zgkljgprsn",
+  "kind": "retitled",
+  "was": "Incident response under pressure: parallels between firefighting and cyber attacks",
+  "now": "Incident response under pressure: Parallels between firefighting and cyber attacks",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-wrqgmx5vjc",
+  "kind": "retitled",
+  "was": "Experts as a service: Crowd based forecasting for cyber risk quantificaiton",
+  "now": "Experts as a service: Crowd-based forecasting for cyber risk quantification",
+  "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-gltjqohlap",
+  "kind": "cancelled",
+  "was": "15 Oct 4:40 pm–5:20 pm",
+  "now": "",
+  "date": "8 Oct 2026"
  }
 ]
