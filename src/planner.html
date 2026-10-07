@@ -659,6 +659,11 @@ details.msel[open]>summary [data-ic] svg{transform:rotate(180deg)}
 #xfer p{margin:0}
 #xfer .xtip{padding:8px 10px;border-radius:8px;background:var(--card)}
 .xferbox{border-color:var(--go)}.xferbox .note{margin:0}
+/* ---------- Hide by keyword ---------- */
+#muteIn{width:100%;padding:6px 8px;border-radius:7px;border:1px solid var(--border);background:var(--card)}
+.mutehint{margin:4px 0 0;font-size:11.5px;line-height:1.4;color:var(--muted)}
+.mutehint .n{float:right;margin:0 0 0 8px;white-space:nowrap;color:var(--accent);font-weight:600}
+.mutehint code{font-size:11px}
 /* ---------- Now page ---------- */
 .nwwrap{max-width:1180px;margin:0 auto}
 .nwtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:15px}
@@ -806,6 +811,9 @@ label.btn select{border:0;background:none;padding:0;height:auto}
     <h4>My interests</h4>
     <input type="text" id="interests" placeholder="e.g. terraform, azure, identity" aria-label="My interests, comma separated" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
     <label><input type="checkbox" id="onlyInt"> Only sessions matching my interests<span class="n" id="intN"></span></label>
+    <h4>Hide sessions matching</h4>
+    <input type="text" id="muteIn" placeholder="e.g. AI, agent*" aria-label="Hide sessions whose title has these words, comma separated" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
+    <p class="mutehint"><span class="n" id="muteN"></span>Whole words in session titles; <code>agent*</code> also matches agents, agentic. Your Going and Maybe sessions always stay.</p>
     <h4>Theme</h4><div id="themeBox"></div>
     <h4>Topic</h4><select id="topic"></select>
     <h4>Format</h4><details class="msel" id="fmtSel"><summary><span id="fmtSum">All formats</span><span data-ic="chev"></span></summary><div class="msel-menu"><button class="msel-clr" data-act="fmtclear">Any format</button><div id="fmtBox"></div></div></details>
@@ -1100,6 +1108,17 @@ let interests=ls(KEY_I,[]);if(!Array.isArray(interests))interests=[];
 interests=interests.filter(t=>typeof t==="string"&&t.trim()).map(t=>t.trim().toLowerCase());
 // A term matches as a phrase, or when every word in it appears somewhere in the session text.
 const intHits=x=>interests.filter(t=>x.hay.includes(t)||t.split(/\s+/).every(w=>x.hay.includes(w)));
+// Keyword hiding (#7): whole words in the title, case-insensitive; a trailing * matches any ending ("agent*").
+// Planned sessions, backups and breaks are never hidden this way.
+const KEY_M="cybercon2026-mute-v1";
+const cleanMute=a=>{const seen=new Set();return (Array.isArray(a)?a:[]).filter(t=>typeof t==="string").map(t=>t.trim().slice(0,40)).filter(t=>t&&t!=="*"&&!seen.has(t.toLowerCase())&&seen.add(t.toLowerCase())).slice(0,30)};
+let mute=cleanMute(ls(KEY_M,[]));
+const muteRx=t=>{const star=t.endsWith("*"),w=(star?t.slice(0,-1):t).trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/\s+/g,"\\s+");
+  return w?new RegExp(`(?<![\\p{L}\\p{N}])${w}${star?"[\\p{L}\\p{N}]*":"(?![\\p{L}\\p{N}])"}`,"iu"):null};
+let MUTE=[];const setMute=v=>{mute=cleanMute(v);MUTE=mute.map(t=>[t,muteRx(t)]).filter(([,r])=>r)};setMute(mute);
+const muteHit=x=>{if(!MUTE.length||x.logi||isBrk(x)||plan[x.id]||backupOf(x.id))return null;for(const [t,r] of MUTE)if(r.test(x.title))return t;return null};
+const muted=x=>!!muteHit(x);
+const muteCount=()=>MUTE.length?S.filter(x=>!hidden.has(x.id)&&muted(x)).length:0;
 // Colleagues' plans imported from share links: name -> {id: "go"|"maybe"}.
 // Colleagues' plans, keyed by the sharer's author ID (or "n:<name>" for older links without one):
 // {name, plan, t: when they shared it, a: author ID, r: when you saved it}.
@@ -1140,6 +1159,7 @@ function clashes(x,gl=goList()){return x.logi?[]:gl.filter(g=>g.id!==x.id&&overl
 
 function matches(x,gl){
   if(!F.showHidden&&hidden.has(x.id))return false;
+  if(!F.showHidden&&muted(x))return false;
   if(!F.showHidden&&lockedBy(x))return false;
   if(F.day!=="all"&&x.dayIdx!==+F.day)return false;
   if(F.formats.size&&!F.formats.has(x.format))return false;
@@ -1199,14 +1219,15 @@ function buildFilters(){
   const locs=[...new Set(S.map(x=>x.location).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
   $("#loc").innerHTML=`<option value="">All locations</option>`+locs.map(l=>`<option ${F.loc===l?"selected":""}>${esc(l)}</option>`).join("");
   $("#hideLogi").checked=F.hideLogi;$("#fits").checked=F.fits;$("#mine").checked=F.mine;$("#q").value=F.q;$("#qm").value=F.q;
-  $("#interests").value=interests.join(", ");$("#onlyInt").checked=F.onlyInt;$("#intN").textContent=interests.length?S.filter(x=>intHits(x).length).length:"";
+  $("#interests").value=interests.join(", ");$("#muteIn").value=mute.join(", ");$("#onlyInt").checked=F.onlyInt;$("#intN").textContent=interests.length?S.filter(x=>intHits(x).length).length:"";
   $("#changedL").hidden=!CHG.size;$("#changed").checked=F.changed;$("#changedN").textContent=CHG.size||"";
   updateHiddenUi();
 }
 function updateHiddenUi(){
-  const nLock=lockHiddenCount();
-  $("#showHidden").checked=F.showHidden;$("#hiddenN").textContent=hidden.size+nLock;$("#unhideAll").disabled=!hidden.size;
-  $("#showHidden").parentElement.title=`${hidden.size} hidden by you, ${nLock} hidden by locks`;
+  const nLock=lockHiddenCount(),nMute=muteCount();
+  $("#showHidden").checked=F.showHidden;$("#hiddenN").textContent=hidden.size+nLock+nMute;$("#unhideAll").disabled=!hidden.size;
+  $("#showHidden").parentElement.title=`${hidden.size} hidden by you, ${nLock} hidden by locks, ${nMute} hidden by keyword`;
+  $("#muteN").textContent=MUTE.length?`hiding ${nMute}`:"";
 }
 function buildTopics(){
   const pool=F.themes.size?S.filter(x=>x.theme.some(t=>F.themes.has(t))):S;
@@ -1215,7 +1236,7 @@ function buildTopics(){
   $("#topic").innerHTML=`<option value="">All topics</option>`+topics.map(t=>`<option ${F.topic===t?"selected":""}>${esc(t)}</option>`).join("");
 }
 
-const lockHiddenCount=()=>locked.size?S.filter(x=>!hidden.has(x.id)&&lockedBy(x)).length:0;
+const lockHiddenCount=()=>locked.size?S.filter(x=>!hidden.has(x.id)&&!muted(x)&&lockedBy(x)).length:0;
 // One status control everywhere: joined Going | Maybe, plus a lock icon once you're going.
 function statusBtns(x){
   const st=plan[x.id]||"",isL=locked.has(x.id);
@@ -1239,9 +1260,9 @@ function slimCard(x){
 }
 function card(x,gl){
   if(x.logi||isBrk(x))return slimCard(x);
-  const st=plan[x.id]||"",cl=clashes(x,gl),isH=hidden.has(x.id),lb=lockedBy(x),ih=intHits(x),bo=backupOf(x.id)&&BY.get(backupOf(x.id));
+  const st=plan[x.id]||"",cl=clashes(x,gl),isH=hidden.has(x.id),mh=isH?null:muteHit(x),lb=lockedBy(x),ih=intHits(x),bo=backupOf(x.id)&&BY.get(backupOf(x.id));
   const chips=[...x.theme,...x.topic].map(t=>`<span>${esc(t)}</span>`).join("");
-  return `<article class="card ${st} ${x.logi?"logi":""} ${isH||lb?"hid":""} ${ih.length?"fav":""} ${x.cancelled?"cancelled":""}" style="--c:${esc(COLORS[x.format]||"#999")}">
+  return `<article class="card ${st} ${x.logi?"logi":""} ${isH||lb||mh?"hid":""} ${ih.length?"fav":""} ${x.cancelled?"cancelled":""}" style="--c:${esc(COLORS[x.format]||"#999")}">
   <div class="row1"><span class="tag">${esc(x.format)}</span><span>${fmt(x.s)} – ${fmt(x.f)}</span><span>${locLink(x)}</span>${x.audience?`<span class="aud">${esc(x.audience)}</span>`:""}${chgBadges(x)}${locked.has(x.id)?`<span title="Locked">${svg("lock")}</span>`:""}</div>
   <h3>${esc(x.title)}</h3>
   ${x.speakers?`<div class="spk">${esc(x.speakers)}</div>`:""}
@@ -1249,7 +1270,7 @@ function card(x,gl){
   ${x.summary?`<p class="sum" title="Click to expand">${esc(x.summary)}</p>`:x.kw&&x.url?`<a class="sumlink" href="${esc(x.url)}" target="_blank" rel="noopener">Read the abstract on the official program ↗</a>`:""}
   ${chips?`<div class="chips">${chips}</div>`:""}
   ${ih.length?`<div class="int">${svg("star")} ${ih.map(esc).join(", ")}</div>`:""}${friendLine(x)}${bo?`<div class="note">${svg("swap")} Backup for: ${esc(bo.title)} (${fmt(bo.s)})</div>`:""}
-  ${lb?`<div class="note">${svg("lock")} Hidden by lock on: ${esc(lb.title)} (${fmt(lb.s)})</div>`:cl.length&&st!=="go"?`<div class="note">Overlaps your plan: ${cl.map(c=>esc(c.title)).join("; ")}</div>`:""}
+  ${mh?`<div class="note">${svg("eyeoff")} Hidden by your keyword “${esc(mh)}”</div>`:""}${lb?`<div class="note">${svg("lock")} Hidden by lock on: ${esc(lb.title)} (${fmt(lb.s)})</div>`:cl.length&&st!=="go"?`<div class="note">Overlaps your plan: ${cl.map(c=>esc(c.title)).join("; ")}</div>`:""}
   ${cl.length&&st==="go"?`<div class="warn">⚠ Clash: ${cl.map(c=>esc(c.title)).join("; ")}</div>`:""}
   ${acts(x,{cl,hide:true})}
 </article>`;
@@ -1329,7 +1350,7 @@ function renderNow(){
       const st=x.f<=t?"past":x.s<=t?"now":x===nx?"next":"";
       return `<div class="trow ${st} ${brk?"brk":""}"><span class="tm">${fmt(x.s)}</span><div class="ttl">${brk?svg("coffee")+" ":""}<b>${esc(x.title)}</b>${brk?"":`<div class="sub">${locLink(x)}</div>`}</div>${st==="now"?`<span class="pill">Now</span>`:st==="next"?`<span class="pill nx">Next</span>`:"<span></span>"}</div>`}).join("")}</div>`;
   }
-  const pool=S.filter(x=>x.dayIdx===N.day&&!x.logi&&!isBrk(x)&&!x.cancelled&&!hidden.has(x.id)&&plan[x.id]!=="go");
+  const pool=S.filter(x=>x.dayIdx===N.day&&!x.logi&&!isBrk(x)&&!x.cancelled&&!hidden.has(x.id)&&!muted(x)&&plan[x.id]!=="go");
   const byInt=(a,b)=>intHits(b).length-intHits(a).length||a.s-b.s;
   const soon=pool.filter(x=>x.s>=t&&x.s<t+45).sort(byInt),live=pool.filter(x=>x.s<=t&&t<x.f).sort(byInt),from=here&&here.location;
   if(soon.length)R+=`<div class="nwsec"><h3>Starting soon <span class="sub">next 45 min · ${soon.length}${interests.length?" · ★ interests first":""}</span></h3>${soon.slice(0,6).map(x=>nwRow(x,from)).join("")}
@@ -1350,7 +1371,7 @@ const viewSeg=(nS,nP)=>`<span class="seg2" role="group" aria-label="Browse by"><
 function renderSpeakers(){
   const sd=$("#sheetDone");if(sd)sd.textContent="Done";
   const q=F.q.toLowerCase().split(/\s+/).filter(Boolean),map=new Map();
-  for(const x of S){if(x.logi||(!F.showHidden&&hidden.has(x.id))||(F.day!=="all"&&x.dayIdx!==+F.day))continue;
+  for(const x of S){if(x.logi||(!F.showHidden&&(hidden.has(x.id)||muted(x)))||(F.day!=="all"&&x.dayIdx!==+F.day))continue;
     for(const n of x.spk){if(!map.has(n))map.set(n,[]);map.get(n).push(x)}}
   const key=n=>{const p=n.split(/\s+/);return (p[p.length-1]+" "+n).toLowerCase()};
   const list=[...map].filter(([n,xs])=>q.every(t=>n.toLowerCase().includes(t)||xs.some(x=>x.hay.includes(t)))).sort((a,b)=>key(a[0]).localeCompare(key(b[0])));
@@ -1412,10 +1433,10 @@ function renderBrowse(){
   let chips="";
   if(F.win)chips=`<span class="chip">${DAYS[F.win.day].label}: starting ${fmt(F.win.from)}–${fmt(F.win.to)}<button data-act="clearwin" aria-label="Clear time window">✕</button></span>`;
   const filtered=!!(F.q||F.day!=="all"||F.formats.size||F.themes.size||F.topic||F.aud.size||F.loc||F.hideLogi||F.fits||F.mine||F.win||F.changed||F.onlyInt);
-  const hideable=filtered?list.filter(x=>!hidden.has(x.id)&&!plan[x.id]&&!lockedBy(x)):[],nLock=lockHiddenCount();
+  const hideable=filtered?list.filter(x=>!hidden.has(x.id)&&!muted(x)&&!plan[x.id]&&!lockedBy(x)):[],nLock=lockHiddenCount();
   const sd=$("#sheetDone");if(sd)sd.textContent=`Show ${list.length} session${list.length===1?"":"s"}`;
-  const nH=hidden.size+nLock;
-  let html=`<div class="toolbar btool">${daySeg()}${viewSeg(list.length)}${nH?`<button class="hchip" data-act="togglehidden" aria-pressed="${F.showHidden}" title="${hidden.size} hidden by you, ${nLock} hidden by ${locked.size} lock${locked.size===1?"":"s"}. Tap to ${F.showHidden?"hide them again":"show them"}.">${svg(F.showHidden?"eye":"eyeoff")}${F.showHidden?"Showing ":""}${nH} hidden${nLock?`<span class="hs">${hidden.size?`${hidden.size} by you · `:""}${nLock} by ${svg("lock")}${locked.size}</span>`:""}</button>`:""}${chips}
+  const nMute=muteCount(),nH=hidden.size+nLock+nMute;
+  let html=`<div class="toolbar btool">${daySeg()}${viewSeg(list.length)}${nH?`<button class="hchip" data-act="togglehidden" aria-pressed="${F.showHidden}" title="${hidden.size} hidden by you, ${nLock} hidden by ${locked.size} lock${locked.size===1?"":"s"}, ${nMute} hidden by keyword. Tap to ${F.showHidden?"hide them again":"show them"}.">${svg(F.showHidden?"eye":"eyeoff")}${F.showHidden?"Showing ":""}${nH} hidden${nLock?`<span class="hs">${[hidden.size?`${hidden.size} by you`:"",nLock?`${nLock} by ${svg("lock")}${locked.size}`:"",nMute?`${nMute} by keyword`:""].filter(Boolean).join(" · ")}</span>`:""}</button>`:""}${chips}
     ${hideable.length&&hideable.length<S.length?`<button class="hchip" data-act="hideshown" title="Hide every session currently listed (Going/Maybe sessions are kept)">${svg("x")}Hide all ${hideable.length} shown</button>`:""}
     ${lastHidden.length?`<button data-act="undo">${svg("undo")}Undo hide${lastHidden.length>1?` (${lastHidden.length})`:""}</button>`:""}</div>`;
   const groups=new Map();
@@ -1473,7 +1494,7 @@ function renderPlan(){
       ${tline(di,{go:goD,may:mayD,brs:brD,B,t:nowT(di),expand:col,after:frLanes(di,B)})}`;
     html+=`<div class="pbody" ${col?"hidden":""}>`;
     const browseBtn=(a,b,label)=>`<button data-act="gap" data-day="${di}" data-from="${a}" data-to="${b}">${svg("search")}${label}</button>`;
-    const gapRow=(a,b)=>{const n=S.filter(x=>x.dayIdx===di&&!x.logi&&!isBrk(x)&&!hidden.has(x.id)&&!lockedBy(x)&&x.s>=a&&x.s<b).length;return b-a>=15?`<div class="gap">${svg("clock")} Free ${fmt(a)} – ${fmt(b)} · ${n} session${n===1?" starts":"s start"} in this window ${n?browseBtn(a,b,"Browse these"):""}</div>`:""};
+    const gapRow=(a,b)=>{const n=S.filter(x=>x.dayIdx===di&&!x.logi&&!isBrk(x)&&!hidden.has(x.id)&&!muted(x)&&!lockedBy(x)&&x.s>=a&&x.s<b).length;return b-a>=15?`<div class="gap">${svg("clock")} Free ${fmt(a)} – ${fmt(b)} · ${n} session${n===1?" starts":"s start"} in this window ${n?browseBtn(a,b,"Browse these"):""}</div>`:""};
     if(!goD.length)html+=`<div class="gap">Nothing marked as going yet. ${browseBtn(B0.from,B0.to,"Browse "+d.label)}</div>`;
     const evs=[...goD.map(x=>({x,brk:false})),...brD.map(x=>({x,brk:true}))].sort((a,b)=>a.x.s-b.x.s||a.x.f-b.x.f);
     let cursor=B.from,prev=null;
@@ -1544,7 +1565,7 @@ function renderVenue(){
     <div class="segc mxf" role="group" aria-label="Floor">${["P","L1","L2"].map(m=>`<button data-act="mfloor" data-m="${m}" aria-pressed="${MX.m===m}">${m==="P"?"Ground":MAPS[m].t}${cnt(m)?`<span class="n" title="${cnt(m)} of your stops">${cnt(m)}</span>`:""}</button>`).join("")}</div></div>`;
   // Room dots (dimmed when nothing on in the selected day), route lines, portals, numbered stops.
   const locs=[...new Set(S.map(x=>x.location))].filter(l=>l!=="Melbourne Room"&&(placeOf(l)||{}).m===MX.m);
-  const dots=locs.map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&(MX.day==null||x.dayIdx===MX.day));
+  const dots=locs.map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
     const mine=day.some(x=>plan[x.id]==="go");
     return `<button class="mk2 pin rdot ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""}" style="left:${pl.p[0]}%;--py:${pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"></button>`}).join("");
   const curve=sg=>sg.pts.map((q,i)=>(i?"L":"M")+px(q).map(v=>v.toFixed(1)).join(",")).join(" ");
@@ -1591,7 +1612,7 @@ function renderVenue(){
 function mxPopHtml(){
   if(!MX.sel)return "";
   const loc=MX.sel,r=ROOMS[loc]||{},lv=levelOf(loc);
-  const all=S.filter(x=>x.location===loc&&!hidden.has(x.id)),list=all.filter(x=>MX.day==null||x.dayIdx===MX.day);
+  const all=S.filter(x=>x.location===loc&&!hidden.has(x.id)&&!muted(x)),list=all.filter(x=>MX.day==null||x.dayIdx===MX.day);
   const other=all.length-list.length;
   return `<div class="mx-pop" role="dialog" aria-label="${esc(loc)}"><div class="ph"><div><b>${esc(loc)}</b> ${lv?`<span class="lv">${lv}</span>`:""}<div class="sub">${lv?lvName(lv)+" · ":""}${zoneName(zoneOf(loc))}${r.cap?` · seats ${r.cap.toLocaleString()} (theatre)`:""}</div></div><button class="icon muted" data-act="mclose" title="Close" aria-label="Close">${svg("x")}</button></div>
     <div class="sub">${MX.day!=null?DAYS[MX.day].label:"All days"} · ${list.length} session${list.length===1?"":"s"}${other?` (${other} on other days)`:""}</div>
@@ -1693,7 +1714,7 @@ function tipBreak(x){
     <b class="tp-t">${esc(x.title)}</b><div class="tp-room">${locHtml(x.location)}</div><div class="tp-a"><span class="sp"></span>${gotoBtn(x)}</div>`;
 }
 function tipRoom(loc){
-  const r=ROOMS[loc]||{},lv=levelOf(loc),di=MX.day,n=S.filter(x=>x.location===loc&&!hidden.has(x.id)&&(di==null||x.dayIdx===di)).length,mine=(MX.R?MX.R.st:[]).filter(s2=>s2.x.location===loc);
+  const r=ROOMS[loc]||{},lv=levelOf(loc),di=MX.day,n=S.filter(x=>x.location===loc&&!hidden.has(x.id)&&!muted(x)&&(di==null||x.dayIdx===di)).length,mine=(MX.R?MX.R.st:[]).filter(s2=>s2.x.location===loc);
   return `<div class="tp-h"><b class="tp-t">${esc(loc)}</b>${lv?`<span class="lv">${lv}</span>`:""}</div><div class="sub">${lv?lvName(lv)+" · ":""}${zoneName(zoneOf(loc))}${r.cap?` · ${r.cap.toLocaleString()} seats`:""}</div>
     ${mine.map(s2=>`<div class="tp-stop"><span class="num">${s2.n}</span><span>${fmt(s2.x.s)} · <b>${esc(s2.x.title)}</b></span></div>`).join("")}
     <div class="sub">${n} session${n===1?"":"s"}${di!=null?" on "+DAYS[di].label:""} · click to list them</div>`;
@@ -1810,7 +1831,7 @@ const qrSvg=(()=>{
 // ---------- Send the whole plan to another device (issue #4) ----------
 // Link fragment #x=<z|j><base64url>: z = deflate-raw compressed JSON, j = plain JSON.
 // Payload {v:1, t: sent at, d: {localStorage key: value}}. Fragments never reach the web server.
-const XFER_KEYS=()=>[KEY,KEY_H,KEY_L,KEY_B,KEY_C,KEY_BK,KEY_I,KEY_FR,KEY_FRH,KEY_N,KEY_ME,KEY_R,KEY_MS,KEY_SEEN];
+const XFER_KEYS=()=>[KEY,KEY_H,KEY_L,KEY_B,KEY_C,KEY_BK,KEY_I,KEY_M,KEY_FR,KEY_FRH,KEY_N,KEY_ME,KEY_R,KEY_MS,KEY_SEEN];
 const XFER_QR_MAX=1800; // ~version 30; denser codes get hard to scan off a laptop screen
 let pendingXfer=null;
 const bytesB64u=b=>{let s="";for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode(...b.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")};
@@ -1837,12 +1858,12 @@ const xferBase=()=>/^https?:$/.test(location.protocol)?location.origin+location.
 const xferCodeIn=t=>{t=String(t||"").trim();const m=/(?:#|&)x=([zj][A-Za-z0-9_-]+)/.exec(t)||/^([zj][A-Za-z0-9_-]{16,})$/.exec(t);return m?m[1]:null};
 function xferStats(get){
   const js=(k,d)=>{try{const v=JSON.parse(get(k));return v??d}catch{return d}},arr=k=>{const v=js(k,[]);return Array.isArray(v)?v:[]};
-  const p=js(KEY,{}),fr=js(KEY_FR,{}),vals=p&&typeof p==="object"?Object.values(p):[];
+  const p=js(KEY,{}),fr=js(KEY_FR,{}),mu=arr(KEY_M),vals=p&&typeof p==="object"?Object.values(p):[];
   return {go:vals.filter(v=>v==="go").length,maybe:vals.filter(v=>v==="maybe").length,locks:arr(KEY_L).length,hidden:arr(KEY_H).length,
-    friends:fr&&typeof fr==="object"&&!Array.isArray(fr)?Object.keys(fr).length:0,interests:arr(KEY_I).length};
+    friends:fr&&typeof fr==="object"&&!Array.isArray(fr)?Object.keys(fr).length:0,interests:arr(KEY_I).length,mute:mu.length};
 }
 const xferLine=s=>[`${s.go} going`,s.maybe?`${s.maybe} maybe`:"",s.locks?`${s.locks} lock${s.locks>1?"s":""}`:"",s.hidden?`${s.hidden} hidden`:"",
-  s.friends?`${s.friends} colleague${s.friends>1?"s":""}`:"",s.interests?`${s.interests} interest${s.interests>1?"s":""}`:""].filter(Boolean).join(" · ");
+  s.friends?`${s.friends} colleague${s.friends>1?"s":""}`:"",s.interests?`${s.interests} interest${s.interests>1?"s":""}`:"",s.mute?`${s.mute} hidden keyword${s.mute>1?"s":""}`:""].filter(Boolean).join(" · ");
 const xferClose=()=>document.getElementById("xfer")?.remove();
 async function xferSend(){
   xferClose();
@@ -2023,7 +2044,7 @@ document.addEventListener("click",e=>{
     else{for(const k of lastHidden)hidden.delete(k);lastHidden=[];saveH()}
     const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(a==="hideshown"){
-    const gl=goList(),ids=S.filter(x=>matches(x,gl)&&!hidden.has(x.id)&&!plan[x.id]).map(x=>x.id);
+    const gl=goList(),ids=S.filter(x=>matches(x,gl)&&!hidden.has(x.id)&&!muted(x)&&!plan[x.id]).map(x=>x.id);
     if(ids.length&&confirm(`Hide all ${ids.length} sessions currently shown? Sessions marked Going/Maybe are kept. You can undo this.`)){hideIds(ids);render()}
     return}
   if(a==="gap"){e.preventDefault();F.win={day:+t.dataset.day,from:+t.dataset.from,to:+t.dataset.to};F.day=t.dataset.day;F.hideLogi=true;mode="browse";buildFilters();render();window.scrollTo(0,0);return}
@@ -2068,7 +2089,7 @@ document.addEventListener("click",e=>{
   if(a==="ics")return exportIcs();
   if(a==="csv")return exportCsv();
   if(a==="share")return share();
-  if(a==="backup")return download("cybercon2026-plan.json","application/json",JSON.stringify({version:5,plan,hidden:[...hidden],locked:[...locked],backups,interests,friends,friendsHidden:[...frHidden]},null,1));
+  if(a==="backup")return download("cybercon2026-plan.json","application/json",JSON.stringify({version:6,plan,hidden:[...hidden],locked:[...locked],backups,interests,mute,friends,friendsHidden:[...frHidden]},null,1));
   if(a==="restore")return $("#restoreFile").click();
   if(a==="print")return window.print();
   if(a==="clear"){if(confirm("Remove every session from your plan?")){plan={};save();render()}return}
@@ -2082,11 +2103,13 @@ document.addEventListener("change",e=>{
   else if(t.id==="loc")F.loc=t.value;
   else if(["hideLogi","fits","mine","showHidden","changed","onlyInt"].includes(t.id))F[t.id]=t.checked;
   else if(t.id==="interests"){interests=[...new Set(t.value.split(",").map(v=>v.trim().toLowerCase()).filter(Boolean))];lsSet(KEY_I,interests);buildFilters()}
+  else if(t.id==="muteIn"){setMute(t.value.split(","));lsSet(KEY_M,mute);buildFilters()}
   else if(t.id==="remind"){remindMin=+t.value;lsSet(KEY_R,remindMin);nativeSync();return}
   else if(t.id==="icsMaybe"){icsMaybe=t.checked;return}
   else if(t.id==="showBreaks"){showBreaks=t.checked;try{localStorage.setItem(KEY_B,showBreaks?"1":"0")}catch{}}
   else if(t.id==="restoreFile"){const f=t.files[0];if(!f)return;f.text().then(s=>{const j=JSON.parse(s),p=cleanPlan(j.plan);plan=p;locked=cleanLocked(j.locked);
     if(j.backups&&typeof j.backups==="object"&&!Array.isArray(j.backups))backups={...j.backups};
+    if(Array.isArray(j.mute)){setMute(j.mute);lsSet(KEY_M,mute)}
     if(Array.isArray(j.interests)){interests=j.interests.filter(v=>typeof v==="string").map(v=>v.trim().toLowerCase()).filter(Boolean);lsSet(KEY_I,interests)}
     if(j.friends&&typeof j.friends==="object"&&!Array.isArray(j.friends)){friends=normFriends(j.friends);saveFr();frHidden=new Set((Array.isArray(j.friendsHidden)?j.friendsHidden:[]).filter(k=>friends[k]));saveFrH()}
     save();buildFilters();if(Array.isArray(j.hidden)){hidden=cleanHidden(j.hidden);lastHidden=[];saveH()}mode="plan";render();alert(`Restored ${Object.keys(p).length} planned sessions${Array.isArray(j.hidden)?` and ${hidden.size} hidden`:""}.`)}).catch(()=>alert("Could not read that backup file.")).finally(()=>t.value="");return}
