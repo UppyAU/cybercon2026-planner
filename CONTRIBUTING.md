@@ -15,6 +15,9 @@ python tools/build.py --check  # the same content check CI runs
 - The whole app is `src/planner.html` (HTML, CSS and JavaScript in one file, no framework or build step
   beyond `tools/build.py` filling in the `/*@NAME@*/` placeholders).
 - Keep changes small and test on a phone-sized window as well as desktop.
+- The native app in `mobile/` calls some page functions and clicks some page elements by name.
+  `tests/test_app_contract.py` lists them and runs in CI (`python -m pytest tests -q`): if it fails,
+  either keep the old name or update `mobile/` in the same PR.
 
 ## Please don't add
 

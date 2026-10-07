@@ -31,6 +31,11 @@ jobs:
       - name: No private content in this repo
         run: python tools/build.py --check
 
+      - name: App contract tests
+        run: |
+          pip install --quiet -r requirements-dev.txt
+          python -m pytest tests -q
+
       - name: Build public edition
         env:
           BUILD_ID: ${{ github.sha }}
