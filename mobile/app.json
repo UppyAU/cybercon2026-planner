@@ -1,0 +1,74 @@
+{
+  "expo": {
+    "name": "CC26 Planner",
+    "slug": "cc26-planner",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/generated/icon.png",
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "android": {
+      "package": "com.forcky.cc26planner",
+      "versionCode": 1,
+      "allowBackup": false,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/generated/adaptive-icon.png",
+        "backgroundColor": "#3355dd"
+      },
+      "permissions": [
+        "POST_NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
+        "RECEIVE_BOOT_COMPLETED"
+      ],
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "ios": {
+      "bundleIdentifier": "com.forcky.cc26planner",
+      "buildNumber": "1",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/generated/notification-icon.png",
+          "color": "#3355dd"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "The camera is used only to scan the QR code from Send to another device, so your plan can move to this phone.",
+          "microphonePermission": "CC26 Planner never records audio. The camera library it uses to scan QR codes requires this entry.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "568c527d-437f-4b2d-9738-ef68d00e2603"
+      }
+    },
+    "owner": "forcky"
+  }
+}

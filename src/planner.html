@@ -1054,7 +1054,7 @@ const save=()=>{
   if(PV)return; // never persist while previewing a shared plan
   for(const id of locked)if(plan[id]!=="go")locked.delete(id); // a lock only exists on a Going session
   try{localStorage.setItem(KEY,JSON.stringify(plan))}catch{}
-  saveL();cleanBackups();lsSet(KEY_BK,backups);
+  saveL();cleanBackups();lsSet(KEY_BK,backups);nativeSync();
 };
 // Locks are personal (like hidden): a locked Going session hides everything that overlaps it.
 const KEY_L="cybercon2026-locked-v1";
@@ -1895,7 +1895,23 @@ function render(){
   tipRefresh();
 }
 
-function download(name,type,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function download(name,type,text){
+  const app=nativeApp();if(app){app.postMessage(JSON.stringify({type:"cc26-file",name,mime:type,text}));return} // the app shares it instead
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+// Native app (mobile/): hand it your Going sessions so it can schedule reminders on the phone. Does nothing in a browser,
+// or in any other app's WebView: only ours adds CC26PlannerApp to the user agent.
+// Times are UTC ms (Melbourne is AEDT, UTC+11, in Oct 2026); walk is minutes from the Going session you've just left (if within 30 min).
+function nativeApp(){return /(^|\s)CC26PlannerApp\//.test(navigator.userAgent)&&window.ReactNativeWebView||null}
+function nativeSync(){
+  const w=nativeApp();if(!w||PV)return;
+  try{
+    const gl=goList(),at=(x,m)=>Date.UTC(2026,9,DAYS[x.dayIdx].d,0,m-660);
+    const sessions=gl.map(x=>{const prev=gl.filter(y=>y.dayIdx===x.dayIdx&&y.f<=x.s&&x.s-y.f<=30).sort((a,b)=>a.f-b.f).pop(),from=prev&&prev.location!==x.location?prev.location:null;
+      return {id:x.id,title:x.title,loc:x.location,start:at(x,x.s),end:at(x,x.f),from,walk:from?walkMin(from,x.location):null}});
+    w.postMessage(JSON.stringify({type:"cc26-plan",v:1,remind:remindMin,sessions}));
+  }catch{}
+}
+nativeSync();
 function icsStamp(x,m){return new Date(Date.UTC(2026,9,DAYS[x.dayIdx].d,0,m-660)).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"")} // Melbourne is AEDT (UTC+11) in Oct 2026
 const icsEsc=s=>String(s||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");
 // RFC 5545 folding: at most 75 octets per line, never splitting a UTF-8 character.
@@ -2066,7 +2082,7 @@ document.addEventListener("change",e=>{
   else if(t.id==="loc")F.loc=t.value;
   else if(["hideLogi","fits","mine","showHidden","changed","onlyInt"].includes(t.id))F[t.id]=t.checked;
   else if(t.id==="interests"){interests=[...new Set(t.value.split(",").map(v=>v.trim().toLowerCase()).filter(Boolean))];lsSet(KEY_I,interests);buildFilters()}
-  else if(t.id==="remind"){remindMin=+t.value;lsSet(KEY_R,remindMin);return}
+  else if(t.id==="remind"){remindMin=+t.value;lsSet(KEY_R,remindMin);nativeSync();return}
   else if(t.id==="icsMaybe"){icsMaybe=t.checked;return}
   else if(t.id==="showBreaks"){showBreaks=t.checked;try{localStorage.setItem(KEY_B,showBreaks?"1":"0")}catch{}}
   else if(t.id==="restoreFile"){const f=t.files[0];if(!f)return;f.text().then(s=>{const j=JSON.parse(s),p=cleanPlan(j.plan);plan=p;locked=cleanLocked(j.locked);

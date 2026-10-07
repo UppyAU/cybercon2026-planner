@@ -1,0 +1,24 @@
+# What EAS Build uploads (mobile/ app builds). EAS reads this instead of every .gitignore, so it
+# repeats their rules. The one difference: mobile/assets/generated/ (icons drawn by
+# mobile/scripts/icons.py) IS uploaded, so the builder needs no Python; those images still never
+# enter git, since tools/build.py --check keeps images out of the repo.
+
+# From .gitignore
+dist/
+__pycache__/
+*.pyc
+.venv/
+private/
+abstracts.json
+*.jpg
+*.jpeg
+
+# From mobile/.gitignore (except assets/generated/)
+node_modules/
+mobile/.expo/
+mobile/android/
+mobile/ios/
+mobile/modules/*/android/build/
+*.apk
+*.aab
+.env*

@@ -1,0 +1,18 @@
+// Must use expo-module-gradle-plugin (the current Expo module template). The legacy
+// applyKotlinExpoModulesCorePlugin() setup still compiles in SDK 57 but crashes at startup on
+// ModuleDefinition's reified Function(...) calls.
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.exactalarm'
+version = '1.0.0'
+
+android {
+  namespace "expo.modules.exactalarm"
+  defaultConfig {
+    versionCode 1
+    versionName '1.0.0'
+  }
+}

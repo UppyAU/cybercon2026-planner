@@ -75,6 +75,10 @@ def check_public():
         rel = p.relative_to(ROOT).as_posix()
         if not p.is_file() or rel.split("/")[0] in {".git", "dist", ".venv", "private"} or "__pycache__" in rel:
             continue
+        # mobile/: installed packages and generated native projects/icons (all gitignored there).
+        if (rel.split("/")[:2] in (["mobile", "node_modules"], ["mobile", "android"], ["mobile", "ios"], ["mobile", ".expo"])
+                or rel.startswith("mobile/assets/generated/") or re.match(r"mobile/modules/[^/]+/android/build/", rel)):
+            continue
         if p.name == "abstracts.json" or p.suffix.lower() in {".jpg", ".jpeg", ".png", ".pdf"}:
             problems.append(f"{rel}: private or binary content does not belong in this repo")
         elif p.suffix.lower() in {".html", ".js", ".json", ".py", ".md", ".css", ".yml", ".yaml", ".txt"}:
