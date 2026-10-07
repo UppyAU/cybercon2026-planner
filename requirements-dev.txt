@@ -1,0 +1,3 @@
+# Test dependencies (tests/). Pinned; Dependabot proposes updates.
+-r requirements.txt
+pytest==9.1.1
