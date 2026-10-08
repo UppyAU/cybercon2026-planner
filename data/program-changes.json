@@ -259,13 +259,6 @@
   "date": "8 Oct 2026"
  },
  {
-  "id": "session-bbwd646flb",
-  "kind": "retitled",
-  "was": "Refactoring the law - Why ignoring legal requirements turns in a technical debt",
-  "now": "Refactoring the law - why ignoring legal requirements turns into technical debt",
-  "date": "8 Oct 2026"
- },
- {
   "id": "session-wek0lgmzan",
   "kind": "retitled",
   "was": "From compliance to conviction — Leading cyber security as a business imperative",
@@ -294,13 +287,6 @@
   "date": "8 Oct 2026"
  },
  {
-  "id": "session-kjcwkfnqju",
-  "kind": "retitled",
-  "was": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030 : The dual threat: A nation-state with a P&L",
-  "now": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
-  "date": "8 Oct 2026"
- },
- {
   "id": "session-zgkljgprsn",
   "kind": "retitled",
   "was": "Incident response under pressure: parallels between firefighting and cyber attacks",
@@ -320,5 +306,103 @@
   "was": "15 Oct 4:40 pm–5:20 pm",
   "now": "",
   "date": "8 Oct 2026"
+ },
+ {
+  "id": "session-xligebwd55",
+  "kind": "new",
+  "was": "",
+  "now": "Voluntary security labelling scheme for smart devices, now in pilot",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-vcqtbjlxin",
+  "kind": "moved",
+  "was": "Think Tank 2",
+  "now": "Room 208",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-vcqtbjlxin",
+  "kind": "time",
+  "was": "15 Oct 10:55 am–11:35 am",
+  "now": "15 Oct 1:30 pm–2:10 pm",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-8hmpbq46su",
+  "kind": "moved",
+  "was": "Think Tank 2",
+  "now": "Room 208",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-xk8rhgjqy2",
+  "kind": "time",
+  "was": "16 Oct 12:35 pm–12:55 pm",
+  "now": "15 Oct 2:45 pm–3:05 pm",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-q7ikdwe4tj",
+  "kind": "retitled",
+  "was": "The unrehearsed verdict: an Oxford-style debate on operational technology and critical infrastructure security",
+  "now": "The unrehearsed verdict: An Oxford-style debate on operational technology and critical infrastructure security",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-jxxuliukni",
+  "kind": "retitled",
+  "was": "Is our sandstone approach to building a security culture actually accelerating modern day supply chain threats? or mitigating them?",
+  "now": "Is our sandstone approach to building a security culture actually accelerating modern day supply chain threats? Or mitigating them?",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-bbwd646flb",
+  "kind": "retitled",
+  "was": "Refactoring the law - why ignoring legal requirements turns into technical debt",
+  "now": "Refactoring the law - why ignoring legal requirements turns in a technical debt",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-t2zgrgpqgu",
+  "kind": "retitled",
+  "was": "BSI Group Workshop - Ensuring trust in agentic AI - certification of AI agents",
+  "now": "BSI Group Workshop - Ensuring trust in Agentic AI - certification of AI agents",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-kjcwkfnqju",
+  "kind": "retitled",
+  "was": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
+  "now": "DPRK cybercrime Vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-f35qddugfx",
+  "kind": "new",
+  "was": "",
+  "now": "Defending against hidden risks of AI tools in the workplace",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-wo5wfaoasf",
+  "kind": "new",
+  "was": "",
+  "now": "No Silver Bullets: Securing Sensitive Data—A Problem as Old as Digital Data Itself",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-y54qieq3zd",
+  "kind": "retitled",
+  "was": "Keynote with Sir Tim Berners-Lee",
+  "now": "In conversation with Sir Tim Berners-Lee",
+  "date": "9 Oct 2026"
+ },
+ {
+  "id": "session-idp2ezafin",
+  "kind": "cancelled",
+  "was": "15 Oct 1:30 pm–2:10 pm",
+  "now": "",
+  "date": "9 Oct 2026"
  }
 ]

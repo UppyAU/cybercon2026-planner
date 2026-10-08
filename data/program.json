@@ -142,6 +142,25 @@
   "kw": "careers cyber gamification harry ouaida participating real-world scenarios security shared strategies students two village"
  },
  {
+  "title": "Voluntary security labelling scheme for smart devices, now in pilot",
+  "format": "Breakout",
+  "day": "14 Oct",
+  "start": "11:10 am",
+  "finish": "11:50 am",
+  "location": "Room 103",
+  "speakers": [
+   "Frank Zeichner"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101411102103",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-xligebwd55",
+  "kw": "buy clear consumers designed device frank information labelling pilot presents scheme security smart voluntary zeichner"
+ },
+ {
   "title": "Designing systems for resilience in an uncertain world",
   "format": "Breakout",
   "day": "14 Oct",
@@ -1934,7 +1953,7 @@
   "finish": "3:10 pm",
   "location": "Room 203",
   "speakers": [
-   "Jakub Zverina, Monica Millar & Scarlett McDermott"
+   "Jakub Zverina, Monica Millar, Scarlett McDermott & Betsy Gregg"
   ],
   "summary": "",
   "theme": [],
@@ -2265,7 +2284,7 @@
   "sponsor": "",
   "sortkey": "26101414303040",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-uosxjj0hy2",
-  "kw": "argues barrier careers case cyber job keynote models outcome-driven rigid roles skills-based unfilled"
+  "kw": "argues barrier careers case cyber job models outcome-driven rigid roles skills-based tank think unfilled"
  },
  {
   "title": "Ask me about running secure operations or leadership, governance and accountability",
@@ -3346,7 +3365,7 @@
   "sponsor": "",
   "sortkey": "26101510552217",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-2tao9giv8t",
-  "kw": "ai-enabled applications data exposes failures handling leakage miss penetration permissions prompt recurring security teams testing tool year"
+  "kw": "ai-enabled applications exposes failures handling implementation miss penetration prompt recurring rushed security shortcuts teams testing year"
  },
  {
   "title": "Your agent works for me now",
@@ -3418,29 +3437,6 @@
   "kw": "communicate confirm contain destroying evidence first hour incident loop manage preserve responders simple soc solo"
  },
  {
-  "title": "When legal meets AI: Navigating eDiscovery, Privilege, and AI-Assisted review in the modern enterprise",
-  "format": "Think Tank",
-  "day": "15 Oct",
-  "start": "10:55 am",
-  "finish": "11:35 am",
-  "location": "Think Tank 2",
-  "speakers": [
-   "Jackie Orchard"
-  ],
-  "summary": "",
-  "theme": [
-   "Law, Policy and Global Power"
-  ],
-  "topic": [
-   "Public Policy, Regulatory Reform and Enforcement"
-  ],
-  "audience": "Intermediate",
-  "sponsor": "",
-  "sortkey": "26101510553020",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-vcqtbjlxin",
-  "kw": "addressed ai communications controls create governance haven't legal organisations privileged risks tools touching"
- },
- {
   "title": "The fatigued engineer: The modern day DevSecOps human risk stack",
   "format": "Think Tank",
   "day": "15 Oct",
@@ -3503,7 +3499,7 @@
   "sponsor": "",
   "sortkey": "26101510554010",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-vokx1ewanv",
-  "kw": "55am accountability ask dan expert global goldberg governance law leadership october omnicom policy power thursday"
+  "kw": "55am accountability ask dan expert global goldberg governance hosts law leadership october policy power themes thursday two"
  },
  {
   "title": "Designing and implementing an effective cyber insurance program for SMEs: Practical risk transfer that actually works",
@@ -4384,6 +4380,29 @@
   "kw": "accelerating ai-enabled australia coordination disinformation examines foreign interference national risk"
  },
  {
+  "title": "When legal meets AI: Navigating eDiscovery, Privilege, and AI-Assisted review in the modern enterprise",
+  "format": "Think Tank",
+  "day": "15 Oct",
+  "start": "1:30 pm",
+  "finish": "2:10 pm",
+  "location": "Room 208",
+  "speakers": [
+   "Jackie Orchard"
+  ],
+  "summary": "",
+  "theme": [
+   "Law, Policy and Global Power"
+  ],
+  "topic": [
+   "Public Policy, Regulatory Reform and Enforcement"
+  ],
+  "audience": "Intermediate",
+  "sponsor": "",
+  "sortkey": "26101513302208",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-vcqtbjlxin",
+  "kw": "addressed ai communications controls create governance haven't legal organisations privileged risks tools touching"
+ },
+ {
   "title": "The ghost workforce: Lessons from emulating North Korean cyber tradecraft",
   "format": "Breakout",
   "day": "15 Oct",
@@ -4474,29 +4493,6 @@
   "sortkey": "26101513302212",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-o5cntqhtqa",
   "kw": "analysis australia best-selling connected data exposes hidden inside privacy risks safety security systems telematics vehicle"
- },
- {
-  "title": "We see the accountability void. We look away",
-  "format": "Breakout",
-  "day": "15 Oct",
-  "start": "1:30 pm",
-  "finish": "2:10 pm",
-  "location": "Room 216",
-  "speakers": [
-   "Gaurav Vikash"
-  ],
-  "summary": "",
-  "theme": [
-   "Leadership, Governance and Accountability"
-  ],
-  "topic": [
-   "Cyber Governance, Ownership and Accountability Models"
-  ],
-  "audience": "General",
-  "sponsor": "",
-  "sortkey": "26101513302216",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-idp2ezafin",
-  "kw": "accountability actually algorithmic answer built decision-makers failures frameworks human lives longer maps void"
  },
  {
   "title": "How AI agents are leaking your secrets",
@@ -5002,6 +4998,29 @@
   "kw": "australia bridge convenient digital finally forcing fraud gap genuinely identity laws safeguarding secure"
  },
  {
+  "title": "What GDPR taught me about power and why Australia needs it / What does privacy feel like",
+  "format": "Think Tank",
+  "day": "15 Oct",
+  "start": "2:20 pm",
+  "finish": "3:00 pm",
+  "location": "Room 208",
+  "speakers": [
+   "Lina Condon"
+  ],
+  "summary": "",
+  "theme": [
+   "Law, Policy and Global Power"
+  ],
+  "topic": [
+   "Privacy, Surveillance and Civil Liberties"
+  ],
+  "audience": "General",
+  "sponsor": "",
+  "sortkey": "26101514202208",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-8hmpbq46su",
+  "kw": "australia case data fundamentally gdpr grounded living offering power privacy protection revealed stronger"
+ },
+ {
   "title": "The threat on HR: Detecting adversaries inside the remote workforce",
   "format": "Breakout",
   "day": "15 Oct",
@@ -5209,29 +5228,6 @@
   "kw": "account agents autonomous covering fell foundation management openbao practitioner secrets short testing worked"
  },
  {
-  "title": "What GDPR taught me about power and why Australia needs it / What does privacy feel like",
-  "format": "Think Tank",
-  "day": "15 Oct",
-  "start": "2:20 pm",
-  "finish": "3:00 pm",
-  "location": "Think Tank 2",
-  "speakers": [
-   "Lina Condon"
-  ],
-  "summary": "",
-  "theme": [
-   "Law, Policy and Global Power"
-  ],
-  "topic": [
-   "Privacy, Surveillance and Civil Liberties"
-  ],
-  "audience": "General",
-  "sponsor": "",
-  "sortkey": "26101514203020",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-8hmpbq46su",
-  "kw": "australia case data fundamentally gdpr grounded living offering power privacy protection revealed stronger"
- },
- {
   "title": "Domain Zero: Human threat intelligence is cyber's unfinished business",
   "format": "Think Tank",
   "day": "15 Oct",
@@ -5295,6 +5291,23 @@
   "sortkey": "26101514204010",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-d0n4ocueiw",
   "kw": "20pm accountability ask culture development expert governance james leadership morphett people thursday workforce"
+ },
+ {
+  "title": "Code by Vibes, Breach by Design: Securing the Non-Coder Revolution",
+  "format": "Knowledge Hub",
+  "day": "15 Oct",
+  "start": "2:45 pm",
+  "finish": "3:05 pm",
+  "location": "Exhibition Hall",
+  "speakers": [],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "Cloudflare",
+  "sortkey": "26101514451030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-xk8rhgjqy2",
+  "kw": "applications authentication broken built carry container environment fixing flaws injection inside isolates logic prompt weak"
  },
  {
   "title": "Afternoon Tea",
@@ -6446,7 +6459,7 @@
   "sponsor": "",
   "sortkey": "26101516404010",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-rue2udhlyz",
-  "kw": "55am ask associates brief expert fair global law managing partner patrick policy power thursday"
+  "kw": "40pm ask associates brief expert fair global law managing partner patrick policy power thursday"
  },
  {
   "title": "Networking Drinks",
@@ -6570,7 +6583,7 @@
   "kw": ""
  },
  {
-  "title": "The unrehearsed verdict: an Oxford-style debate on operational technology and critical infrastructure security",
+  "title": "The unrehearsed verdict: An Oxford-style debate on operational technology and critical infrastructure security",
   "format": "Panel",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6978,7 +6991,7 @@
   "kw": "access agents ai cause digital framework gemini governing harm incidents including insider introduces legitimate memory poisoning research"
  },
  {
-  "title": "Is our sandstone approach to building a security culture actually accelerating modern day supply chain threats? or mitigating them?",
+  "title": "Is our sandstone approach to building a security culture actually accelerating modern day supply chain threats? Or mitigating them?",
   "format": "Think Tank",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -7001,7 +7014,7 @@
   "kw": "accelerating ageing assumptions chain closes gap pre-release provenance registries reviews risk signed supply trusted verified"
  },
  {
-  "title": "Refactoring the law - why ignoring legal requirements turns into technical debt",
+  "title": "Refactoring the law - why ignoring legal requirements turns in a technical debt",
   "format": "Think Tank",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -7158,7 +7171,7 @@
   "kw": "assessment assessor boundaries building defensible defining evidence irap keys managing package relationship smooth system"
  },
  {
-  "title": "BSI Group Workshop - Ensuring trust in agentic AI - certification of AI agents",
+  "title": "BSI Group Workshop - Ensuring trust in Agentic AI - certification of AI agents",
   "format": "Workshop",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -7376,7 +7389,7 @@
   "kw": "ai analysts chain lose move roles siem soar tier transforming two value workflows"
  },
  {
-  "title": "DPRK cybercrime vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
+  "title": "DPRK cybercrime Vs Australia’s sovereign security roadmap to 2030: The dual threat: A nation-state with a P&L",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7774,7 +7787,7 @@
   "kw": "actually awareness behaviour change debate fail human instead management metrics phishing practitioners risk three training works"
  },
  {
-  "title": "Code by Vibes, Breach by Design: Securing the Non-Coder Revolution",
+  "title": "Defending against hidden risks of AI tools in the workplace",
   "format": "Knowledge Hub",
   "day": "16 Oct",
   "start": "12:35 pm",
@@ -7785,10 +7798,10 @@
   "theme": [],
   "topic": [],
   "audience": "",
-  "sponsor": "Cloudflare",
+  "sponsor": "ThreatLocker",
   "sortkey": "26101612351030",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-xk8rhgjqy2",
-  "kw": "applications authentication broken built carry container environment fixing flaws injection inside isolates logic prompt weak"
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-f35qddugfx",
+  "kw": "ai attack bypass controls data effectively exponentially expose impeding increasing innovation introduce join mitigate organizational power productivity risk risks sensitive surfaces tools transform uncover workplace"
  },
  {
   "title": "Who owns what when AI fails? The GenAI shared responsibility model for AI risk across every use case",
@@ -8228,6 +8241,23 @@
   "kw": "adversarial assurance closing continuous detection driven engineering gap ground simulation telemetry truth"
  },
  {
+  "title": "No Silver Bullets: Securing Sensitive Data—A Problem as Old as Digital Data Itself",
+  "format": "Knowledge Hub",
+  "day": "16 Oct",
+  "start": "1:00 pm",
+  "finish": "1:20 pm",
+  "location": "Exhibition Hall",
+  "speakers": [],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "Concentric AI",
+  "sortkey": "26101613001030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-wo5wfaoasf",
+  "kw": "change complex customer data differently drive enterprise explain failed lessons project protection right usually vendor"
+ },
+ {
   "title": "Lunch",
   "format": "Break",
   "day": "16 Oct",
@@ -8298,7 +8328,7 @@
   "kw": ""
  },
  {
-  "title": "Keynote with Sir Tim Berners-Lee",
+  "title": "In conversation with Sir Tim Berners-Lee",
   "format": "Keynote",
   "day": "16 Oct",
   "start": "3:05 pm",
@@ -8315,6 +8345,30 @@
   "sortkey": "26101615051000",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-y54qieq3zd",
   "kw": "berners-lee co-founder data foundation founder heading institute online open privacy sir tim web wide world"
+ },
+ {
+  "title": "We see the accountability void. We look away",
+  "format": "Breakout",
+  "day": "15 Oct",
+  "start": "1:30 pm",
+  "finish": "2:10 pm",
+  "location": "Room 216",
+  "speakers": [
+   "Gaurav Vikash"
+  ],
+  "summary": "",
+  "theme": [
+   "Leadership, Governance and Accountability"
+  ],
+  "topic": [
+   "Cyber Governance, Ownership and Accountability Models"
+  ],
+  "audience": "General",
+  "sponsor": "",
+  "sortkey": "26101513302216",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-idp2ezafin",
+  "kw": "accountability actually algorithmic answer built decision-makers failures frameworks human lives longer maps void",
+  "cancelled": true
  },
  {
   "title": "SOCI in orbit: Why your risk management plan just hit Mach 25",
