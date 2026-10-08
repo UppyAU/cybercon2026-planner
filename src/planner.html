@@ -233,7 +233,9 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .rt{fill:none;stroke:#1e9e57;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:12 9;animation:flow 1s linear infinite}
 .rt.xf{stroke:#7a5af8;stroke-dasharray:4 8}
 @keyframes flow{to{stroke-dashoffset:-21}}
-.rt.dim,.rt-bg.dim{opacity:.22}
+.rt-ld{fill:none;stroke:#1e9e57;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.rt-bg.ld{stroke-width:7}
+.rt.dim,.rt-bg.dim,.rt-ld.dim{opacity:.22}
 .mx-stage .mk2.legar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#1e9e57;color:#fff;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);pointer-events:none}
 .mx-stage .mk2.legar.xf{background:#7a5af8}
 .mx-stage .mk2.legar.dim{opacity:.3}
@@ -1608,7 +1610,12 @@ function renderVenue(){
   const legs=G.segs.map((sg,i)=>({i,x:sg.x,P:sg.pts.map(px),dim:selN.size>0&&!selN.has(sg.from)&&!selN.has(sg.to)}));
   const lanes=laneOffsets(legs.map(l=>l.P));legs.forEach((l,i)=>l.lanes=lanes[i]);
   Object.assign(MX,{legs,laneK:null,avoid:[...R.st.filter(s2=>s2.pl.m===MX.m).map(s2=>px(s2.pl.p)),...G.portals.map(q=>px(q.p))]});
-  const segs=legs.map(l=>`<path class="rt-bg ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("");
+  // Thin connectors join each numbered pin to the door its legs start or end at.
+  const ends=new Set(G.segs.flatMap(sg=>[sg.from,sg.to]));
+  const leads=[...new Set(R.st.filter(s2=>s2.pl.m===MX.m&&ends.has(s2.n)&&DOORS[s2.x.location]).map(s2=>s2.x.location))].map(l=>{const pl=placeOf(l);
+    return {d:pathD([px([pl.p[0],pl.p[1]-M.lift*100/M.h]),px(DOORS[l])]),dim:selN.size>0&&!R.st.some(s2=>s2.x.location===l&&selN.has(s2.n))}});
+  const segs=leads.map(q=>`<path class="rt-bg ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt-bg ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
+    +leads.map(q=>`<path class="rt-ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("");
   const arrows=legs.map(l=>`<span class="mk2 legar ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14M12.5 6l6 6-6 6"/></svg></span>`).join("");
   // One marker per stair core; arrivals and departures through the same stair share a label.
   const pg=new Map();for(const q of G.portals){const k=q.p.join(",");if(!pg.has(k))pg.set(k,[]);pg.get(k).push(q)}
