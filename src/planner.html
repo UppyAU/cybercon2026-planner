@@ -237,6 +237,15 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 @keyframes flow{to{stroke-dashoffset:-24}}
 @media (prefers-reduced-motion:reduce){.rt-fl{animation:none}}
 .mx-rooms{pointer-events:none}
+.fbox{fill:rgba(14,138,132,.2);stroke:#0e8a84;stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none}
+.fbox:hover,.fbox:focus-visible,.fbox.sel{fill:rgba(14,138,132,.34);stroke-width:3}
+.mx-dark .fbox{fill:rgba(45,212,191,.16);stroke:#2dd4bf}
+.mx-stage .mk2.fac{height:26px;padding:0 9px 0 7px;border-radius:13px;background:#0e8a84;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:2}
+.mx-stage .mk2.fac:hover{background:#0b726d;border-color:#fff}
+.mx-stage .mk2.fac svg{width:14px;height:14px}
+.mx-stage .mk2.fac:not(:has(span)){width:24px;height:24px;padding:0;border-radius:50%}
+.mx-stage .mk2.fac.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4)}
+.nwfac .nwday b .ic{width:15px;height:15px;vertical-align:-2px;color:#0e8a84}
 .rbox{fill:rgba(51,85,221,.12);stroke:#3355dd;stroke-opacity:.75;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none;transition:fill .15s}
 .rbox:hover,.rbox:focus-visible{fill:rgba(51,85,221,.28)}
 .rbox.dim{fill:rgba(128,130,150,.07);stroke:#8a8fa8;stroke-opacity:.55}
@@ -288,6 +297,7 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .lg-box.approx{border-style:dashed;background:rgba(30,158,87,.12);border-color:#1e9e57}
 .lg-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 1px var(--border)}
 .lg-dot.mine{background:var(--go)}
+.lg-fac{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#0e8a84;color:#fff;font-style:normal}.lg-fac svg{width:12px;height:12px}
 .lg-stop{min-width:18px;height:18px;border-radius:9px;background:#1e9e57;color:#fff;font-size:10px;font-weight:800;font-style:normal;text-align:center;line-height:18px}
 .lg-line{width:26px;height:0;border-top:5px solid #1e9e57;border-radius:3px;vertical-align:2px!important}
 .lg-line.xf{border-top-color:#7a5af8}
@@ -986,6 +996,15 @@ const SHAPES={
   "Melbourne Room":["L2",[[8.22,23.42],[13.59,17.45],[21.87,14.56],[30.26,41.62],[16.57,50.34]]]
 };
 const APPROX=new Set(["Exhibition Hall"]);
+// Venue facilities from the attendee information CyberCon emailed out; positions from MCEC's venue map PDF.
+const FACILITIES=[
+  {k:"quiet",ic:"leaf",t:"Quiet room",m:"L2",where:"Room 215, Level 2",pts:[[78.13,27.25],[80.99,28.78],[80.49,33.12],[77.08,31.29]],
+   txt:"A space to take a break, in Room 215 on Level 2 of the Convention Centre. Please don't make phone calls or use it for work."},
+  {k:"prayer",ic:"hands",t:"Prayer room",m:"P",where:"Ground floor, near Goldfields Café",p:[50.78,55.56],
+   txt:"On the ground floor of the Convention Centre, close to Goldfields Café (behind the Plenary stage on MCEC's map). Ask at the customer service desk if you need directions."}
+];
+FACILITIES.forEach(f=>{if(f.pts)f.p=polyC(f.pts)});
+const FAC=Object.fromEntries(FACILITIES.map(f=>[f.k,f]));
 // Area-weighted centre of a polygon, so numbers sit in the middle of the room.
 function polyC(P){let a=0,x=0,y=0;P.forEach((q,i)=>{const r=P[(i+1)%P.length],c=q[0]*r[1]-r[0]*q[1];a+=c;x+=(q[0]+r[0])*c;y+=(q[1]+r[1])*c});
   return a?[+(x/(3*a)).toFixed(2),+(y/(3*a)).toFixed(2)]:P[0]}
@@ -1092,6 +1111,8 @@ function pathR(P,r){
 const locLink=x=>placeOf(x.location)?`<a href="#" class="loclink" data-act="goto" data-id="${x.id}" title="Show ${esc(x.location)} on the venue map">${locHtml(x.location)}</a>`:locHtml(x.location);
 const locHtml=loc=>`${svg("pin").replace('class="ic"','class="ic lpin"')}${esc(loc)}${levelOf(loc)?` <span class="lv" title="${lvName(levelOf(loc))} (MCEC floor plan)">${levelOf(loc)}</span>`:""}`;
 const P={
+  leaf:'<path d="M5 19c0-8.5 5.5-13.5 14-14-.5 8.5-5.5 14-14 14z"/><path d="M5 19l7.5-7.5"/>',
+  hands:'<path d="M12 3.5v13M12 3.5c-1.6 2.2-3.6 6-3.6 9.6v3.4L5.5 20M12 3.5c1.6 2.2 3.6 6 3.6 9.6v3.4l2.9 3.5"/>',
   check:'<path d="M20 6 9 17l-5-5"/>',
   maybe:'<circle cx="12" cy="12" r="9"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.6-2.7 2.6"/><path d="M12 16.5h.01"/>',
   lock:'<rect x="4.5" y="11" width="15" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/>',
@@ -1453,6 +1474,7 @@ function renderNow(){
   const soon=pool.filter(x=>x.s>=t&&x.s<t+45).sort(byInt),live=pool.filter(x=>x.s<=t&&t<x.f).sort(byInt),from=here&&here.location;
   if(soon.length)R+=`<div class="nwsec"><h3>Starting soon <span class="sub">next 45 min · ${soon.length}${interests.length?" · ★ interests first":""}</span></h3>${soon.slice(0,6).map(x=>nwRow(x,from)).join("")}
     ${soon.length>6?`<details><summary class="more-link">Show ${soon.length-6} more</summary>${soon.slice(6).map(x=>nwRow(x,from)).join("")}</details>`:""}</div>`;
+  R+=`<div class="nwsec nwfac"><h3>Need a break?</h3>${FACILITIES.map(f=>`<div class="nwday"><div><b>${svg(f.ic)} ${f.t}</b><div class="sub">${esc(f.where)}${f.k==="quiet"?" · no calls or work":""}</div></div><button data-act="facgo" data-k="${f.k}" title="Show the ${f.t.toLowerCase()} on the venue map">${svg("pin")}Map</button></div>`).join("")}</div>`;
   if(live.length)R+=`<details class="nwsec" id="liveBox" ${nowLiveOpen?"open":""}><summary><h3 style="display:inline">Also on now <span class="sub">${live.length}</span></h3></summary>${live.map(x=>nwRow(x,from)).join("")}</details>`;
   html+=`<div class="nwgrid"><div class="nwcol">${L}</div>${R?`<div class="nwcol">${R}</div>`:""}</div></div>`;
   $("#view").innerHTML=html;
@@ -1647,7 +1669,7 @@ function planRow(x,isClash,extra){
   <div><span class="tag" style="--c:${esc(COLORS[x.format]||"#999")}">${esc(x.format)}</span> <b>${esc(x.title)}</b>${x.speakers?`<div class="sub">${esc(x.speakers)}</div>`:""}${extra||""}${chgBadges(x)?`<div>${chgBadges(x)}</div>`:""}${friendLine(x)}${plan[x.id]==="go"?bkRow(x):""}${acts(x,{cl:clashes(x)})}</div></div>`;
 }
 
-const MX={m:null,day:undefined,k:1,tx:0,ty:0,fitK:1,sel:null,selId:null,focus:null,fitted:false,autoRoute:false,dragged:false,R:null};
+const MX={m:null,fac:null,day:undefined,k:1,tx:0,ty:0,fitK:1,sel:null,selId:null,focus:null,fitted:false,autoRoute:false,dragged:false,R:null};
 function renderVenue(){
   const gl=goList();
   if(MX.day===undefined){MX.day=gl.length?gl[0].dayIdx:null;MX.autoRoute=true}
@@ -1655,13 +1677,16 @@ function renderVenue(){
   if(!MX.m)MX.m=R.st[0]?R.st[0].pl.m:"P";
   const M=MAPS[MX.m],G=R.out[MX.m],px=p=>[p[0]*M.w/100,p[1]*M.h/100];
   const cnt=m=>R.st.filter(s=>s.pl.m===m).length;
-  let html=`<div class="vhead"><h2>Venue map</h2><div class="sub">Melbourne Convention &amp; Exhibition Centre, 1 Convention Centre Place, South Wharf. Levels, capacities and floor plans come from MCEC's <a href="${GUIDE_URL}" target="_blank" rel="noopener">Floor Plans and Space Capacities guide ↗</a>; see also the <a href="${GROUND_PDF}" target="_blank" rel="noopener">ground floor map (PDF) ↗</a>.</div><div class="sub" style="margin-top:6px">${svg("pin")} Entrances: 1 Convention Centre Place (Convention Centre) and 2 Clarendon Street (Exhibition Centre). Trams 12, 96 and 109 stop on Clarendon Street; taxis and ride share on Convention Centre Place.</div></div>`;
+  let html=`<div class="vhead"><h2>Venue map</h2><div class="sub">Melbourne Convention &amp; Exhibition Centre, 1 Convention Centre Place, South Wharf. Levels, capacities and floor plans come from MCEC's <a href="${GUIDE_URL}" target="_blank" rel="noopener">Floor Plans and Space Capacities guide ↗</a>; see also the <a href="${GROUND_PDF}" target="_blank" rel="noopener">ground floor map (PDF) ↗</a>.</div><div class="sub" style="margin-top:6px">${svg("pin")} Entrances: 1 Convention Centre Place (Convention Centre) and 2 Clarendon Street (Exhibition Centre). Trams 12, 96 and 109 stop on Clarendon Street; taxis and ride share on Convention Centre Place.</div><div class="sub" style="margin-top:4px">${svg("leaf")} ${FACILITIES.map(f=>`<a href="#" data-act="facgo" data-k="${f.k}">${f.t}</a>: ${esc(f.where)}`).join(" · ")}</div></div>`;
   html+=`<div class="mapx" id="mapx"><div class="mx-bar">
     <div class="mxr d-only"><span class="lbl">${svg("route")}Route</span><div class="segc" role="group" aria-label="Route day">${DAYS.map((d,i)=>{const n=gl.filter(x=>x.dayIdx===i).length;return `<button data-act="mday" data-day="${i}" aria-pressed="${MX.day===i}" ${n?"":`title="No Going sessions on ${d.label}"`}>${d.label.slice(0,3)}${n?`<span class="n">${n}</span>`:""}</button>`}).join("")}<button data-act="mday" data-day="none" aria-pressed="${MX.day==null}">Off</button></div></div>
     <div class="segc mxf" role="group" aria-label="Floor">${["P","L1","L2"].map(m=>`<button data-act="mfloor" data-m="${m}" aria-pressed="${MX.m===m}">${m==="P"?"Ground":MAPS[m].t}${cnt(m)?`<span class="n" title="${cnt(m)} of your stops">${cnt(m)}</span>`:""}</button>`).join("")}</div></div>`;
   // Room dots (dimmed when nothing on in the selected day), route lines, portals, numbered stops.
   const locs=[...new Set(S.map(x=>x.location))].filter(l=>(placeOf(l)||{}).m===MX.m);
   const stopLocs=new Set(R.st.map(s2=>s2.x.location));
+  const facs=FACILITIES.filter(f=>f.m===MX.m);
+  const fboxes=facs.filter(f=>f.pts).map(f=>`<polygon class="fbox ${MX.fac===f.k?"sel":""}" points="${f.pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mfac" data-k="${f.k}" role="button" tabindex="0" aria-label="${f.t}: ${esc(f.where)}"/>`).join("");
+  const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("");
   const boxes=locs.filter(l=>SHAPEM[l]&&(l!=="Melbourne Room"||stopLocs.has(l)||MX.sel===l)).map(l=>{const day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day)),mine=day.some(x=>plan[x.id]==="go");
     return `<polygon class="rbox ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""} ${APPROX.has(l)?"approx":""}" points="${SHAPEM[l].pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" role="button" tabindex="0" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"/>`}).join("");
   const dots=locs.filter(l=>!SHAPEM[l]&&l!=="Melbourne Room").map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
@@ -1685,12 +1710,12 @@ function renderVenue(){
   const stops=[...byLoc].map(([l,arr])=>`<button class="mk2 ${SHAPEM[l]?"ctr":"pin"} stopm ${MX.sel===l?"sel":""}" style="left:${arr[0].pl.p[0]}%;${SHAPEM[l]?"top":"--py"}:${arr[0].pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-id="${arr[0].x.id}" data-tip="r:${esc(l)}" aria-label="Stop ${arr.map(s2=>s2.n).join(", ")}: ${esc(l)}">${arr.map(s2=>s2.n).join(",")}</button>`).join("");
   html+=`<div class="mx-view ${mapDark()?"mx-dark":""}" id="mxView" tabindex="0" style="background:${M.bg}" aria-label="${esc(M.t)} map. Scroll or pinch to zoom, drag to pan, arrow keys to move.">
     <div class="mx-stage" id="mxStage" style="width:${M.w}px;height:${M.h}px;--lift:${M.lift}px">${M.src?`<div class="mx-clip"><img src="${M.src.url}" style="width:${M.src.pw}px;height:${M.src.ph}px;left:${-M.src.x}px;top:${-M.src.y}px" alt="${esc(M.t)} map (MCEC)" draggable="false" crossorigin="anonymous" referrerpolicy="no-referrer"><div class="mx-err">The ${esc(M.t.toLowerCase())} plan couldn't load from MCEC's guide. Check your connection.</div></div>`:`<img src="${M.img}" alt="${esc(M.t)} map" draggable="false">`}
-      <svg class="mx-svg mx-rooms" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}">${boxes}</svg><svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${dots}${portals}${stops}</div>
+      <svg class="mx-svg mx-rooms" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}">${boxes}${fboxes}</svg><svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${dots}${fmarks}${portals}${stops}</div>
     <div class="mx-ctl"><button class="icon" data-act="mzoom" data-f="1.5" title="Zoom in" aria-label="Zoom in">${svg("plus")}</button><button class="icon" data-act="mzoom" data-f="0.667" title="Zoom out" aria-label="Zoom out">${svg("minus")}</button><button class="icon" data-act="mfit" title="Fit map" aria-label="Fit map">${svg("fit")}</button><button class="icon" data-act="mstyle" title="Map style: ${mapStyle==="auto"?"follows your device":mapStyle} (tap to change)" aria-label="Map style ${mapStyle}">${svg(mapStyle==="dark"?"moon":mapStyle==="light"?"sun":"contrast")}</button>${G.segs.length||byLoc.size?`<button class="icon" data-act="mroute" title="Zoom to my route" aria-label="Zoom to my route">${svg("route")}</button>`:""}</div>
     ${mxPopHtml()}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a room for sessions</div></div>`;
   const unplaced=R.all.filter(s2=>!s2.pl);
-  html+=`<div class="mx-legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
+  html+=`<div class="mx-legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
     +(unplaced.length?`<div class="mx-note">Not drawn (location not on MCEC's plans): ${unplaced.map(s2=>`${s2.n}. ${esc(s2.x.location)}`).join(", ")}</div>`:"")+`</div>`;
   if(gl.length){
     const di=MX.day,g=di==null?[]:gl.filter(x=>x.dayIdx===di);
@@ -1716,6 +1741,9 @@ function renderVenue(){
   mxBind();mxPlace();
 }
 function mxPopHtml(){
+  if(!MX.sel&&MX.fac&&FAC[MX.fac]){const f=FAC[MX.fac];
+    return `<div class="mx-pop" role="dialog" aria-label="${f.t}"><div class="ph"><div><b>${svg(f.ic)} ${f.t}</b><div class="sub">${esc(f.where)}</div></div><button class="icon muted" data-act="mclose" title="Close" aria-label="Close">${svg("x")}</button></div>
+      <p style="margin:8px 0 6px">${esc(f.txt)}</p><p class="sub" style="margin:0">From the attendee information CyberCon emailed out.</p></div>`}
   if(!MX.sel)return "";
   const loc=MX.sel,r=ROOMS[loc]||{},lv=levelOf(loc);
   const all=S.filter(x=>x.location===loc&&!hidden.has(x.id)&&!muted(x)),list=all.filter(x=>MX.day==null||x.dayIdx===MX.day);
@@ -2145,8 +2173,11 @@ document.addEventListener("click",e=>{
   if(t.dataset.act==="goto"||t.dataset.act==="mgo"){e.preventDefault();const x=BY.get(t.dataset.id),pl=x&&placeOf(x.location);if(!pl)return;
     Object.assign(MX,{m:pl.m,day:x.dayIdx,sel:x.location,selId:x.id,focus:pl.p,fitted:true});const was=mode;mode="venue";render();
     if(was!=="venue"||t.dataset.act==="mgo")$("#mapx")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(t.dataset.act==="mroom"){MX.sel=t.dataset.loc;MX.selId=null;return renderVenue()}
-  if(t.dataset.act==="mclose"){MX.sel=null;MX.selId=null;return renderVenue()}
+  if(t.dataset.act==="mroom"){MX.sel=t.dataset.loc;MX.selId=null;MX.fac=null;return renderVenue()}
+  if(t.dataset.act==="mclose"){MX.sel=null;MX.selId=null;MX.fac=null;return renderVenue()}
+  if(t.dataset.act==="mfac"){MX.fac=t.dataset.k;MX.sel=null;MX.selId=null;return renderVenue()}
+  if(t.dataset.act==="facgo"){e.preventDefault();const f=FAC[t.dataset.k];if(!f)return;Object.assign(MX,{m:f.m,fac:f.k,sel:null,selId:null,focus:f.p,fitted:true});const was=mode;mode="venue";render();
+    if(was!=="venue")$("#mapx")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(t.dataset.act==="mfloor"){if(MX.m!==t.dataset.m){MX.m=t.dataset.m;MX.fitted=false;MX.autoRoute=true;if(MX.sel&&(placeOf(MX.sel)||{}).m!==MX.m){MX.sel=null;MX.selId=null}}return renderVenue()}
   if(t.dataset.act==="mday"){MX.day=t.dataset.day==="none"?null:+t.dataset.day;if(MX.day!=null)F.day=String(MX.day);const R=routeGeo(MX.day);if(R.st[0])MX.m=R.st[0].pl.m;MX.fitted=false;MX.autoRoute=true;MX.selId=null;return renderVenue()}
   if(t.dataset.act==="mzoom"){const D=mxDims();if(D)mxZoomAt(D.w/2,D.h/2,+t.dataset.f,true);return}
