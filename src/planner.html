@@ -233,6 +233,11 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .rt{fill:none;stroke:#1e9e57;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:12 9;animation:flow 1s linear infinite}
 .rt.xf{stroke:#7a5af8;stroke-dasharray:4 8}
 @keyframes flow{to{stroke-dashoffset:-21}}
+.rt.dim,.rt-bg.dim{opacity:.22}
+.mx-stage .mk2.legar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#1e9e57;color:#fff;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);pointer-events:none}
+.mx-stage .mk2.legar.xf{background:#7a5af8}
+.mx-stage .mk2.legar.dim{opacity:.3}
+.mx-stage .legar svg{width:14px;height:14px;display:block}
 @media (prefers-reduced-motion:reduce){.rt{animation:none}}
 .mx-stage .mk2{position:absolute;transform:translate(-50%,-50%) scale(var(--ik,1));z-index:1}
 .mx-stage .rdot{width:18px;height:18px;padding:0;border-radius:50%;border:2px solid #fff;background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.45)}
@@ -985,17 +990,44 @@ function routeGeo(di){
     const a=st[i-1],b=st[i];
     if(a.x.location===b.x.location)continue;
     const A=locPts(a.x.location),B=[...locPts(b.x.location)].reverse();
-    if(a.pl.m===b.pl.m){out[a.pl.m].segs.push({pts:walk(a.pl.m,A,B)});continue}
+    if(a.pl.m===b.pl.m){out[a.pl.m].segs.push({pts:walk(a.pl.m,A,B),from:a.n,to:b.n});continue}
     let best=null;
     for(const k of [1,2,3]){const p1=walk(a.pl.m,A,[NAV[a.pl.m].n["s"+k]]),p2=walk(b.pl.m,[NAV[b.pl.m].n["s"+k]],B),c=plen(p1)+plen(p2);if(!best||c<best.c)best={c,k,p1,p2}}
     const up=floorNo(b.pl.m)>floorNo(a.pl.m),via="Stair "+best.k;
-    out[a.pl.m].segs.push({pts:best.p1,x:1});
+    out[a.pl.m].segs.push({pts:best.p1,x:1,from:a.n,to:b.n});
     out[a.pl.m].portals.push({p:NAV[a.pl.m].n["s"+best.k],to:b.pl.m,up,kind:"dep",txt:`${up?"Up":"Down"} to ${floorName(b.pl.m)}`,via});
-    out[b.pl.m].segs.push({pts:best.p2,x:1});
+    out[b.pl.m].segs.push({pts:best.p2,x:1,from:a.n,to:b.n});
     out[b.pl.m].portals.push({p:NAV[b.pl.m].n["s"+best.k],to:a.pl.m,up:!up,kind:"arr",txt:`From ${floorName(a.pl.m)}`,via});
   }
   return {all,st,out};
 }
+// Legs that share a corridor are drawn side by side, like lines on a transit map, instead of on top of each other.
+// Returns, per leg and segment, a lane offset in lane widths (signed against the leg's own direction).
+function laneOffsets(legs){
+  const sg=[];legs.forEach((P,i)=>{for(let j=1;j<P.length;j++){const a=P[j-1],b=P[j],L=dist(a,b);sg.push({i,j,a,b,L,ux:L?(b[0]-a[0])/L:0,uy:L?(b[1]-a[1])/L:0})}});
+  const shared=(s,t)=>{if(s.L<1||t.L<1)return false;const off=q=>Math.abs((q[0]-s.a[0])*s.uy-(q[1]-s.a[1])*s.ux);if(off(t.a)>1.5||off(t.b)>1.5)return false;
+    const pr=q=>(q[0]-s.a[0])*s.ux+(q[1]-s.a[1])*s.uy,lo=Math.max(0,Math.min(pr(t.a),pr(t.b))),hi=Math.min(s.L,Math.max(pr(t.a),pr(t.b)));return hi-lo>6};
+  return legs.map((P,i)=>sg.filter(s=>s.i===i).map(s=>{const T=sg.filter(t=>shared(s,t)),ids=[...new Set(T.map(t=>t.i))].sort((x,y)=>x-y);if(ids.length<2)return 0;
+    const ref=T.find(t=>t.i===ids[0]),sign=s.ux*ref.ux+s.uy*ref.uy<0?-1:1;return (ids.indexOf(i)-(ids.length-1)/2)*sign}));
+}
+// Offsets a polyline by lanes[j]*gap per segment, mitring the joins.
+function laneLine(P,lanes,gap){
+  if(!lanes||lanes.every(v=>!v))return P;
+  const S=P.slice(1).map((b,j)=>{const a=P[j],L=dist(a,b)||1,ux=(b[0]-a[0])/L,uy=(b[1]-a[1])/L,o=lanes[j]*gap;return {a:[a[0]-uy*o,a[1]+ux*o],b:[b[0]-uy*o,b[1]+ux*o],ux,uy,o}});
+  const out=[S[0].a];
+  for(let j=1;j<S.length;j++){const s=S[j-1],t=S[j],cr=s.ux*t.uy-s.uy*t.ux;
+    if(Math.abs(cr)<.05){out.push(s.b,t.a);continue}
+    const k=((t.a[0]-s.a[0])*t.uy-(t.a[1]-s.a[1])*t.ux)/cr,q=[s.a[0]+s.ux*k,s.a[1]+s.uy*k];
+    if(dist(q,P[j])>3*Math.max(Math.abs(s.o),Math.abs(t.o),gap))out.push(s.b,t.a);else out.push(q)}
+  out.push(S[S.length-1].b);return out;
+}
+// Point and heading (degrees) at distance d along a polyline.
+function alongLine(Q,d){
+  for(let j=1;j<Q.length;j++){const a=Q[j-1],b=Q[j],L=dist(a,b);if(!L&&j<Q.length-1)continue;
+    if(d<=L||j===Q.length-1){const t=L?Math.min(1,d/L):0;return {p:[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t],a:Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI}}d-=L}
+  return {p:Q[0],a:0};
+}
+const pathD=P=>P.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+","+q[1].toFixed(1)).join(" ");
 const locLink=x=>placeOf(x.location)?`<a href="#" class="loclink" data-act="goto" data-id="${x.id}" title="Show ${esc(x.location)} on the venue map">${locHtml(x.location)}</a>`:locHtml(x.location);
 const locHtml=loc=>`${svg("pin").replace('class="ic"','class="ic lpin"')}${esc(loc)}${levelOf(loc)?` <span class="lv" title="${lvName(levelOf(loc))} (MCEC floor plan)">${levelOf(loc)}</span>`:""}`;
 const P={
@@ -1571,8 +1603,13 @@ function renderVenue(){
   const dots=locs.map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
     const mine=day.some(x=>plan[x.id]==="go");
     return `<button class="mk2 pin rdot ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""}" style="left:${pl.p[0]}%;--py:${pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"></button>`}).join("");
-  const curve=sg=>sg.pts.map((q,i)=>(i?"L":"M")+px(q).map(v=>v.toFixed(1)).join(",")).join(" ");
-  const segs=G.segs.map(sg=>`<path class="rt-bg" d="${curve(sg)}"/><path class="rt ${sg.x?"xf":""}" d="${curve(sg)}"/>`).join("");
+  // Tapping a stop (or its step) highlights the legs into and out of it.
+  const selN=new Set(R.st.filter(s2=>MX.selId?s2.x.id===MX.selId:s2.x.location===MX.sel).map(s2=>s2.n));
+  const legs=G.segs.map((sg,i)=>({i,x:sg.x,P:sg.pts.map(px),dim:selN.size>0&&!selN.has(sg.from)&&!selN.has(sg.to)}));
+  const lanes=laneOffsets(legs.map(l=>l.P));legs.forEach((l,i)=>l.lanes=lanes[i]);
+  Object.assign(MX,{legs,laneK:null,avoid:[...R.st.filter(s2=>s2.pl.m===MX.m).map(s2=>px(s2.pl.p)),...G.portals.map(q=>px(q.p))]});
+  const segs=legs.map(l=>`<path class="rt-bg ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("");
+  const arrows=legs.map(l=>`<span class="mk2 legar ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14M12.5 6l6 6-6 6"/></svg></span>`).join("");
   // One marker per stair core; arrivals and departures through the same stair share a label.
   const pg=new Map();for(const q of G.portals){const k=q.p.join(",");if(!pg.has(k))pg.set(k,[]);pg.get(k).push(q)}
   const portals=[...pg.values()].map(arr=>{arr.sort((a,b)=>(a.kind==="arr"?0:1)-(b.kind==="arr"?0:1));
@@ -1582,7 +1619,7 @@ function renderVenue(){
   const stops=[...byLoc].map(([l,arr])=>`<button class="mk2 pin stopm ${MX.sel===l?"sel":""}" style="left:${arr[0].pl.p[0]}%;--py:${arr[0].pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-id="${arr[0].x.id}" data-tip="r:${esc(l)}" aria-label="Stop ${arr.map(s2=>s2.n).join(", ")}: ${esc(l)}">${arr.map(s2=>s2.n).join(",")}</button>`).join("");
   html+=`<div class="mx-view ${mapDark()?"mx-dark":""}" id="mxView" tabindex="0" style="background:${M.bg}" aria-label="${esc(M.t)} map. Scroll or pinch to zoom, drag to pan, arrow keys to move.">
     <div class="mx-stage" id="mxStage" style="width:${M.w}px;height:${M.h}px;--lift:${M.lift}px">${M.src?`<div class="mx-clip"><img src="${M.src.url}" style="width:${M.src.pw}px;height:${M.src.ph}px;left:${-M.src.x}px;top:${-M.src.y}px" alt="${esc(M.t)} map (MCEC)" draggable="false" crossorigin="anonymous" referrerpolicy="no-referrer"><div class="mx-err">The ${esc(M.t.toLowerCase())} plan couldn't load from MCEC's guide. Check your connection.</div></div>`:`<img src="${M.img}" alt="${esc(M.t)} map" draggable="false">`}
-      <svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${dots}${portals}${stops}</div>
+      <svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${arrows}${dots}${portals}${stops}</div>
     <div class="mx-ctl"><button class="icon" data-act="mzoom" data-f="1.5" title="Zoom in" aria-label="Zoom in">${svg("plus")}</button><button class="icon" data-act="mzoom" data-f="0.667" title="Zoom out" aria-label="Zoom out">${svg("minus")}</button><button class="icon" data-act="mfit" title="Fit map" aria-label="Fit map">${svg("fit")}</button><button class="icon" data-act="mstyle" title="Map style: ${mapStyle==="auto"?"follows your device":mapStyle} (tap to change)" aria-label="Map style ${mapStyle}">${svg(mapStyle==="dark"?"moon":mapStyle==="light"?"sun":"contrast")}</button>${G.segs.length||byLoc.size?`<button class="icon" data-act="mroute" title="Zoom to my route" aria-label="Zoom to my route">${svg("route")}</button>`:""}</div>
     ${mxPopHtml()}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a pin for sessions</div></div>`;
@@ -1625,7 +1662,19 @@ function mxPopHtml(){
 // ---- pan / zoom ----
 function mxDims(){const v=$("#mxView");if(!v)return null;const r=v.getBoundingClientRect();return {v,w:r.width,h:r.height,M:MAPS[MX.m]}}
 function mxClamp(k){return Math.min(MX.fitK*5,Math.max(MX.fitK*.8,k))}
-function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));if(TIP.anchor)tipPos()}
+function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));mxLanes(st);if(TIP.anchor)tipPos()}
+function mxLanes(st){
+  const L=MX.legs;if(!L||!L.length||MX.laneK===MX.k)return;MX.laneK=MX.k;
+  const M=MAPS[MX.m],gap=8/MX.k,used=[...(MX.avoid||[])];
+  for(const l of L){
+    const Q=laneLine(l.P,l.lanes,gap),d=pathD(Q);st.querySelectorAll(`path[data-l="${l.i}"]`).forEach(e=>e.setAttribute("d",d));
+    const ar=st.querySelector(`.legar[data-l="${l.i}"]`);if(!ar)continue;
+    const len=plen(Q);ar.style.display=len*MX.k<44?"none":"";if(len*MX.k<44)continue;
+    let best=null;
+    for(const f of [.5,.4,.6,.3,.7,.2,.8]){const c=alongLine(Q,len*f),m=used.length?Math.min(...used.map(u=>dist(u,c.p)))*MX.k:1e9;if(!best||m>best.m)best={...c,m};if(best.m>=34)break}
+    used.push(best.p);ar.style.left=(best.p[0]/M.w*100).toFixed(3)+"%";ar.style.top=(best.p[1]/M.h*100).toFixed(3)+"%";ar.querySelector("path").setAttribute("transform",`rotate(${best.a.toFixed(1)} 12 12)`);
+  }
+}
 function mxFit(anim){const D=mxDims();if(!D)return;MX.fitK=Math.min(D.w/D.M.w,D.h/D.M.h)*.97;MX.k=MX.fitK;MX.tx=(D.w-D.M.w*MX.k)/2;MX.ty=(D.h-D.M.h*MX.k)/2;mxApply(anim)}
 function mxFocus(p,zoom,anim){const D=mxDims();if(!D)return;MX.k=mxClamp(MX.fitK*zoom);MX.tx=D.w/2-p[0]*D.M.w/100*MX.k;MX.ty=D.h/2-p[1]*D.M.h/100*MX.k;mxApply(anim)}
 function mxZoomAt(cx,cy,f,anim){const nk=mxClamp(MX.k*f);MX.tx=cx-(cx-MX.tx)*(nk/MX.k);MX.ty=cy-(cy-MX.ty)*(nk/MX.k);MX.k=nk;mxApply(anim)}
