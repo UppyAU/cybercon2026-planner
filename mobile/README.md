@@ -34,8 +34,9 @@ the switch (`modules/exact-alarm`).
 scheduled, until you next open it (it reschedules on launch). Swiping it away from recent apps doesn't.
 
 **Your plan is per app:** the app has its own storage, separate from your browser. To bring a plan
-across from a laptop, use **My plan › More › Send to another device** there, then in the app use
-**My plan › More › Receive from another device** and choose **Scan QR code** (or paste the link).
+across from a laptop, use **My plan › ⋯ › Save & move your plan › Send to another device** there,
+then in the app use **Receive from another device** in the same panel and choose **Scan QR code**
+(or paste the link).
 The app uses the system scanner (Google code scanner on Android, which needs no camera permission;
 VisionKit on iOS, which asks for the camera) and only accepts a planner transfer link. Scanning the
 QR code with the phone's own camera app opens the browser instead, so its plan would land there.
