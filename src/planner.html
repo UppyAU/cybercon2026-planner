@@ -232,9 +232,13 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .rt-bg{fill:none;stroke:#fff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.9}
 .rt{fill:none;stroke:#1e9e57;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .rt.xf{stroke:#7a5af8}
+/* Lighter dashes flow along each leg in the walking direction, over the solid line. */
+.rt-fl{fill:none;stroke:rgba(255,255,255,.34);stroke-width:6;stroke-linecap:butt;vector-effect:non-scaling-stroke;stroke-dasharray:12 12;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+@media (prefers-reduced-motion:reduce){.rt-fl{animation:none}}
 .rt-ld{fill:none;stroke:#1e9e57;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .rt-bg.ld{stroke-width:7}
-.rt.dim,.rt-bg.dim,.rt-ld.dim,.rt-ch.dim{opacity:.22}
+.rt.dim,.rt-bg.dim,.rt-ld.dim,.rt-ch.dim{opacity:.22}.rt-fl.dim{opacity:0}
 .rt-ch{fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .mx-stage .mk2{position:absolute;transform:translate(-50%,-50%) scale(var(--ik,1));z-index:1}
 .mx-stage .rdot{width:18px;height:18px;padding:0;border-radius:50%;border:2px solid #fff;background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.45)}
@@ -1611,6 +1615,7 @@ function renderVenue(){
     return {d:pathD([px([pl.p[0],pl.p[1]-M.lift*100/M.h]),px(DOORS[l])]),dim:selN.size>0&&!R.st.some(s2=>s2.x.location===l&&selN.has(s2.n))}});
   const segs=leads.map(q=>`<path class="rt-bg ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt-bg ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
     +leads.map(q=>`<path class="rt-ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
+    +legs.map(l=>`<path class="rt-fl ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
     +legs.map(l=>`<path class="rt-ch ${l.dim?"dim":""}" data-c="${l.i}"/>`).join("");
   // One marker per stair core; arrivals and departures through the same stair share a label.
   const pg=new Map();for(const q of G.portals){const k=q.p.join(",");if(!pg.has(k))pg.set(k,[]);pg.get(k).push(q)}
