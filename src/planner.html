@@ -657,6 +657,11 @@ details.msel[open]>summary [data-ic] svg{transform:rotate(180deg)}
 #xfer .xqr svg{display:block;width:100%;height:auto}
 #xfer .xa{display:flex;gap:8px}#xfer .xa button{flex:1}
 #xfer p{margin:0}
+#xfer .xsec{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+#xfer .xsec h3{margin:0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+#xfer .xa.wrap{flex-wrap:wrap}#xfer .xa.wrap button{flex:1 1 140px}
+#xfer.xdata .xa button{justify-content:center;white-space:normal;text-align:center;line-height:1.25;min-height:40px;height:auto}
+#xfer .xdz{border-top:1px solid var(--border);padding-top:10px;margin-top:4px;display:flex}
 #xfer .xtip{padding:8px 10px;border-radius:8px;background:var(--card)}
 .xferbox{border-color:var(--go)}.xferbox .note{margin:0}
 /* ---------- Hide by keyword ---------- */
@@ -1470,11 +1475,9 @@ function renderPlan(){
       <button data-act="share" title="Copy a link a colleague can open to compare plans">${svg("link")}<span class="d-only">Share</span></button>
       <label class="btn bchip" title="Show breaks, all-day items and evening networking"><input type="checkbox" id="showBreaks" ${showBreaks?"checked":""}>${svg("coffee")}<span class="d-only">Breaks</span></label>
       <details class="more"><summary class="btn" title="More actions">${svg("dots")}</summary><div class="menu" role="menu">
-      <button data-act="pcollapse" data-v="all">${svg("chev")}Collapse all days</button><button data-act="pcollapse" data-v="none">${svg("chev")}Expand all days</button>
+      ${DAYS.every((_,i)=>collapsed.has(i))?`<button data-act="pcollapse" data-v="none">${svg("chev")}Expand all days</button>`:`<button data-act="pcollapse" data-v="all">${svg("chev")}Collapse all days</button>`}
       <button data-act="lockall">${svg("lock")}Lock all Going</button><button data-act="unlockall">${svg("unlock")}Unlock all</button><hr>
-      <button data-act="xsend">${svg("up")}Send to another device</button><button data-act="xrecv">${svg("down")}Receive from another device</button><hr>
-      <button data-act="csv">${svg("file")}Export CSV</button><button data-act="backup">${svg("down")}Backup to file</button><button data-act="restore">${svg("up")}Restore from file</button><button data-act="print">${svg("print")}Print</button><hr>
-      <button class="danger" data-act="clear">${svg("trash")}Clear plan</button><hr><button data-act="fb" data-t="bug">${svg("ext")}Report a problem</button><button data-act="fb" data-t="idea">${svg("ext")}Suggest an idea</button></div></details></div>
+      <button data-act="print">${svg("print")}Print</button><button data-act="xdata">${svg("swap")}Save &amp; move your plan…</button></div></details></div>
   </div>`+xferBox()+shareBox()+changesAlert(items)+friendsPanel(gl);
   if(!items.length)html+=`<p class="empty">Your plan is empty. Use <b>Going</b> or <b>Maybe</b> on sessions in <a href="#" data-act="tobrowse">Browse program</a>.</p>`;
   DAYS.forEach((d,di)=>{
@@ -1874,12 +1877,24 @@ async function xferSend(){
     ${qr?`<div class="xqr">${qr}</div><p class="sub">Scan this with your other device's camera. You'll be asked before its plan is replaced.</p>`
       :`<p class="note">Your plan is too big for a QR code. Copy the link and send it to yourself instead (AirDrop, email or Notes).</p>`}
     <div class="xa"><button class="primary" data-act="xcopy">${svg("link")}Copy link</button>${navigator.share?`<button data-act="xshare">${svg("ext")}Share…</button>`:""}</div>
-    <p class="sub xtip"><b>Planner on your iPhone home screen?</b> Links open in Safari, which keeps a separate plan. Copy the link, open the planner from your home screen, then use <b>My plan › More › Receive from another device</b> and paste it.</p>
+    <p class="sub xtip"><b>Planner on your iPhone home screen?</b> Links open in Safari, which keeps a separate plan. Copy the link, open the planner from your home screen, then use <b>My plan › ⋯ › Save &amp; move your plan › Receive from another device</b> and paste it.</p>
     <p class="sub">The link holds your whole plan, colleagues included, so only send it to yourself.</p></div>`;
   document.body.appendChild(el);el.querySelector('[data-act="xcopy"]').focus();
 }
+function xferData(){
+  xferClose();
+  const el=document.createElement("div");el.id="xfer";el.className="xdata";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","Save and move your plan");
+  el.innerHTML=`<div class="xbox"><div class="xh"><b>${svg("swap")}Save &amp; move your plan</b><button class="icon muted" data-act="xclose" aria-label="Close">${svg("x")}</button></div>
+    <div class="sub">${xferLine(xferStats(k=>localStorage.getItem(k)))}</div>
+    <section class="xsec"><h3>Another device</h3><div class="xa"><button data-act="xsend">${svg("up")}Send to another device</button><button data-act="xrecv">${svg("down")}Receive from another device</button></div>
+      <p class="sub">Copies everything to your phone or laptop with a QR code or link.</p></section>
+    <section class="xsec"><h3>File</h3><div class="xa wrap"><button data-act="backup">${svg("down")}Backup to file</button><button data-act="restore">${svg("up")}Restore from file</button><button data-act="csv">${svg("file")}Export CSV</button></div>
+      <p class="sub">A backup restores everything later. CSV opens in Excel or Sheets.</p></section>
+    <div class="xdz"><button class="danger" data-act="clear">${svg("trash")}Clear plan…</button></div></div>`;
+  document.body.appendChild(el);el.querySelector('[data-act="xsend"]').focus();
+}
 function xferReceive(text){
-  const code=xferCodeIn(text);if(!code){alert("That doesn't look like a transfer link. Copy it again from the other device (My plan › More › Send to another device).");return}
+  const code=xferCodeIn(text);if(!code){alert("That doesn't look like a transfer link. Copy it again from the other device (My plan › ⋯ › Save & move your plan › Send to another device).");return}
   xferDecode(code).then(x=>{xferClose();pendingXfer=x;mode="plan";render();window.scrollTo(0,0)}).catch(()=>alert("That transfer link couldn't be read. Copy it again from the other device."));
 }
 function loadTransfer(){
@@ -2075,6 +2090,7 @@ document.addEventListener("click",e=>{
   if(a==="frpv"){const f=friends[t.dataset.k];if(f){pendingShare={plan:f.plan,name:f.name,a:f.a,t:f.t,stored:true};pvEnter();render();window.scrollTo(0,0)}return}
   if(a==="mstyle"){mapStyle={auto:"dark",dark:"light",light:"auto"}[mapStyle];lsSet(KEY_MS,mapStyle);return renderVenue()}
   if(a==="fb"){e.preventDefault();window.open(fbUrl(t.dataset.t||"bug"),"_blank","noopener");return}
+  if(a==="xdata"){xferData();return}
   if(a==="xsend"){xferSend();return}
   if(a==="xrecv"){const v=prompt("Paste the transfer link from your other device:");if(v)xferReceive(v);return}
   if(a==="xclose"){xferClose();return}
@@ -2087,6 +2103,7 @@ document.addEventListener("click",e=>{
     for(const [k,v] of Object.entries(d))try{localStorage.setItem(k,v)}catch{}
     location.reload();return}
   if(a==="ics")return exportIcs();
+  if(["csv","backup","restore","clear"].includes(a)&&t.closest("#xfer"))xferClose();
   if(a==="csv")return exportCsv();
   if(a==="share")return share();
   if(a==="backup")return download("cybercon2026-plan.json","application/json",JSON.stringify({version:6,plan,hidden:[...hidden],locked:[...locked],backups,interests,mute,friends,friendsHidden:[...frHidden]},null,1));
