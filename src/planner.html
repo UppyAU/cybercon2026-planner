@@ -244,6 +244,8 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .mx-stage .mk2.fac:hover{background:#0b726d;border-color:#fff}
 .mx-stage .mk2.fac svg{width:14px;height:14px}
 .mx-stage .mk2.fac:not(:has(span)){width:24px;height:24px;padding:0;border-radius:50%}
+/* Phones: facilities show just their symbol; the name is in the popup and the legend. */
+@media(max-width:700px){.mx-stage .mk2.fac span{display:none}.mx-stage .mk2.fac{width:24px;height:24px;padding:0;border-radius:50%}}
 .mx-stage .mk2.fac.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4)}
 .nwfac .nwday b .ic{width:15px;height:15px;vertical-align:-2px;color:#0e8a84}
 .rbox{fill:rgba(51,85,221,.12);stroke:#3355dd;stroke-opacity:.75;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none;transition:fill .15s}
@@ -1686,7 +1688,7 @@ function renderVenue(){
   const stopLocs=new Set(R.st.map(s2=>s2.x.location));
   const facs=FACILITIES.filter(f=>f.m===MX.m);
   const fboxes=facs.filter(f=>f.pts).map(f=>`<polygon class="fbox ${MX.fac===f.k?"sel":""}" points="${f.pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mfac" data-k="${f.k}" role="button" tabindex="0" aria-label="${f.t}: ${esc(f.where)}"/>`).join("");
-  const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("");
+  const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" title="${f.t}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("");
   const boxes=locs.filter(l=>SHAPEM[l]&&(l!=="Melbourne Room"||stopLocs.has(l)||MX.sel===l)).map(l=>{const day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day)),mine=day.some(x=>plan[x.id]==="go");
     return `<polygon class="rbox ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""} ${APPROX.has(l)?"approx":""}" points="${SHAPEM[l].pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" role="button" tabindex="0" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"/>`}).join("");
   const dots=locs.filter(l=>!SHAPEM[l]&&l!=="Melbourne Room").map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
