@@ -229,18 +229,13 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .sumlink{font-size:12.5px;color:var(--accent);width:max-content}
 .credits{max-width:1200px;margin:18px auto 10px;padding:0 16px;font-size:12px;color:var(--muted);text-align:center}
 .mx-svg{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
-.rt-bg{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.9}
-.rt{fill:none;stroke:#1e9e57;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:12 9;animation:flow 1s linear infinite}
-.rt.xf{stroke:#7a5af8;stroke-dasharray:4 8}
-@keyframes flow{to{stroke-dashoffset:-21}}
+.rt-bg{fill:none;stroke:#fff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.9}
+.rt{fill:none;stroke:#1e9e57;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.rt.xf{stroke:#7a5af8}
 .rt-ld{fill:none;stroke:#1e9e57;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .rt-bg.ld{stroke-width:7}
-.rt.dim,.rt-bg.dim,.rt-ld.dim{opacity:.22}
-.mx-stage .mk2.legar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#1e9e57;color:#fff;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);pointer-events:none}
-.mx-stage .mk2.legar.xf{background:#7a5af8}
-.mx-stage .mk2.legar.dim{opacity:.3}
-.mx-stage .legar svg{width:14px;height:14px;display:block}
-@media (prefers-reduced-motion:reduce){.rt{animation:none}}
+.rt.dim,.rt-bg.dim,.rt-ld.dim,.rt-ch.dim{opacity:.22}
+.rt-ch{fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .mx-stage .mk2{position:absolute;transform:translate(-50%,-50%) scale(var(--ik,1));z-index:1}
 .mx-stage .rdot{width:18px;height:18px;padding:0;border-radius:50%;border:2px solid #fff;background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.45)}
 .mx-stage .rdot:hover,.mx-stage .rdot:focus-visible{background:var(--accent);outline:3px solid rgba(51,85,221,.45);outline-offset:2px}
@@ -274,8 +269,8 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .lg-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 1px var(--border)}
 .lg-dot.mine{background:var(--go)}
 .lg-stop{min-width:18px;height:18px;border-radius:9px;background:#1e9e57;color:#fff;font-size:10px;font-weight:800;font-style:normal;text-align:center;line-height:18px}
-.lg-line{width:26px;height:0;border-top:4px dashed #1e9e57;vertical-align:2px!important}
-.lg-line.xf{border-top:4px dotted #7a5af8}
+.lg-line{width:26px;height:0;border-top:5px solid #1e9e57;border-radius:3px;vertical-align:2px!important}
+.lg-line.xf{border-top-color:#7a5af8}
 .mx-note{font-size:12px;color:var(--maybe);margin-top:6px}
 .stop[role=button]{cursor:pointer}
 .stop[role=button]:hover,.stop[role=button]:focus-visible{border-color:var(--accent);outline:none}
@@ -1609,14 +1604,14 @@ function renderVenue(){
   const selN=new Set(R.st.filter(s2=>MX.selId?s2.x.id===MX.selId:s2.x.location===MX.sel).map(s2=>s2.n));
   const legs=G.segs.map((sg,i)=>({i,x:sg.x,P:sg.pts.map(px),dim:selN.size>0&&!selN.has(sg.from)&&!selN.has(sg.to)}));
   const lanes=laneOffsets(legs.map(l=>l.P));legs.forEach((l,i)=>l.lanes=lanes[i]);
-  Object.assign(MX,{legs,laneK:null,avoid:[...R.st.filter(s2=>s2.pl.m===MX.m).map(s2=>px(s2.pl.p)),...G.portals.map(q=>px(q.p))]});
+  Object.assign(MX,{legs,laneK:null});
   // Thin connectors join each numbered pin to the door its legs start or end at.
   const ends=new Set(G.segs.flatMap(sg=>[sg.from,sg.to]));
   const leads=[...new Set(R.st.filter(s2=>s2.pl.m===MX.m&&ends.has(s2.n)&&DOORS[s2.x.location]).map(s2=>s2.x.location))].map(l=>{const pl=placeOf(l);
     return {d:pathD([px([pl.p[0],pl.p[1]-M.lift*100/M.h]),px(DOORS[l])]),dim:selN.size>0&&!R.st.some(s2=>s2.x.location===l&&selN.has(s2.n))}});
   const segs=leads.map(q=>`<path class="rt-bg ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt-bg ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
-    +leads.map(q=>`<path class="rt-ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("");
-  const arrows=legs.map(l=>`<span class="mk2 legar ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14M12.5 6l6 6-6 6"/></svg></span>`).join("");
+    +leads.map(q=>`<path class="rt-ld ${q.dim?"dim":""}" d="${q.d}"/>`).join("")+legs.map(l=>`<path class="rt ${l.x?"xf":""} ${l.dim?"dim":""}" data-l="${l.i}" d="${pathD(l.P)}"/>`).join("")
+    +legs.map(l=>`<path class="rt-ch ${l.dim?"dim":""}" data-c="${l.i}"/>`).join("");
   // One marker per stair core; arrivals and departures through the same stair share a label.
   const pg=new Map();for(const q of G.portals){const k=q.p.join(",");if(!pg.has(k))pg.set(k,[]);pg.get(k).push(q)}
   const portals=[...pg.values()].map(arr=>{arr.sort((a,b)=>(a.kind==="arr"?0:1)-(b.kind==="arr"?0:1));
@@ -1626,7 +1621,7 @@ function renderVenue(){
   const stops=[...byLoc].map(([l,arr])=>`<button class="mk2 pin stopm ${MX.sel===l?"sel":""}" style="left:${arr[0].pl.p[0]}%;--py:${arr[0].pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-id="${arr[0].x.id}" data-tip="r:${esc(l)}" aria-label="Stop ${arr.map(s2=>s2.n).join(", ")}: ${esc(l)}">${arr.map(s2=>s2.n).join(",")}</button>`).join("");
   html+=`<div class="mx-view ${mapDark()?"mx-dark":""}" id="mxView" tabindex="0" style="background:${M.bg}" aria-label="${esc(M.t)} map. Scroll or pinch to zoom, drag to pan, arrow keys to move.">
     <div class="mx-stage" id="mxStage" style="width:${M.w}px;height:${M.h}px;--lift:${M.lift}px">${M.src?`<div class="mx-clip"><img src="${M.src.url}" style="width:${M.src.pw}px;height:${M.src.ph}px;left:${-M.src.x}px;top:${-M.src.y}px" alt="${esc(M.t)} map (MCEC)" draggable="false" crossorigin="anonymous" referrerpolicy="no-referrer"><div class="mx-err">The ${esc(M.t.toLowerCase())} plan couldn't load from MCEC's guide. Check your connection.</div></div>`:`<img src="${M.img}" alt="${esc(M.t)} map" draggable="false">`}
-      <svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${arrows}${dots}${portals}${stops}</div>
+      <svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${dots}${portals}${stops}</div>
     <div class="mx-ctl"><button class="icon" data-act="mzoom" data-f="1.5" title="Zoom in" aria-label="Zoom in">${svg("plus")}</button><button class="icon" data-act="mzoom" data-f="0.667" title="Zoom out" aria-label="Zoom out">${svg("minus")}</button><button class="icon" data-act="mfit" title="Fit map" aria-label="Fit map">${svg("fit")}</button><button class="icon" data-act="mstyle" title="Map style: ${mapStyle==="auto"?"follows your device":mapStyle} (tap to change)" aria-label="Map style ${mapStyle}">${svg(mapStyle==="dark"?"moon":mapStyle==="light"?"sun":"contrast")}</button>${G.segs.length||byLoc.size?`<button class="icon" data-act="mroute" title="Zoom to my route" aria-label="Zoom to my route">${svg("route")}</button>`:""}</div>
     ${mxPopHtml()}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a pin for sessions</div></div>`;
@@ -1672,14 +1667,13 @@ function mxClamp(k){return Math.min(MX.fitK*5,Math.max(MX.fitK*.8,k))}
 function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));mxLanes(st);if(TIP.anchor)tipPos()}
 function mxLanes(st){
   const L=MX.legs;if(!L||!L.length||MX.laneK===MX.k)return;MX.laneK=MX.k;
-  const M=MAPS[MX.m],gap=8/MX.k,used=[...(MX.avoid||[])];
+  const k=MX.k,step=56/k,edge=14/k,h=1.7/k,w=2.1/k,f=v=>v.toFixed(2);
   for(const l of L){
-    const Q=laneLine(l.P,l.lanes,gap),d=pathD(Q);st.querySelectorAll(`path[data-l="${l.i}"]`).forEach(e=>e.setAttribute("d",d));
-    const ar=st.querySelector(`.legar[data-l="${l.i}"]`);if(!ar)continue;
-    const len=plen(Q);ar.style.display=len*MX.k<44?"none":"";if(len*MX.k<44)continue;
-    let best=null;
-    for(const f of [.5,.4,.6,.3,.7,.2,.8]){const c=alongLine(Q,len*f),m=used.length?Math.min(...used.map(u=>dist(u,c.p)))*MX.k:1e9;if(!best||m>best.m)best={...c,m};if(best.m>=34)break}
-    used.push(best.p);ar.style.left=(best.p[0]/M.w*100).toFixed(3)+"%";ar.style.top=(best.p[1]/M.h*100).toFixed(3)+"%";ar.querySelector("path").setAttribute("transform",`rotate(${best.a.toFixed(1)} 12 12)`);
+    const Q=laneLine(l.P,l.lanes,9/k),d=pathD(Q);st.querySelectorAll(`path[data-l="${l.i}"]`).forEach(e=>e.setAttribute("d",d));
+    const len=plen(Q),n=Math.floor((len-2*edge)/step),at=n>=0?[...Array(n+1)].map((_,i)=>(len-n*step)/2+i*step):len*k>=20?[len/2]:[];
+    const ch=at.map(t=>{const c=alongLine(Q,t),r=c.a*Math.PI/180,ux=Math.cos(r),uy=Math.sin(r),[x,y]=c.p;
+      return `M${f(x-ux*h-uy*w)},${f(y-uy*h+ux*w)}L${f(x+ux*h)},${f(y+uy*h)}L${f(x-ux*h+uy*w)},${f(y-uy*h-ux*w)}`}).join("");
+    st.querySelectorAll(`path[data-c="${l.i}"]`).forEach(e=>e.setAttribute("d",ch));
   }
 }
 function mxFit(anim){const D=mxDims();if(!D)return;MX.fitK=Math.min(D.w/D.M.w,D.h/D.M.h)*.97;MX.k=MX.fitK;MX.tx=(D.w-D.M.w*MX.k)/2;MX.ty=(D.h-D.M.h*MX.k)/2;mxApply(anim)}
