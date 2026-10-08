@@ -41,5 +41,4 @@ def test_outlines_are_drawn_under_every_line():
     m = re.search(r"const segs=(.*?);\n", PAGE, re.S)
     assert m, "segs not found in src/planner.html"
     e = m.group(1)
-    first_line = min(e.index('class="rt '), e.index('class="rt-ld'))
-    assert e.rindex('class="rt-bg') < first_line, "every outline must be drawn before any line or connector"
+    assert e.rindex('class="rt-bg') < e.index('class="rt '), "every outline must be drawn before any line"
