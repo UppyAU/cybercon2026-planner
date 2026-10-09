@@ -12,7 +12,7 @@ offline   cybercon2026-planner.html: the full planner as one file to open straig
 DIR (or the CYBERCON_PRIVATE environment variable) holds content that is not ours to publish:
     abstracts.json          {"<session slug>": "<abstract>"}
     floorplans/P.jpg, L1.jpg, L2.jpg
-Needs Pillow for the app icons.
+Needs Pillow for the app icons, favicon and link-preview image.
 """
 import argparse, base64, hashlib, json, os, re, shutil, subprocess, sys
 from pathlib import Path
@@ -22,6 +22,7 @@ TEMPLATE = ROOT / "src" / "planner.html"
 DATA = ROOT / "data"
 ROLE = "planner"
 REPO_URL = "https://github.com/UppyAU/cybercon2026-planner"
+SITE_URL = "https://cc26plan.nb-cs.net"
 
 # MCEC "Floor Plans and Space Capacities" guide on Issuu (pages 3, 6, 7). Each entry places the
 # full page image so the crop the map was traced on lines up with the stage (stage px).
@@ -117,11 +118,20 @@ def private_inputs(pdir, sessions):
 def add_shell(html, edition):
     cred = ' crossorigin="use-credentials"' if edition == "private" else ""
     head = (f'<link rel="manifest" href="/manifest.webmanifest"{cred}>\n'
+            '<link rel="icon" href="/favicon.ico" sizes="any">\n'
             '<link rel="icon" type="image/png" href="/icons/icon-192.png">\n'
             '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">\n'
             '<meta name="description" content="Unofficial attendee planner for CyberCon 2026 (Melbourne, 14-16 Oct 2026). Not affiliated with AISA.">\n')
     if edition == "private":
         head += '<meta name="robots" content="noindex,nofollow">\n'
+    else:
+        desc = "Plan your CyberCon 2026 sessions, spot clashes and find your way around MCEC. Free, unofficial and works offline."
+        head += (f'<meta property="og:type" content="website">\n<meta property="og:url" content="{SITE_URL}/">\n'
+                 '<meta property="og:title" content="CyberCon 2026 Planner (unofficial)">\n'
+                 f'<meta property="og:description" content="{desc}">\n'
+                 f'<meta property="og:image" content="{SITE_URL}/og.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+                 '<meta property="og:image:alt" content="CyberCon 2026 Planner, unofficial attendee planner">\n'
+                 '<meta name="twitter:card" content="summary_large_image">\n')
     html = replace_once(html, "</title>\n", "</title>\n" + head)
     me = 'Built by <a href="https://github.com/UppyAU" target="_blank" rel="noopener">@UppyAU</a>'
     src = f'<a href="{REPO_URL}" target="_blank" rel="noopener">Source &amp; feedback on GitHub</a>'
@@ -164,10 +174,11 @@ def swa_config(html, edition):
         "Strict-Transport-Security": "max-age=31536000",
         "Cross-Origin-Opener-Policy": "same-origin",
     }
+    # The app lives at "/" (state is in the #hash), so unknown paths get a real 404 rather than the app.
     cfg = {
-        "navigationFallback": {"rewrite": "/index.html", "exclude": ["/icons/*", "/*.{webmanifest,js,json,png,svg,ico,html}"]},
         "mimeTypes": {".webmanifest": "application/manifest+json"},
         "globalHeaders": headers,
+        "responseOverrides": {"404": {"rewrite": "/404.html", "statusCode": 404}},
     }
     if edition == "public":
         cfg["routes"] = [
@@ -184,12 +195,13 @@ def swa_config(html, edition):
             {"route": "/.auth/login/github", "statusCode": 404},
             {"route": "/.auth/login/twitter", "statusCode": 404},
             {"route": "/forbidden.html", "allowedRoles": ["anonymous"], "headers": nocache},
+            {"route": "/robots.txt", "allowedRoles": ["anonymous"]},
             {"route": "/manifest.webmanifest", "allowedRoles": ["anonymous"]},
             {"route": "/icons/*", "allowedRoles": ["anonymous"], "headers": icons},
             {"route": "/sw.js", "allowedRoles": [ROLE], "headers": nocache},
             {"route": "/*", "allowedRoles": [ROLE], "headers": nocache},
         ]
-        cfg["responseOverrides"] = {
+        cfg["responseOverrides"] |= {
             "401": {"redirect": "/.auth/login/aad?post_login_redirect_uri=.referrer", "statusCode": 302},
             "403": {"rewrite": "/forbidden.html"},
         }
@@ -237,6 +249,13 @@ FORBIDDEN = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta 
 """
 
 
+NOT_FOUND = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page not found · CyberCon 2026 Planner</title><style>body{font:16px/1.5 system-ui,sans-serif;max-width:560px;margin:15vh auto;padding:0 20px;color:#1b1f3a}a{color:#3355dd}
+@media(prefers-color-scheme:dark){body{background:#0f1220;color:#e8eaf6}a{color:#7c9cff}}</style></head>
+<body><h1>Page not found</h1><p>The planner lives at the home page. <a href="/">Open the CyberCon 2026 Planner</a>.</p></body></html>
+"""
+
+
 def manifest():
     return {
         "name": "CyberCon 2026 Planner (unofficial)", "short_name": "CyberCon", "start_url": "/", "scope": "/",
@@ -250,8 +269,20 @@ def manifest():
     }
 
 
+def font(size, bold=True):
+    from PIL import ImageFont
+    names = (["segoeuib.ttf", "DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"] if bold
+             else ["segoeui.ttf", "DejaVuSans.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"])
+    for n in names:
+        try:
+            return ImageFont.truetype(n, size)
+        except OSError:
+            pass
+    return ImageFont.load_default(size)
+
+
 def make_icons(out):
-    from PIL import Image, ImageDraw, ImageFont
+    from PIL import Image, ImageDraw
     out.mkdir(parents=True, exist_ok=True)
 
     def draw(size, pad_frac, rounded):
@@ -267,10 +298,7 @@ def make_icons(out):
         d.line([x0, y0 + w * 0.26, x1, y0 + w * 0.26], fill="white", width=lw)
         for fx in (0.3, 0.7):
             d.line([x0 + w * fx, p - w * 0.02, x0 + w * fx, y0 + w * 0.12], fill="white", width=lw)
-        try:
-            f = ImageFont.truetype("segoeuib.ttf", round(w * 0.42))
-        except OSError:
-            f = ImageFont.load_default()
+        f = font(round(w * 0.42))
         d.text(((x0 + x1) / 2, y0 + w * 0.6), "26", fill="white", font=f, anchor="mm")
         return im
 
@@ -278,6 +306,24 @@ def make_icons(out):
     draw(512, 0.2, True).save(out / "icon-512.png")
     draw(512, 0.28, False).save(out / "icon-maskable-512.png")
     draw(180, 0.2, False).convert("RGB").save(out / "apple-touch-icon.png")
+    draw(64, 0.12, True).save(out.parent / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    return draw
+
+
+def make_preview(path, draw):
+    """1200x630 link-preview card (Open Graph) for Teams, Slack, LinkedIn and messages."""
+    from PIL import Image, ImageDraw
+    im = Image.new("RGB", (1200, 630), (15, 18, 32))
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, 1200, 10], fill=(51, 85, 221))
+    im.paste(icon := draw(300, 0.2, True), (90, 165), icon)
+    x = 450
+    d.text((x, 150), "CYBERCON 2026 · UNOFFICIAL", font=font(30), fill=(154, 160, 195))
+    d.text((x, 195), "Attendee Planner", font=font(78), fill=(232, 234, 246))
+    for i, line in enumerate(["Plan sessions and spot clashes", "Walking routes around MCEC", "Melbourne · 14–16 Oct 2026"]):
+        d.text((x, 320 + i * 52), line, font=font(36, bold=False), fill=(201, 205, 230))
+    d.text((x, 520), SITE_URL.replace("https://", ""), font=font(30), fill=(124, 156, 255))
+    im.save(path, optimize=True)
 
 
 def write_site(out, html, edition):
@@ -291,7 +337,11 @@ def write_site(out, html, edition):
     (out / "staticwebapp.config.json").write_text(json.dumps(swa_config(html, edition), indent=2), encoding="utf-8")
     if edition == "private":
         (out / "forbidden.html").write_text(FORBIDDEN, encoding="utf-8")
-    make_icons(out / "icons")
+    (out / "404.html").write_text(NOT_FOUND, encoding="utf-8")
+    (out / "robots.txt").write_text("User-agent: *\n" + ("Allow: /\n" if edition == "public" else "Disallow: /\n"), encoding="utf-8")
+    draw = make_icons(out / "icons")
+    if edition == "public":
+        make_preview(out / "og.png", draw)
     print(f"{edition:8} {(out / 'index.html').stat().st_size / 1024:,.0f} KB  sw {ver}")
 
 
