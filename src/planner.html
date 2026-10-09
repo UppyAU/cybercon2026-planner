@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>CyberCon 2026 Planner (unofficial)</title>
 <style>
-:root{--bg:#0f1220;--panel:#161a2c;--card:#1d2240;--text:#e8eaf6;--muted:#9aa0c3;--accent:#7c9cff;--go:#2ecc71;--maybe:#f1c40f;--bad:#ff5c7a;--border:#2c3358;--brk:#d4a373;--on-accent:#0b1020;--on-go:#05210f}
-@media (prefers-color-scheme: light){:root{--bg:#f4f5fb;--panel:#fff;--card:#fff;--text:#1b1f3a;--muted:#5d6385;--accent:#3355dd;--go:#1e9e57;--maybe:#b98b00;--bad:#d6334f;--border:#d9dcef;--brk:#9c6644;--on-accent:#fff;--on-go:#fff}}
+:root{--bg:#0f1220;--panel:#161a2c;--card:#1d2240;--text:#e8eaf6;--muted:#9aa0c3;--accent:#7c9cff;--go:#2ecc71;--maybe:#f1c40f;--bad:#ff5c7a;--border:#2c3358;--brk:#d4a373;--on-accent:#0b1020;--on-go:#05210f;--on-bad:#2a0410;--warn-text:#f1c40f}
+@media (prefers-color-scheme: light){:root{--bg:#f4f5fb;--panel:#fff;--card:#fff;--text:#1b1f3a;--muted:#5d6385;--accent:#3355dd;--go:#15803d;--maybe:#b98b00;--bad:#c42a45;--border:#d9dcef;--brk:#9c6644;--on-accent:#fff;--on-go:#fff;--on-bad:#fff;--warn-text:#7a5a00}}
 *{box-sizing:border-box}
 body{margin:0;font:14px/1.45 system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
 a{color:var(--accent)}
@@ -39,7 +39,7 @@ main{display:grid;grid-template-columns:280px 1fr;gap:16px;padding:16px;max-widt
 main.planmode{grid-template-columns:1fr}
 main.planmode aside{display:none}
 aside{position:sticky;top:70px;align-self:start;max-height:calc(100vh - 86px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px}
-aside h4{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+aside h2{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 aside input[type=search],aside select{width:100%;padding:6px 8px;border-radius:7px;border:1px solid var(--border);background:var(--card)}
 aside label{display:flex;gap:6px;align-items:center;padding:2px 0;cursor:pointer}
 aside label .n{margin-left:auto;color:var(--muted);font-size:12px}
@@ -70,7 +70,7 @@ button:disabled{opacity:.45;cursor:default;border-color:var(--border)}
 .chips{display:flex;gap:4px;flex-wrap:wrap}
 .chips span{font-size:11px;border:1px solid var(--border);border-radius:10px;padding:0 7px;color:var(--muted)}
 .warn{color:var(--bad);font-size:12px;font-weight:600}
-.note{color:var(--maybe);font-size:12px;font-weight:600}
+.note{color:var(--warn-text);font-size:12px;font-weight:600}
 .actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:4px}
 .actions .tail{margin-left:auto;display:inline-flex;gap:6px}
 button.st{min-width:78px}
@@ -124,7 +124,7 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
   nav.tabs button[aria-pressed="true"]{background:none;color:var(--accent)}
   nav.tabs .tab-ic,nav.tabs .ts{display:block}
   nav.tabs .tl{display:none}
-  nav.tabs .badge{position:absolute;top:2px;left:calc(50% + 6px);font-size:10px;min-width:18px;line-height:16px;padding:0 5px}
+  nav.tabs .badge{position:absolute;top:2px;left:calc(50% + 6px);font-size:11px;min-width:18px;line-height:16px;padding:0 5px}
   #mbar{position:sticky;top:0;z-index:12;display:flex;flex-direction:column;gap:8px;padding:8px calc(10px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left));background:color-mix(in srgb,var(--bg) 94%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
   body:not(.m-browse):not(.m-plan):not(.m-venue) #mbar{display:none!important}
   body.m-plan #mbar .mrow,body.m-venue #mbar .mrow{display:none}
@@ -152,10 +152,10 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
   .pday .gap{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center}
   .pday .gap button{grid-column:1/-1;justify-self:start;margin-top:4px}
   .pday .gap>svg{grid-row:1}
-  .ticks{font-size:9px}
+  .ticks{font-size:10px}
   body.m-venue #view{display:flex;flex-direction:column}
   body.m-venue .vhead{order:2;padding:10px 12px}
-  body.m-venue .vhead h2{display:none}
+  body.m-venue .vhead h2{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   body.m-venue .route{order:1}
 }
 /* Touch screens: 40px targets, and 16px inputs so iOS Safari doesn't zoom on focus. */
@@ -180,7 +180,7 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .bar .b-brk span{font-size:10px;font-weight:700;color:var(--brk);letter-spacing:.02em;white-space:nowrap;text-transform:uppercase}
 @container (max-width:34px){.bar .b-brk span{display:none}}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:-4px 0 8px}
-.lv{display:inline-block;font-size:10px;font-weight:700;padding:0 5px;border-radius:4px;border:1px solid var(--border);color:var(--muted);vertical-align:1px}
+.lv{display:inline-block;font-size:11px;font-weight:700;padding:0 5px;border-radius:4px;border:1px solid var(--border);color:var(--muted);vertical-align:1px}
 .vhead{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
 .vhead h2{margin:0 0 2px;font-size:18px}
 .zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
@@ -230,28 +230,28 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .credits{max-width:1200px;margin:18px auto 10px;padding:0 16px;font-size:12px;color:var(--muted);text-align:center}
 .mx-svg{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
 .rt-bg{fill:none;stroke:#fff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.9}
-.rt{fill:none;stroke:#1e9e57;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.rt{fill:none;stroke:#15803d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .rt.xf{stroke:#7a5af8}
 /* Lighter dashes flow along each leg in the walking direction, over the solid line. */
 .rt-fl{fill:none;stroke:rgba(255,255,255,.34);stroke-width:6;stroke-linecap:butt;vector-effect:non-scaling-stroke;stroke-dasharray:12 12;animation:flow 1.1s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-24}}
 @media (prefers-reduced-motion:reduce){.rt-fl{animation:none}}
 .mx-rooms{pointer-events:none}
-.fbox{fill:rgba(14,138,132,.2);stroke:#0e8a84;stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none}
+.fbox{fill:rgba(14,138,132,.2);stroke:#0a706a;stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none}
 .fbox:hover,.fbox:focus-visible,.fbox.sel{fill:rgba(14,138,132,.34);stroke-width:3}
 .mx-dark .fbox{fill:rgba(45,212,191,.16);stroke:#2dd4bf}
-.mx-stage .mk2.fac{height:26px;padding:0 9px 0 7px;border-radius:13px;background:#0e8a84;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:2}
-.mx-stage .mk2.fac:hover{background:#0b726d;border-color:#fff}
+.mx-stage .mk2.fac{height:26px;padding:0 9px 0 7px;border-radius:13px;background:#0a706a;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:2}
+.mx-stage .mk2.fac:hover{background:#085a55;border-color:#fff}
 .mx-stage .mk2.fac svg{width:14px;height:14px}
 .mx-stage .mk2.fac:not(:has(span)){width:24px;height:24px;padding:0;border-radius:50%}
 /* Phones: facilities show just their symbol; the name is in the popup and the legend. */
 @media(max-width:700px){.mx-stage .mk2.fac span{display:none}.mx-stage .mk2.fac{width:24px;height:24px;padding:0;border-radius:50%}}
 .mx-stage .mk2.fac.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4)}
-.nwfac .nwday b .ic{width:15px;height:15px;vertical-align:-2px;color:#0e8a84}
+.nwfac .nwday b .ic{width:15px;height:15px;vertical-align:-2px;color:#0a706a}
 .rbox{fill:rgba(51,85,221,.12);stroke:#3355dd;stroke-opacity:.75;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:all;cursor:pointer;outline:none;transition:fill .15s}
 .rbox:hover,.rbox:focus-visible{fill:rgba(51,85,221,.28)}
 .rbox.dim{fill:rgba(128,130,150,.07);stroke:#8a8fa8;stroke-opacity:.55}
-.rbox.mine{fill:rgba(30,158,87,.24);stroke:#1e9e57;stroke-opacity:1;stroke-width:2.5}
+.rbox.mine{fill:rgba(30,158,87,.24);stroke:#15803d;stroke-opacity:1;stroke-width:2.5}
 .rbox.mine:hover,.rbox.mine:focus-visible{fill:rgba(30,158,87,.36)}
 .rbox.approx{stroke-dasharray:7 5}
 .rbox.approx.mine{fill:rgba(30,158,87,.08)}
@@ -265,7 +265,7 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .rt.dim,.rt-bg.dim,.rt-ch.dim{opacity:.22}.rt-fl.dim{opacity:0}
 .rt-ch{fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .mx-stage .mk2{position:absolute;transform:translate(-50%,-50%) scale(var(--ik,1));z-index:1}
-.mx-stage .rdot{width:18px;height:18px;padding:0;border-radius:50%;border:2px solid #fff;background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.mx-stage .rdot{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid #fff;background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.45)}
 .mx-stage .rdot:hover,.mx-stage .rdot:focus-visible{background:var(--accent);outline:3px solid rgba(51,85,221,.45);outline-offset:2px}
 .mx-stage .rdot.dim{opacity:.35}
 .mx-stage .rdot.mine{background:var(--go)}
@@ -276,8 +276,8 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .mx-stage .pin.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.5)!important}
 .mx-stage .stopm.sel{z-index:5}
 .mx-stage .sel{box-shadow:0 0 0 4px #fff,0 0 0 8px var(--accent)!important;z-index:4}
-.mx-stage .stopm{min-width:30px;height:30px;padding:0 7px;border-radius:15px;background:#1e9e57;color:#fff;border:2px solid #fff;font-weight:800;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.5);z-index:3}
-.mx-stage .stopm:hover{background:#178a4b;border-color:#fff}
+.mx-stage .stopm{min-width:30px;height:30px;padding:0 7px;border-radius:15px;background:#15803d;color:#fff;border:2px solid #fff;font-weight:800;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.5);z-index:3}
+.mx-stage .stopm:hover{background:#116b33;border-color:#fff}
 .mx-stage .portal{height:28px;padding:0 10px;border-radius:14px;background:#7a5af8;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.45);z-index:2}
 .mx-stage .portal:hover{background:#6846f0;border-color:#fff}
 .mx-stage .portal{transform:translate(-50%,-50%) scale(var(--ik,1)) translateY(-26px)}
@@ -295,13 +295,13 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .mx-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px;align-items:center}
 .mx-legend i{display:inline-block;vertical-align:-3px;margin-right:5px}
 .lg-box{width:16px;height:11px;border-radius:2px;background:rgba(51,85,221,.18);border:1.5px solid #3355dd}
-.lg-box.mine{background:rgba(30,158,87,.3);border-color:#1e9e57}
-.lg-box.approx{border-style:dashed;background:rgba(30,158,87,.12);border-color:#1e9e57}
+.lg-box.mine{background:rgba(30,158,87,.3);border-color:#15803d}
+.lg-box.approx{border-style:dashed;background:rgba(30,158,87,.12);border-color:#15803d}
 .lg-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 1px var(--border)}
 .lg-dot.mine{background:var(--go)}
-.lg-fac{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#0e8a84;color:#fff;font-style:normal}.lg-fac svg{width:12px;height:12px}
-.lg-stop{min-width:18px;height:18px;border-radius:9px;background:#1e9e57;color:#fff;font-size:10px;font-weight:800;font-style:normal;text-align:center;line-height:18px}
-.lg-line{width:26px;height:0;border-top:5px solid #1e9e57;border-radius:3px;vertical-align:2px!important}
+.lg-fac{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#0a706a;color:#fff;font-style:normal}.lg-fac svg{width:12px;height:12px}
+.lg-stop{min-width:18px;height:18px;border-radius:9px;background:#15803d;color:#fff;font-size:10px;font-weight:800;font-style:normal;text-align:center;line-height:18px}
+.lg-line{width:26px;height:0;border-top:5px solid #15803d;border-radius:3px;vertical-align:2px!important}
 .lg-line.xf{border-top-color:#7a5af8}
 .mx-note{font-size:12px;color:var(--maybe);margin-top:6px}
 .stop[role=button]{cursor:pointer}
@@ -341,7 +341,7 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .gap{padding:6px;border-top:1px dashed var(--border);color:var(--muted);font-size:13px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .sub{color:var(--muted);font-size:12px}
 /* ---------- UX pass ---------- */
-.card.slim{padding:6px 10px;gap:0;opacity:.85}
+.card.slim{padding:6px 10px;gap:0}
 .card.slim .srow{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
 .card.slim .srow b{color:var(--text);font-size:13.5px}
 .card.slim .tail{margin-left:auto;display:inline-flex;gap:4px}
@@ -381,7 +381,7 @@ details.more.sim .menu select,details.more.sim .menu input{flex:1;height:34px;pa
   .toolbar .count{font-size:12px}
   .prow.brk{grid-template-columns:auto 1fr auto;gap:2px 8px}
   .prow.brk .t{font-size:12px;line-height:1.25}
-  .prow.brk .t span{display:block}.prow.brk .t .tsep{display:none}.prow.brk .t .te{opacity:.75}
+  .prow.brk .t span{display:block}.prow.brk .t .tsep{display:none}.prow.brk .t .te{color:var(--muted)}
   .prow.brk .btns{grid-row:1/3;grid-column:3}
   .nowhead{padding:10px 12px}
   .nowhead .simw{margin-left:0}
@@ -427,7 +427,7 @@ aside .sfield>[data-ic]{left:10px}
   #mbar input{width:100%;height:44px;padding:0 12px 0 38px;border-radius:12px;font-size:16px}
   #mbar .fbtn{position:relative;flex:none;width:44px;height:44px;padding:0;border-radius:12px}
   #mbar .fbtn svg{width:20px;height:20px}
-  #mbar .fbtn .badge{position:absolute;top:-6px;right:-6px;min-width:18px;padding:0 5px;font-size:10px;line-height:18px}
+  #mbar .fbtn .badge{position:absolute;top:-6px;right:-6px;min-width:18px;padding:0 5px;font-size:11px;line-height:18px}
   #mbar .mdays{display:grid;grid-template-columns:auto repeat(3,1fr);gap:2px;padding:3px;overflow:visible;background:var(--card);border:1px solid var(--border);border-radius:11px}
   #mbar .mdays button{height:34px;padding:0 14px;border:0;border-radius:8px;background:none;color:var(--muted);font-weight:600;font-size:14px}
   #mbar .mdays button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
@@ -468,7 +468,7 @@ button.hchip[aria-pressed="true"]{background:color-mix(in srgb,var(--accent) 15%
 .segc button:hover{border:0;color:var(--text)}
 .segc button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .segc .n{font-size:11px;font-weight:700;min-width:18px;line-height:17px;padding:0 5px;border-radius:9px;text-align:center;background:color-mix(in srgb,var(--go) 22%,transparent);color:var(--go)}
-.segc button[aria-pressed="true"] .n{background:color-mix(in srgb,var(--on-accent) 18%,transparent);color:inherit}
+.segc button[aria-pressed="true"] .n{background:var(--on-accent);color:var(--accent)}
 .mxr{display:flex;gap:8px;align-items:center}
 .mx-bar{justify-content:flex-start}
 .mxr .lbl{display:inline-flex;gap:5px;align-items:center;font-size:12px;font-weight:600;color:var(--muted)}
@@ -480,7 +480,7 @@ button.hchip[aria-pressed="true"]{background:color-mix(in srgb,var(--accent) 15%
 .rs[role="button"]{cursor:pointer}
 .rs[role="button"]:hover,.rs:focus-visible{background:var(--card);outline:none}
 .rs.on{background:color-mix(in srgb,var(--accent) 13%,transparent)}
-.rs .num{width:28px;height:28px;border-radius:50%;background:#1e9e57;color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.rs .num{width:28px;height:28px;border-radius:50%;background:#15803d;color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .rs.na .num{background:var(--muted)}
 .rs .t{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .rs b{display:block;font-size:14px;line-height:1.3;font-weight:600}
@@ -515,12 +515,15 @@ div.tl.exp{cursor:pointer}
 .tl-h{position:absolute;top:0;bottom:0;width:1px;background:var(--border);opacity:.7}
 .tl-brk{position:absolute;top:0;bottom:0;height:auto!important;padding:0!important;border:0;border-radius:0;align-items:flex-end;justify-content:center;container-type:inline-size;
   background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--brk) 24%,transparent) 0 4px,transparent 4px 9px);box-shadow:inset 1px 0 0 color-mix(in srgb,var(--brk) 55%,transparent),inset -1px 0 0 color-mix(in srgb,var(--brk) 55%,transparent)}
-.tl-brk span{font-size:9px;font-weight:700;color:var(--brk);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;padding-bottom:2px}
+.tl-brk span{font-size:10px;font-weight:700;color:var(--brk);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;padding-bottom:2px}
 @container (max-width:32px){.tl-brk span{display:none}}
-.tl-it{position:absolute;min-width:4px;padding:0 6px 0 8px!important;border:0;border-radius:6px;justify-content:flex-start;font-size:11px;font-weight:600;overflow:hidden;box-shadow:inset 3px 0 0 var(--c);z-index:1}
+.tl-it{position:absolute;min-width:4px;padding:0 6px 0 8px!important;border:0;border-radius:6px;justify-content:flex-start;font-size:11px;font-weight:600;box-shadow:inset 3px 0 0 var(--c);z-index:1}
+.tl-it span{min-width:0}
+/* Short sessions are drawn narrow; the tap area is at least 24px wide without changing the bar. */
+.tl-it::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:max(100%,24px);transform:translateX(-50%)}
 .tl-it span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tl-it.k-go{background:color-mix(in srgb,var(--go) 88%,transparent);color:var(--on-go)}
-.tl-it.k-bad{background:var(--bad);color:#fff}
+.tl-it.k-go{background:var(--go);color:var(--on-go)}
+.tl-it.k-bad{background:var(--bad);color:var(--on-bad)}
 .tl-it.k-maybe{background:color-mix(in srgb,var(--maybe) 14%,var(--card));color:var(--text);box-shadow:inset 0 0 0 1.5px var(--maybe)}
 .tl-it.past{opacity:.4;filter:grayscale(.6)}
 .tl-it:hover,.tl-it:focus-visible,.tl-brk:hover,.tl-brk:focus-visible{outline:2px solid var(--accent);outline-offset:1px;z-index:4}
@@ -548,8 +551,8 @@ div.tl.exp{cursor:pointer}
 #tip .tp-a{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:4px;padding-top:8px;border-top:1px solid var(--border)}
 #tip .tp-a .sp{flex:1}
 #tip .tp-stop{display:flex;gap:8px;align-items:center}
-#tip .tp-stop .num{width:20px;height:20px;border-radius:50%;background:#1e9e57;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
-@media(max-width:700px){.tl-ticks{font-size:9px}
+#tip .tp-stop .num{width:20px;height:20px;border-radius:50%;background:#15803d;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+@media(max-width:700px){.tl-ticks{font-size:10px}
   #tip{left:8px!important;right:8px;width:auto;top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom));border-radius:16px;box-shadow:0 -8px 40px rgba(0,0,0,.45);padding:14px 16px}
 }
 /* ---------- Shared per-session actions ---------- */
@@ -678,7 +681,7 @@ details.msel[open]>summary [data-ic] svg{transform:rotate(180deg)}
 .sharebox .sba input{flex:1;min-width:140px;max-width:240px}
 @media(max-width:700px){.sharebox .sba>button{flex:1}.sharebox .sba input{max-width:none;width:100%;flex-basis:100%}.frn{max-width:70px}}
 /* ---------- Unofficial label, feedback ---------- */
-.brand .unof{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--border);border-radius:5px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);vertical-align:2px}
+.brand .unof{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--border);border-radius:5px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);vertical-align:2px}
 .fbside{margin:4px 0 0;font-size:12px;color:var(--muted);text-align:center}
 @media(max-width:700px){.brand .unof{margin-left:0;padding:0;border:0;font-size:inherit;letter-spacing:inherit;vertical-align:0}.brand .unof::before{content:"\00a0· "}}
 /* ---------- Send to another device ---------- */
@@ -786,7 +789,7 @@ button.bkb[aria-pressed="true"]{background:#0e9f9e;border-color:#0e9f9e;color:#f
 .card.fav{box-shadow:inset 0 0 0 1px var(--accent)}
 .fr{font-size:12px;color:#0e9f9e;font-weight:600}
 .chg{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:5px;background:var(--maybe);color:#111}
-.chg.cancel{background:var(--bad);color:#fff}.chg.new{background:var(--go);color:var(--on-go)}
+.chg.cancel{background:var(--bad);color:var(--on-bad)}.chg.new{background:var(--go);color:var(--on-go)}
 .card.cancelled h3{text-decoration:line-through}
 .alert{background:color-mix(in srgb,var(--maybe) 14%,var(--panel));border:1px solid var(--maybe);border-radius:10px;padding:10px 14px;margin-bottom:12px}
 .alert h3{margin:0 0 6px;font-size:15px}.alert ul{margin:4px 0 8px;padding-left:18px}.alert li{margin:3px 0}
@@ -801,7 +804,7 @@ button.bkb[aria-pressed="true"]{background:#0e9f9e;border-color:#0e9f9e;color:#f
 .seg2 button:hover{border:0;color:var(--text)}
 .seg2 button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .seg2 .n{font-size:11px;font-weight:700;min-width:20px;line-height:17px;padding:0 6px;border-radius:9px;text-align:center;background:color-mix(in srgb,var(--muted) 22%,transparent);color:inherit;font-variant-numeric:tabular-nums}
-.seg2 button[aria-pressed="true"] .n{background:color-mix(in srgb,var(--on-accent) 18%,transparent)}
+.seg2 button[aria-pressed="true"] .n{background:var(--on-accent);color:var(--accent)}
 .btool{gap:8px}
 .spkl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr));gap:10px}
 .spkc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
@@ -830,7 +833,7 @@ label.btn select{border:0;background:none;padding:0;height:auto}
   </nav>
   <span class="meta">14–16 Oct 2026 · MCEC · Program snapshot <span id="scraped"></span> · <a id="srcLink" target="_blank" rel="noopener">official program ↗</a> · <a href="#" data-act="fb" data-t="bug" title="Report a problem or suggest an idea on GitHub">Feedback</a></span>
 </header>
-<div id="mbar" class="m-only noprint">
+<div id="mbar" class="m-only noprint" role="search" aria-label="Search and day">
   <div class="mrow"><label class="sfield"><span data-ic="search"></span><input type="search" id="qm" placeholder="Search sessions, speakers…" aria-label="Search" enterkeyhint="search" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other"></label><button id="mFilters" class="fbtn" data-act="sheet" aria-haspopup="dialog" aria-label="Filters" title="Filters"><span data-ic="filter"></span><span class="badge" id="fCount"></span></button></div>
   <div class="mdays segc" id="mDays" role="group" aria-label="Day"></div>
 </div>
@@ -840,24 +843,24 @@ label.btn select{border:0;background:none;padding:0;height:auto}
   <aside id="filters" aria-label="Filters">
     <div class="sheet-head m-only"><b>Filters</b><button data-act="closesheet" id="sheetDone" class="primary">Done</button></div>
     <label class="sfield"><span data-ic="search"></span><input type="search" id="q" placeholder="Search title, speaker, topic… ( / )" aria-label="Search" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other"></label>
-        <h4>Show</h4>
+        <h2>Show</h2>
     <label><input type="checkbox" id="hideLogi"> Hide breaks &amp; networking</label>
     <label><input type="checkbox" id="fits"> Only sessions that fit my plan <span class="n" title="Temporary view filter. Use 🔒 Lock on a Going session to hide its overlaps permanently.">ⓘ</span></label>
     <label><input type="checkbox" id="mine"> Only my planned sessions</label>
     <label><input type="checkbox" id="showHidden"> Show hidden sessions<span class="n" id="hiddenN">0</span></label>
     <label id="changedL" hidden><input type="checkbox" id="changed"> Only changed or new sessions<span class="n" id="changedN"></span></label>
     <button id="unhideAll" style="width:100%;margin-top:4px">Unhide all</button>
-    <h4>My interests</h4>
+    <h2>My interests</h2>
     <input type="text" id="interests" placeholder="e.g. terraform, azure, identity" aria-label="My interests, comma separated" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
     <label><input type="checkbox" id="onlyInt"> Only sessions matching my interests<span class="n" id="intN"></span></label>
-    <h4>Hide sessions matching</h4>
+    <h2>Hide sessions matching</h2>
     <input type="text" id="muteIn" placeholder="e.g. AI, agent*" aria-label="Hide sessions whose title has these words, comma separated" autocomplete="off" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
     <p class="mutehint"><span class="n" id="muteN"></span>Whole words in session titles; <code>agent*</code> also matches agents, agentic. Your Going and Maybe sessions always stay.</p>
-    <h4>Theme</h4><div id="themeBox"></div>
-    <h4>Topic</h4><select id="topic"></select>
-    <h4>Format</h4><details class="msel" id="fmtSel"><summary><span id="fmtSum">All formats</span><span data-ic="chev"></span></summary><div class="msel-menu"><button class="msel-clr" data-act="fmtclear">Any format</button><div id="fmtBox"></div></div></details>
-    <h4>Audience level</h4><div id="audBox"></div>
-    <h4>Location</h4><select id="loc"></select>
+    <h2>Theme</h2><div id="themeBox"></div>
+    <h2>Topic</h2><select id="topic" aria-label="Topic"></select>
+    <h2>Format</h2><details class="msel" id="fmtSel"><summary><span id="fmtSum">All formats</span><span data-ic="chev"></span></summary><div class="msel-menu"><button class="msel-clr" data-act="fmtclear">Any format</button><div id="fmtBox"></div></div></details>
+    <h2>Audience level</h2><div id="audBox"></div>
+    <h2>Location</h2><select id="loc" aria-label="Location"></select>
     <p><button id="reset" style="width:100%">Reset filters</button></p>
     <p class="fbside"><a href="#" data-act="fb" data-t="bug">Report a problem</a> · <a href="#" data-act="fb" data-t="idea">Suggest an idea</a></p>
   </aside>
@@ -1377,13 +1380,13 @@ const gotoBtn=x=>placeOf(x.location)?`<button class="icon muted" data-act="goto"
 const detailsBtn=x=>x.url?`<a class="btn icon muted" href="${esc(x.url)}" target="_blank" rel="noopener" title="Session details (official site)" aria-label="Details: ${esc(x.title)}">${svg("ext")}</a>`:"";
 function slimCard(x){
   const isH=hidden.has(x.id),lb=lockedBy(x);
-  return `<article class="card slim ${isH||lb?"hid":""}" style="--c:${esc(COLORS[x.format]||"#999")}"><div class="srow"><span class="tag">${esc(x.format)}</span><b>${esc(x.title)}</b><span>${fmt(x.s)} – ${fmt(x.f)}</span><span>${locLink(x)}</span>${chgBadges(x)}<span class="tail">${gotoBtn(x)}${isH?`<button class="icon" data-act="unhide" data-id="${x.id}" title="Show again" aria-label="Unhide ${esc(x.title)}">${svg("undo")}</button>`:hideBtn(x)}</span></div></article>`;
+  return `<article class="card slim ${isH||lb?"hid":""}" data-sid="${x.id}" style="--c:${esc(COLORS[x.format]||"#999")}"><div class="srow"><span class="tag">${esc(x.format)}</span><b>${esc(x.title)}</b><span>${fmt(x.s)} – ${fmt(x.f)}</span><span>${locLink(x)}</span>${chgBadges(x)}<span class="tail">${gotoBtn(x)}${isH?`<button class="icon" data-act="unhide" data-id="${x.id}" title="Show again" aria-label="Unhide ${esc(x.title)}">${svg("undo")}</button>`:hideBtn(x)}</span></div></article>`;
 }
 function card(x,gl){
   if(x.logi||isBrk(x))return slimCard(x);
   const st=plan[x.id]||"",cl=clashes(x,gl),isH=hidden.has(x.id),mh=isH?null:muteHit(x),lb=lockedBy(x),ih=intHits(x),bo=backupOf(x.id)&&BY.get(backupOf(x.id));
   const chips=[...x.theme,...x.topic].map(t=>`<span>${esc(t)}</span>`).join("");
-  return `<article class="card ${st} ${x.logi?"logi":""} ${isH||lb||mh?"hid":""} ${ih.length?"fav":""} ${x.cancelled?"cancelled":""}" style="--c:${esc(COLORS[x.format]||"#999")}">
+  return `<article class="card ${st} ${x.logi?"logi":""} ${isH||lb||mh?"hid":""} ${ih.length?"fav":""} ${x.cancelled?"cancelled":""}" data-sid="${x.id}" style="--c:${esc(COLORS[x.format]||"#999")}">
   <div class="row1"><span class="tag">${esc(x.format)}</span><span>${fmt(x.s)} – ${fmt(x.f)}</span><span>${locLink(x)}</span>${x.audience?`<span class="aud">${esc(x.audience)}</span>`:""}${chgBadges(x)}${locked.has(x.id)?`<span title="Locked">${svg("lock")}</span>`:""}</div>
   <h3>${esc(x.title)}</h3>
   ${x.speakers?`<div class="spk">${esc(x.speakers)}</div>`:""}
@@ -1420,7 +1423,7 @@ function renderNow(){
   const N=melNow(),gl=goList(),pad=n=>String(n).padStart(2,"0");
   const simVal=nowSim?`${pad(Math.floor(nowSim.min/60))}:${pad(nowSim.min%60)}`:"10:50";
   const when=N.day>=0?`${DAYS[N.day].label} · ${fmt(N.min)}`:new Date().toLocaleString("en-AU",{timeZone:"Australia/Melbourne",weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
-  let html=`<div class="nwwrap"><div class="nwtop"><div><b>${when}</b> <span class="sub">Melbourne</span>${N.sim?`<span class="pv">Preview</span>`:""}</div>
+  let html=`<div class="nwwrap"><h2 class="sr">Now</h2><div class="nwtop"><div><b>${when}</b> <span class="sub">Melbourne</span>${N.sim?`<span class="pv">Preview</span>`:""}</div>
     <div class="nwtools noprint">${nowSim?`<button data-act="simlive">${svg("x")}Exit preview</button>`:""}<details class="more sim"><summary class="btn" title="See this page at another day and time">${svg("clock")}${nowSim?"Change":"Preview"}</summary><div class="menu">
       <div class="sub">See what this page will show at another moment.</div>
       <div class="row"><select id="simDay" aria-label="Preview day">${DAYS.map((d,i)=>`<option value="${i}" ${(nowSim?nowSim.day:0)===i?"selected":""}>${d.label}</option>`).join("")}</select><input type="time" id="simTime" value="${simVal}" step="300" aria-label="Preview time"></div>
@@ -1549,9 +1552,7 @@ function frLanes(di,B){
     h+=`<div class="frrow" style="--fc:${FRC[i%FRC.length]};height:${H}px"><span class="frn" title="${esc(f.name)}">${esc(f.name.length>12?initials(f.name):f.name)}</span>${it.map(({x,l})=>`<button class="frb ${plan[x.id]==="go"?"tog":""}" style="left:${pct(x.s)};width:${wd(x)};top:${2+l*(RH+G)}px;height:${RH}px" data-tip="s:${x.id}" aria-label="${esc(f.name)}: ${esc(x.title)}, ${fmt(x.s)}"></button>`).join("")}</div>`});
   return h?`<div class="frl">${h}</div>`:"";
 }
-function renderBrowse(){
-  if(F.view==="speakers")return renderSpeakers();
-  const gl=goList(),list=S.filter(x=>matches(x,gl));
+function browseToolbar(list){
   let chips="";
   if(F.win)chips=`<span class="chip">${DAYS[F.win.day].label}: starting ${fmt(F.win.from)}–${fmt(F.win.to)}<button data-act="clearwin" aria-label="Clear time window">✕</button></span>`;
   const filtered=!!(F.q||F.day!=="all"||F.formats.size||F.themes.size||F.topic||F.aud.size||F.loc||F.hideLogi||F.fits||F.mine||F.win||F.changed||F.onlyInt);
@@ -1561,17 +1562,48 @@ function renderBrowse(){
   let html=`<div class="toolbar btool">${daySeg()}${viewSeg(list.length)}${nH?`<button class="hchip" data-act="togglehidden" aria-pressed="${F.showHidden}" title="${hidden.size} hidden by you, ${nLock} hidden by ${locked.size} lock${locked.size===1?"":"s"}, ${nMute} hidden by keyword. Tap to ${F.showHidden?"hide them again":"show them"}.">${svg(F.showHidden?"eye":"eyeoff")}${F.showHidden?"Showing ":""}${nH} hidden${nLock?`<span class="hs">${[hidden.size?`${hidden.size} by you`:"",nLock?`${nLock} by ${svg("lock")}${locked.size}`:"",nMute?`${nMute} by keyword`:""].filter(Boolean).join(" · ")}</span>`:""}</button>`:""}${chips}
     ${hideable.length&&hideable.length<S.length?`<button class="hchip" data-act="hideshown" title="Hide every session currently listed (Going/Maybe sessions are kept)">${svg("x")}Hide all ${hideable.length} shown</button>`:""}
     ${lastHidden.length?`<button data-act="undo">${svg("undo")}Undo hide${lastHidden.length>1?` (${lastHidden.length})`:""}</button>`:""}</div>`;
-  const groups=new Map();
+  return html;
+}
+// The full program is ~15k elements, so Browse draws what's on screen first and adds the rest in small batches.
+let browseJob=0,browseFlush=null;
+function renderBrowse(){
+  if(F.view==="speakers")return renderSpeakers();
+  const gl=goList(),list=S.filter(x=>matches(x,gl)),v=$("#view"),want=window.scrollY+innerHeight*2.5,job=++browseJob;
+  const parts=[],groups=new Map();
   for(const x of list){const k=x.dayIdx+"|"+x.s;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(x)}
   let lastDay=-1;
   for(const [k,xs] of groups){
     const [d,s]=k.split("|").map(Number);
-    if(d!==lastDay){html+=`<h2 class="dayh">${DAYS[d].label}</h2>`;lastDay=d}
-    html+=`<h3 class="slot">${fmt(s)} · ${xs.length} session${xs.length>1?"s":""}</h3><div class="grid">${xs.map(x=>card(x,gl)).join("")}</div>`;
+    const head=d!==lastDay;
+    parts.push(()=>`${head?`<h2 class="dayh">${DAYS[d].label}</h2>`:""}<h3 class="slot">${fmt(s)} · ${xs.length} session${xs.length>1?"s":""}</h3><div class="grid">${xs.map(x=>card(x,gl)).join("")}</div>`);
+    lastDay=d;
   }
-  if(!list.length)html+=`<p class="empty">No sessions match these filters.${hidden.size&&!F.showHidden?" Some sessions are hidden — tick <b>Show hidden sessions</b> to include them.":""}</p>`;
-  $("#view").innerHTML=html;
+  let i=0;const take=n=>{let h="";for(const end=Math.min(parts.length,i+n);i<end;i++)h+=parts[i]();return h};
+  v.innerHTML=browseToolbar(list)+take(6)+(list.length?"":`<p class="empty">No sessions match these filters.${hidden.size&&!F.showHidden?" Some sessions are hidden — tick <b>Show hidden sessions</b> to include them.":""}</p>`);
+  // Enough to fill the screen (and wherever the caller will scroll back to), then the rest in the background.
+  while(i<parts.length&&document.documentElement.scrollHeight<want)v.insertAdjacentHTML("beforeend",take(4));
+  const live=()=>job===browseJob&&mode==="browse"&&F.view!=="speakers";
+  browseFlush=()=>{if(live()&&i<parts.length){v.insertAdjacentHTML("beforeend",take(parts.length));tipRefresh()}};
+  const idle=window.requestIdleCallback||(f=>setTimeout(()=>f({timeRemaining:()=>8}),16));
+  const more=dl=>{if(!live())return;let h="";do h+=take(1);while(i<parts.length&&dl.timeRemaining()>6);v.insertAdjacentHTML("beforeend",h);if(i<parts.length)idle(more)};
+  if(i<parts.length)idle(more);
 }
+// Going/Maybe in Browse: redraw only the tapped card and the cards it overlaps, when the visible list can't change.
+function browsePatch(x,gl){
+  if(mode!=="browse"||F.view==="speakers"||F.fits||F.mine||locked.size||!matches(x,gl))return false;
+  if(Object.entries(backups).some(([k,v])=>k===x.id||v===x.id))return false;
+  const ae=document.activeElement,act=ae&&ae.closest?.("article.card")&&ae.dataset.act;
+  let ok=false;
+  for(const el of document.querySelectorAll("#view article.card[data-sid]")){
+    const y=BY.get(el.dataset.sid);if(!y||(y.id!==x.id&&!overlaps(x,y)))continue;
+    const had=act&&el.contains(ae);el.outerHTML=card(y,gl);if(y.id===x.id)ok=true;
+    if(had)document.querySelector(`#view article.card[data-sid="${y.id}"] [data-act="${act}"]`)?.focus({preventScroll:true});
+  }
+  if(!ok)return false;
+  const tb=document.querySelector("#view>.toolbar.btool");if(tb)tb.outerHTML=browseToolbar(S.filter(y=>matches(y,gl)));
+  return true;
+}
+window.addEventListener("beforeprint",()=>browseFlush&&browseFlush());
 
 function renderPlan(){
   const gl=goList(),items=S.filter(x=>plan[x.id]);
@@ -1717,7 +1749,7 @@ function renderVenue(){
     ${mxPopHtml()}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a room for sessions</div></div>`;
   const unplaced=R.all.filter(s2=>!s2.pl);
-  html+=`<div class="mx-legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
+  html+=`<div class="mx-legend" tabindex="0" role="group" aria-label="Map legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
     +(unplaced.length?`<div class="mx-note">Not drawn (location not on MCEC's plans): ${unplaced.map(s2=>`${s2.n}. ${esc(s2.x.location)}`).join(", ")}</div>`:"")+`</div>`;
   if(gl.length){
     const di=MX.day,g=di==null?[]:gl.filter(x=>x.dayIdx===di);
@@ -1733,7 +1765,7 @@ function renderVenue(){
             if(w!=null)walkT+=w;if(fc)flr++;if(tg)tight++;
             steps+=`<li class="rhop ${tg?"tight":""} ${fc?"xf":""}">${svg("walk")}${w!=null?`~${w} min walk`:"Walk time unknown"}${fc?` · ${floorNo(mb)>floorNo(ma)?"up":"down"} to ${floorName(mb)}`:""} · ${gap<0?"overlaps":gap+" min between"}${tg?" ⚠":""}</li>`}}
         const ok=!!placeOf(x.location);
-        steps+=`<li class="rs ${ok?"":"na"} ${MX.selId===x.id?"on":""}" ${ok?`role="button" tabindex="0" data-act="mgo" data-id="${x.id}" title="Show on the map"`:""}><span class="num">${i+1}</span><div class="rt2"><div class="t">${fmt(x.s)} – ${fmt(x.f)}</div><b>${esc(x.title)}</b><div class="sub">${locHtml(x.location)}${ok?"":" · not on MCEC's plans"}</div></div>${ok?svg("chev"):""}</li>`;
+        steps+=`<li><div class="rs ${ok?"":"na"} ${MX.selId===x.id?"on":""}" ${ok?`role="button" tabindex="0" data-act="mgo" data-id="${x.id}" title="Show on the map"`:""}><span class="num">${i+1}</span><div class="rt2"><div class="t">${fmt(x.s)} – ${fmt(x.f)}</div><b>${esc(x.title)}</b><div class="sub">${locHtml(x.location)}${ok?"":" · not on MCEC's plans"}</div></div>${ok?svg("chev"):""}</div></li>`;
       });
       html+=`<div class="rhead"><h3>My route · ${DAYS[di].label}</h3><span class="sub">${g.length} stop${g.length>1?"s":""} · ~${walkT} min walking${flr?` · ${flr} floor change${flr>1?"s":""}`:""}${tight?` · <b style="color:var(--bad)">${tight} tight</b>`:""}</span></div><ol class="rsteps">${steps}</ol>`;
     }
@@ -2055,7 +2087,7 @@ function xferBox(){
     <div class="sba"><button class="primary" data-act="xapply">${svg("check")}Use it on this device</button><button class="muted" data-act="xcancel">Cancel</button></div></div>`;
 }
 
-function render(){
+function render(patch){
   const pb=$("#pvbar");document.body.classList.toggle("pvmode",!!PV);pb.hidden=!PV;
   if(PV){const g=Object.values(plan).filter(v=>v==="go").length;
     pb.innerHTML=`<span class="pvt">${svg("eye")}<span><b>Previewing ${esc(pendingShare?.name||"a shared")}${pendingShare?.name?"'s":""} plan</b><span class="sub"> · ${g} going · read-only</span></span></span><span class="pva">${pendingShare?.stored?"":`<button data-act="sharecmp">${svg("users")}${friendFor(pendingShare)?"Update":"Compare"}</button>`}<button data-act="sharerep">Use as my plan</button><button class="primary" data-act="pvexit">${svg("x")}Exit</button></span>`}
@@ -2070,7 +2102,7 @@ function render(){
   const fsm=$("#fmtSum");if(fsm)fsm.textContent=F.formats.size?(F.formats.size<=2?[...F.formats].join(", "):F.formats.size+" formats"):"All formats";
   const nf=[F.formats.size,F.themes.size,F.topic,F.aud.size,F.loc,F.hideLogi,F.fits,F.mine,F.showHidden,F.changed,F.onlyInt].filter(Boolean).length;
   $("#fCount").textContent=nf||"";
-  mode==="now"?renderNow():mode==="plan"?renderPlan():mode==="venue"?renderVenue():renderBrowse();
+  if(!(patch&&browsePatch(patch,goList())))mode==="now"?renderNow():mode==="plan"?renderPlan():mode==="venue"?renderVenue():renderBrowse();
   if(mode==="venue")F.day=MX.day==null?"all":String(MX.day);
   $("#mDays").innerHTML=dayBtns();
   tipRefresh();
@@ -2195,7 +2227,7 @@ document.addEventListener("click",e=>{
   if(PV&&PV_BLOCK.has(a)){alert("You're previewing a shared plan. Exit the preview to change your own plan.");return}
   if(a==="sharepv"){pvEnter();render();window.scrollTo(0,0);return}
   if(a==="pvexit"){pvExit();if(pendingShare?.stored)pendingShare=null;mode="plan";render();window.scrollTo(0,0);return}
-  if(a==="go"||a==="maybe"){if(plan[id]===a)delete plan[id];else plan[id]=a;save();const y=window.scrollY;render();window.scrollTo(0,y);return}
+  if(a==="go"||a==="maybe"){if(plan[id]===a)delete plan[id];else plan[id]=a;save();const y=window.scrollY;render(BY.get(id));window.scrollTo(0,y);return}
   if(a==="lock"){if(locked.has(id))locked.delete(id);else if(plan[id]==="go")locked.add(id);saveL();const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(a==="lockall"){for(const x of goList())locked.add(x.id);saveL();return render()}
   if(a==="unlockall"){locked.clear();saveL();return render()}
