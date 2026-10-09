@@ -98,6 +98,12 @@ def key(r):
     return r["url"].rstrip("/").rsplit("/", 1)[-1] if r.get("url") else None
 
 
+def same_words(a, b):
+    """True when two titles differ only in capitalisation, spacing or punctuation."""
+    norm = lambda t: re.sub(r"[\W_]+", "", t.casefold())
+    return norm(a) == norm(b)
+
+
 def diff(old, new, stamp):
     oldk = {key(r): r for r in old if key(r)}
     newk = {key(r): r for r in new if key(r)}
@@ -112,7 +118,7 @@ def diff(old, new, stamp):
             changes.append({"id": k, "kind": "moved", "was": o["location"], "now": r["location"]})
         if (o["day"], o["start"], o["finish"]) != (r["day"], r["start"], r["finish"]):
             changes.append({"id": k, "kind": "time", "was": when(o), "now": when(r)})
-        if o["title"] != r["title"]:
+        if o["title"] != r["title"] and not same_words(o["title"], r["title"]):
             changes.append({"id": k, "kind": "retitled", "was": o["title"], "now": r["title"]})
     gone = [o for k, o in oldk.items() if k not in newk]
     for o in gone:
