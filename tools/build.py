@@ -317,12 +317,22 @@ def make_preview(path, draw):
     d = ImageDraw.Draw(im)
     d.rectangle([0, 0, 1200, 10], fill=(51, 85, 221))
     im.paste(icon := draw(300, 0.2, True), (90, 165), icon)
-    x = 450
-    d.text((x, 150), "CYBERCON 2026 · UNOFFICIAL", font=font(30), fill=(154, 160, 195))
-    d.text((x, 195), "Attendee Planner", font=font(78), fill=(232, 234, 246))
-    for i, line in enumerate(["Plan sessions and spot clashes", "Walking routes around MCEC", "Melbourne · 14–16 Oct 2026"]):
-        d.text((x, 320 + i * 52), line, font=font(36, bold=False), fill=(201, 205, 230))
-    d.text((x, 520), SITE_URL.replace("https://", ""), font=font(30), fill=(124, 156, 255))
+    x, room = 450, 1200 - 450 - 60
+
+    # The deploy runner's fallback font is wider than Segoe UI, so shrink any line that would run off the card.
+    def fit(text, size, bold=True):
+        while size > 12 and d.textlength(text, font=font(size, bold)) > room:
+            size -= 2
+        return font(size, bold)
+
+    d.text((x, 150), "CYBERCON 2026 · UNOFFICIAL", font=fit("CYBERCON 2026 · UNOFFICIAL", 30), fill=(154, 160, 195))
+    d.text((x, 195), "Attendee Planner", font=fit("Attendee Planner", 78), fill=(232, 234, 246))
+    lines = ["Plan sessions and spot clashes", "Walking routes around MCEC", "Melbourne · 14–16 Oct 2026"]
+    body = min((fit(t, 36, False) for t in lines), key=lambda f: f.size)
+    for i, line in enumerate(lines):
+        d.text((x, 320 + i * 52), line, font=body, fill=(201, 205, 230))
+    url = SITE_URL.replace("https://", "")
+    d.text((x, 520), url, font=fit(url, 30), fill=(124, 156, 255))
     im.save(path, optimize=True)
 
 
