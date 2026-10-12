@@ -106,7 +106,7 @@
   "kw": "ai conman drawing engineered experience exploited final hall hamish mclaren scaling tracy trust victim"
  },
  {
-  "title": "Security at Agentic Scale: Protecting the Enterprise in the Age of AI Agents",
+  "title": "Security at agentic scale: protecting the enterprise in the age of AI agents",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "11:10 am",
@@ -149,7 +149,7 @@
   "finish": "11:50 am",
   "location": "Room 103",
   "speakers": [
-   "Frank Zeichner"
+   "Alan de Zwaan"
   ],
   "summary": "",
   "theme": [],
@@ -158,7 +158,7 @@
   "sponsor": "",
   "sortkey": "26101411102103",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-xligebwd55",
-  "kw": "buy clear consumers designed device frank information labelling pilot presents scheme security smart voluntary zeichner"
+  "kw": "australian buy certified compare consumers cyber device hear help label pilot scheme security smart"
  },
  {
   "title": "Designing systems for resilience in an uncertain world",
@@ -684,7 +684,7 @@
   "kw": "abuse ai attackers case defending five hands-on labs manipulation model practical rag steps studies systems target"
  },
  {
-  "title": "AI: The Invisible Decision",
+  "title": "AI: The invisible decision",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "11:35 am",
@@ -720,7 +720,7 @@
   "kw": "agent ai asked comply engineering existence hours kill led mark preserve recounts say shut social vos"
  },
  {
-  "title": "Can't See the Forrest for the Trees: SMB Security in the Age of AI FOMO",
+  "title": "Can't see the forest for the trees: SMB security in the age of AI FOMO",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "12:00 pm",
@@ -892,6 +892,25 @@
   "sortkey": "26101412002207",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-n1gdlm7wa5",
   "kw": "actually australian controls court cyber funded isn't monitored policy regulators rulings test three worked"
+ },
+ {
+  "title": "Secure by design: Raising expectations for connected technologies",
+  "format": "Breakout",
+  "day": "14 Oct",
+  "start": "12:00 pm",
+  "finish": "12:40 pm",
+  "location": "Room 208",
+  "speakers": [
+   "Stephanie Hilton"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101412002208",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-nrw2ylwcdp",
+  "kw": "australian bar bring connected cyber design device government hear labelling raising risks secure smart technologies work"
  },
  {
   "title": "How to stop security operations centres reinventing the wheel: What AI SecOps can learn from Toyota",
@@ -1189,7 +1208,7 @@
   "kw": "12pm ask cowan culture development edith expert haskell-dowland paul people professor subjects university wednesday workforce"
  },
  {
-  "title": "What If Isn't Enough: Real-World Verification of Your Microsoft Entra ID Conditional Access",
+  "title": "What if isn't enough: Real-world verification of your Microsoft Entra ID conditional access",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "12:25 pm",
@@ -1246,7 +1265,7 @@
   "kw": "behind controls covers decisions eight essential framework prescriptive principles-based reshaped"
  },
  {
-  "title": "The Changing Face of Identity: Humans, Machines and AI Agents",
+  "title": "The changing face of identity: Humans, machines and AI agents",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "1:40 pm",
@@ -1486,7 +1505,7 @@
   "sponsor": "",
   "sortkey": "26101413402210",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-kqelyeyhyf",
-  "kw": "attack chain compromise credentials full infostealer log marketplace network ransomware sale stolen traces"
+  "kw": "business chain compromise crime criminal cyber ecosystem email enables fraud interconnected ransomware real-world services supply underground"
  },
  {
   "title": "Stop failing the same way: How DFIR findings should shape GRC",
@@ -1807,7 +1826,7 @@
   "kw": "bring chatham custom cyber governance house leave maturity organisation report score workshop"
  },
  {
-  "title": "Secure AI by Design: Protecting Your AI Adoption Journey",
+  "title": "Secure AI by design: Protecting your AI adoption journey",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "2:05 pm",
@@ -1841,7 +1860,7 @@
   "kw": "contestants david final finley first four grand hosted keating kyle place rounds savva-willett stage three waters winner"
  },
  {
-  "title": "Beyond the Hype: Building the Governance Foundation to Fully Embrace AI",
+  "title": "Beyond the hype: Building the governance foundation to fully embrace AI",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "2:30 pm",
@@ -1858,7 +1877,7 @@
   "kw": "ahead ai ambition close enterprise gap governance measure question readiness running scale"
  },
  {
-  "title": "Opening doors: AISA - building the next generation of cyber talent",
+  "title": "Meet the AISA 2026 Scholarship recipients and learn their stories",
   "format": "Careers Village",
   "day": "14 Oct",
   "start": "2:30 pm",
@@ -1874,7 +1893,7 @@
   "sponsor": "",
   "sortkey": "26101414301030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-wjkudfn7vh",
-  "kw": "30pm building careers crabtree cyber emily exhibition generation hall lead paige talent village wednesday zhang"
+  "kw": "30pm aisa crabtree emily paige recipients scholarship stories students tell university wednesday zhang"
  },
  {
   "title": "Turning IEC 62443 into action: A practical path to critical infrastructure resilience",
@@ -1953,7 +1972,7 @@
   "finish": "3:10 pm",
   "location": "Room 203",
   "speakers": [
-   "Jakub Zverina, Monica Millar, Scarlett McDermott & Betsy Gregg"
+   "Jakub Zverina, Monica Millar, Scarlett McDermott, Betsy Gregg & Guy Roberts"
   ],
   "summary": "",
   "theme": [],
@@ -2306,7 +2325,7 @@
   "kw": "30pm accountability ceo expert governance jacqui kernot leadership model operations running secure security wednesday"
  },
  {
-  "title": "Rethinking Security for Agentic AI — From Control to Orchestration",
+  "title": "Rethinking security for agentic AI: from control to orchestration",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "2:55 pm",
@@ -2340,7 +2359,24 @@
   "kw": ""
  },
  {
-  "title": "Empowered Together: Redefining How Security Operations Teams See, Respond and Prevail",
+  "title": "The Data Is the Target: What 177 DFIR Investigations Reveal About Identity, AI and Speed",
+  "format": "Knowledge Hub",
+  "day": "14 Oct",
+  "start": "3:20 pm",
+  "finish": "3:40 pm",
+  "location": "Exhibition Hall",
+  "speakers": [],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "Triskele Labs",
+  "sortkey": "26101415201030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-k0ebmwkstk",
+  "kw": "access common findings identity incident investigations mfa past rdp stolen tokens unsecured vpn"
+ },
+ {
+  "title": "Empowered together: Redefining how security operations teams see, respond and prevail",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "3:50 pm",
@@ -2652,6 +2688,25 @@
   "kw": "adversary-based closes combining compliant continuous framework gap paper practice risk secure security testing validation"
  },
  {
+  "title": "It’s essential, essentially: Strengthening cyber security guidance for operational technology",
+  "format": "Breakout",
+  "day": "14 Oct",
+  "start": "3:50 pm",
+  "finish": "4:30 pm",
+  "location": "Room 217",
+  "speakers": [
+   "Kenneth Radke"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101415502217",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-6cw0wwwxzi",
+  "kw": "australian built cyber essentials first framework government hear operational ot security stands technology writing"
+ },
+ {
   "title": "Outgunned but not outmanoeuvred: How SMEs win the cyber war",
   "format": "Breakout",
   "day": "14 Oct",
@@ -2811,7 +2866,7 @@
   "kw": "50pm accountability ask bring dan expert governance leadership maslin october questions wednesday"
  },
  {
-  "title": "The Elephant in the SOC: Why No One Sees Identity Whole",
+  "title": "The elephant in the SOC: Why no one sees identity whole",
   "format": "Knowledge Hub",
   "day": "14 Oct",
   "start": "4:15 pm",
@@ -3033,7 +3088,7 @@
   "kw": "australia capability civilian cyber deployable discussion established industry-led national newly policy reserve turns years"
  },
  {
-  "title": "When Agentic AI Works Around Your Security Controls",
+  "title": "When agentic AI works around your security controls",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "10:55 am",
@@ -3594,7 +3649,7 @@
   "kw": "attacks detecting environment hands-on hunts industrial kali mitigating networks ot plcs purple scada simulated threats workshop"
  },
  {
-  "title": "Machine Speed Adversaries, Pragmatic Defense",
+  "title": "Machine-speed adversaries, pragmatic defense",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "11:20 am",
@@ -3653,7 +3708,7 @@
   "kw": "cyber depend executing incident insurance outcomes plan practitioners pressure response unpack"
  },
  {
-  "title": "Security in the AI Era: Cybersecurity Through the Eyes of the Attacker & Defender",
+  "title": "Security in the AI era: Cybersecurity through the eyes of the attacker & defender",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "11:45 am",
@@ -3668,6 +3723,25 @@
   "sortkey": "26101511451030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-nvzelcajyf",
   "kw": "actors ai-driven early modernise monetisation moved operations pace response schemes side threat"
+ },
+ {
+  "title": "The human layer in cyber security: what organisational culture does to your security posture",
+  "format": "Careers Village",
+  "day": "15 Oct",
+  "start": "11:45 am",
+  "finish": "12:25 pm",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Rezza Moeini"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101511451030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-2ixvo22oxb",
+  "kw": "australian cultures cyber finds healthier interviewer leave misses near people professionals questions readily report research"
  },
  {
   "title": "AI on Kubernetes is a hidden attack surface",
@@ -4183,7 +4257,7 @@
   "kw": "act ai boards breach consultants corporations decisions directors duties governance outsource panel warns"
  },
  {
-  "title": "From Endpoint Management to Exposure Management: The Next Evolution of Cybersecurity in the Age of Agentic AI",
+  "title": "From endpoint management to exposure management: The next evolution of cybersecurity in the age of Agentic AI",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "1:30 pm",
@@ -4495,6 +4569,25 @@
   "kw": "analysis australia best-selling connected data exposes hidden inside privacy risks safety security systems telematics vehicle"
  },
  {
+  "title": "AISA 2030: Strategy Sneak Peek",
+  "format": "Breakout",
+  "day": "15 Oct",
+  "start": "1:30 pm",
+  "finish": "2:10 pm",
+  "location": "Room 216",
+  "speakers": [
+   "Michael Burchell"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101513302216",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-ihbp5td0qk",
+  "kw": "aisa association directors five november preview priorities release roadmap strategy years"
+ },
+ {
   "title": "How AI agents are leaking your secrets",
   "format": "Breakout",
   "day": "15 Oct",
@@ -4744,7 +4837,7 @@
   "kw": "common cyber early exploitation financial grooming manipulation pattern professionals recognise romance scams trust-building"
  },
  {
-  "title": "The Evolution of NDR in the Age of AI: Visibility, detection, and response across the modern network – and the role NDR plays in a mature SOC",
+  "title": "The evolution of NDR in the age of AI: Visibility, detection, and response across the modern network, and the role NDR plays in a mature SOC",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "1:55 pm",
@@ -4824,7 +4917,7 @@
   "kw": "adversary australia confidence conflicts cyber gulf lessons offer regional state tested year zealand"
  },
  {
-  "title": "AI-Driven SecOps: Federated Data, MCP, and Dynamic AI Runbooks",
+  "title": "AI-driven SecOps: Federated data, MCP, and dynamic AI runbooks",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "2:20 pm",
@@ -5293,7 +5386,7 @@
   "kw": "20pm accountability ask culture development expert governance james leadership morphett people thursday workforce"
  },
  {
-  "title": "Code by Vibes, Breach by Design: Securing the Non-Coder Revolution",
+  "title": "Code by vibes, breach by design: Securing the non-coder revolution",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "2:45 pm",
@@ -5373,7 +5466,7 @@
   "kw": "ai assess buyers changing cyber events geopolitical instability insurance insurers markets price reshaping risk systemic"
  },
  {
-  "title": "Unified, Automated, and Powered by Agentic AI: The SOC Reimagined",
+  "title": "Unified, automated, and powered by agentic AI: The SOC reimagined",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "3:50 pm",
@@ -5934,7 +6027,7 @@
   "kw": "agentic ai approve case dfir direct enters finding for508 hands-on investigation reject sans simulated workshop"
  },
  {
-  "title": "The Science of Recoverability: Why Most Organisations Can't Answer the One Question That Matters",
+  "title": "The science of recoverability: Why most organisations can't answer the one question that matters",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "4:15 pm",
@@ -5993,7 +6086,7 @@
   "kw": "barriers cyber cyber5050 data limiting panel participation progression report says shortage skills survey women"
  },
  {
-  "title": "Trusted Identity, Autonomous Agents: The New Cybercrime Battleground",
+  "title": "Trusted identity, autonomous agents: The new cybercrime battleground",
   "format": "Knowledge Hub",
   "day": "15 Oct",
   "start": "4:40 pm",
@@ -6530,7 +6623,7 @@
   "kw": ""
  },
  {
-  "title": "Conference Re-Cap with Shadow Minister Aaron Violi",
+  "title": "Conference Opening Day 3",
   "format": "Other",
   "day": "16 Oct",
   "start": "9:00 am",
@@ -6652,7 +6745,7 @@
   "kw": "building business cyber model pairs practical resilience security small smes strengthening structured students studentship talent"
  },
  {
-  "title": "Your Riskiest Employee Might Not Be Human",
+  "title": "Your riskiest employee might not be human",
   "format": "Knowledge Hub",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -6667,6 +6760,25 @@
   "sortkey": "26101610551030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-nmzz7ehppn",
   "kw": "agentic ai insider offered organisation question reach risk running treated work"
+ },
+ {
+  "title": "The power of unlikely skills: From law and art to cyber",
+  "format": "Careers Village",
+  "day": "16 Oct",
+  "start": "10:55 am",
+  "finish": "11:35 am",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Lauren Compson, Polly Cheung, Biljana Roksandic, Venessa Smith & Simone van Nieuwenhuizen"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101610551030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-4gmawdfn5e",
+  "kw": "55am art biljana bring cheung compson cyber friday lauren law nieuwenhuizen polly roksandic simone skills smith unlikely van venessa"
  },
  {
   "title": "Beyond human-in-the-loop: Rethinking AI architecture",
@@ -6713,29 +6825,6 @@
   "sortkey": "26101610552104",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-nh4xs8lp7h",
   "kw": "approval-gated blast cloud code first guardrails infrastructure lands mistakes modular pipelines policy radius shrink workload"
- },
- {
-  "title": "Finding Amelia Earhart using security architecture",
-  "format": "Breakout",
-  "day": "16 Oct",
-  "start": "10:55 am",
-  "finish": "11:35 am",
-  "location": "Room 105",
-  "speakers": [
-   "Robert Laurie"
-  ],
-  "summary": "",
-  "theme": [
-   "People, Culture and Workforce"
-  ],
-  "topic": [
-   "Human Risk, Judgement and Decision-Making Under Pressure"
-  ],
-  "audience": "General",
-  "sponsor": "",
-  "sortkey": "26101610552105",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-tpizozmcma",
-  "kw": "amelia applied architecture day disappearance earhart framework modelling reconstruct sabsa security trust went wrong"
  },
  {
   "title": "Maximising value through partnership - transforming customer-vendor dynamics",
@@ -6899,7 +6988,7 @@
   "kw": "ai-enabled cyber decisions depends factor genuine inclusive leadership neurodiversity resilience risk safeguarding shapes systems"
  },
  {
-  "title": "Four years in the AI trenches: a practitioner's honest field notes from 2022 to 2026",
+  "title": "Four years in the AI trenches: A practitioner's honest field notes from 2022 to 2026",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "10:55 am",
@@ -7257,7 +7346,7 @@
   "kw": "advanced adversaries breaches capacity coverage created expectations exploit gaps limited preventable small unrealistic"
  },
  {
-  "title": "Defeating AI Threats with an Unlimited Security Model",
+  "title": "Defeating AI threats with an unlimited security model",
   "format": "Knowledge Hub",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7272,6 +7361,25 @@
   "sortkey": "26101611451030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-th3b4j5sql",
   "kw": "comparison continuous cyber delivery function points reprioritisable security stated trust whole zero"
+ },
+ {
+  "title": "Meet the AISA 2026 Scholarship recipients and learn their stories",
+  "format": "Careers Village",
+  "day": "16 Oct",
+  "start": "11:45 am",
+  "finish": "12:25 pm",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Alice Kjar, Anh Doan & Jasmine Rizwan"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101611451030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-4pwhhmbadq",
+  "kw": "45am aisa alice anh doan friday jasmine kjar recipients rizwan scholarship second sessions stories two"
  },
  {
   "title": "LLM-driven autonomous and process aware industrial control system threat detection",
@@ -7688,7 +7796,7 @@
   "kw": "alerts analysts common first gap live mistakes month pressure reveal security soc studying theory thirty triaging"
  },
  {
-  "title": "The career that runs everything and nobody talks about",
+  "title": "Ask me about the career that runs everything and nobody talks about",
   "format": "Ask an Expert",
   "day": "16 Oct",
   "start": "11:45 am",
@@ -7707,7 +7815,7 @@
   "kw": "45am abbas ask career ciso everything expert field friday kudrati nobody runs subject talks"
  },
  {
-  "title": "Agents and Adversaries: When Your Own AI Does the Adversary's Job For It",
+  "title": "Agents and adversaries: When your own AI does the adversary's job for it",
   "format": "Knowledge Hub",
   "day": "16 Oct",
   "start": "12:10 pm",
@@ -7802,6 +7910,25 @@
   "sortkey": "26101612351030",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-f35qddugfx",
   "kw": "ai attack bypass controls data effectively exponentially expose impeding increasing innovation introduce join mitigate organizational power productivity risk risks sensitive surfaces tools transform uncover workplace"
+ },
+ {
+  "title": "Rawthority: Leverage your story to get what you want",
+  "format": "Careers Village",
+  "day": "16 Oct",
+  "start": "12:35 pm",
+  "finish": "1:15 pm",
+  "location": "Exhibition Hall",
+  "speakers": [
+   "Aleyx Ward"
+  ],
+  "summary": "",
+  "theme": [],
+  "topic": [],
+  "audience": "",
+  "sponsor": "",
+  "sortkey": "26101612351030",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-rnvtglldrg",
+  "kw": "credible employers experience interview job linkedin notice pin profile story turn want workshop"
  },
  {
   "title": "Who owns what when AI fails? The GenAI shared responsibility model for AI risk across every use case",
@@ -8241,7 +8368,7 @@
   "kw": "adversarial assurance closing continuous detection driven engineering gap ground simulation telemetry truth"
  },
  {
-  "title": "No Silver Bullets: Securing Sensitive Data—A Problem as Old as Digital Data Itself",
+  "title": "No silver bullets: Securing sensitive data, a problem as old as digital data itself",
   "format": "Knowledge Hub",
   "day": "16 Oct",
   "start": "1:00 pm",
@@ -8345,6 +8472,30 @@
   "sortkey": "26101615051000",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-y54qieq3zd",
   "kw": "berners-lee co-founder data foundation founder heading institute online open privacy sir tim web wide world"
+ },
+ {
+  "title": "Finding Amelia Earhart using security architecture",
+  "format": "Breakout",
+  "day": "16 Oct",
+  "start": "10:55 am",
+  "finish": "11:35 am",
+  "location": "Room 105",
+  "speakers": [
+   "Robert Laurie"
+  ],
+  "summary": "",
+  "theme": [
+   "People, Culture and Workforce"
+  ],
+  "topic": [
+   "Human Risk, Judgement and Decision-Making Under Pressure"
+  ],
+  "audience": "General",
+  "sponsor": "",
+  "sortkey": "26101610552105",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-tpizozmcma",
+  "kw": "amelia applied architecture day disappearance earhart framework modelling reconstruct sabsa security trust went wrong",
+  "cancelled": true
  },
  {
   "title": "We see the accountability void. We look away",
