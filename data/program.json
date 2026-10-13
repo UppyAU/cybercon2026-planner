@@ -8046,7 +8046,7 @@
   "kw": "analysis borrowing controls failure formula hold introduces method pressure proactive security shift testing"
  },
  {
-  "title": "Can cyber regulation keep pace with a fragmented threat environment?",
+  "title": "Preserving the capacity to defend: When global cyber threats meet fragmented regulation",
   "format": "Breakout",
   "day": "16 Oct",
   "start": "12:35 pm",
@@ -8276,29 +8276,6 @@
   "kw": "assessments assurance blind confidence cyber governance multi-year research reveals self-reported sme spot substitutes validated"
  },
  {
-  "title": "Beyond the credential: What Telegram knows about your company that you don’t",
-  "format": "Think Tank",
-  "day": "16 Oct",
-  "start": "12:35 pm",
-  "finish": "1:15 pm",
-  "location": "Think Tank 1",
-  "speakers": [
-   "Jesse Hoppo"
-  ],
-  "summary": "",
-  "theme": [
-   "Running Secure Operations"
-  ],
-  "topic": [
-   "Threat Intelligence, Detection and Adversary Behaviour"
-  ],
-  "audience": "General",
-  "sponsor": "",
-  "sortkey": "26101612353010",
-  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-gwjwh4mcoa",
-  "kw": "access cookies expose far including infostealer logs monitor passwords saas security teams think usernames"
- },
- {
   "title": "Compliant, but still exposed: Rethinking OT cyber risk as an architectural problem",
   "format": "Think Tank",
   "day": "16 Oct",
@@ -8472,6 +8449,30 @@
   "sortkey": "26101615051000",
   "url": "https://melbourne2026.cyberconference.com.au/sessions/session-y54qieq3zd",
   "kw": "berners-lee co-founder data foundation founder heading institute online open privacy sir tim web wide world"
+ },
+ {
+  "title": "Beyond the credential: What Telegram knows about your company that you don’t",
+  "format": "Think Tank",
+  "day": "16 Oct",
+  "start": "12:35 pm",
+  "finish": "1:15 pm",
+  "location": "Think Tank 1",
+  "speakers": [
+   "Jesse Hoppo"
+  ],
+  "summary": "",
+  "theme": [
+   "Running Secure Operations"
+  ],
+  "topic": [
+   "Threat Intelligence, Detection and Adversary Behaviour"
+  ],
+  "audience": "General",
+  "sponsor": "",
+  "sortkey": "26101612353010",
+  "url": "https://melbourne2026.cyberconference.com.au/sessions/session-gwjwh4mcoa",
+  "kw": "access cookies expose far including infostealer logs monitor passwords saas security teams think usernames",
+  "cancelled": true
  },
  {
   "title": "Finding Amelia Earhart using security architecture",
