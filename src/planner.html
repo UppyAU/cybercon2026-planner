@@ -244,6 +244,14 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .mx-stage .mk2.fac:hover{background:#085a55;border-color:#fff}
 .mx-stage .mk2.fac svg{width:14px;height:14px}
 .mx-stage .mk2.fac:not(:has(span)){width:24px;height:24px;padding:0;border-radius:50%}
+/* CyberCon areas in the hall: named pills when zoomed in, compact symbols when the whole floor is in view. */
+.mx-stage .mk2.area{height:26px;padding:0 9px 0 7px;border-radius:13px;background:#b45309;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:2}
+.mx-stage .mk2.area:hover{background:#92400e;border-color:#fff}
+.mx-stage .mk2.area svg{width:14px;height:14px}
+.mx-stage .mk2.area.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4);z-index:5}
+.mx-stage:not(.zin) .mk2.area span{display:none}
+.mx-stage:not(.zin) .mk2.area{width:24px;height:24px;padding:0;border-radius:50%;justify-content:center}
+.lg-area{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#b45309;color:#fff;font-style:normal}.lg-area svg{width:12px;height:12px}
 /* Phones: facilities show just their symbol; the name is in the popup and the legend. */
 @media(max-width:700px){.mx-stage .mk2.fac span{display:none}.mx-stage .mk2.fac{width:24px;height:24px;padding:0;border-radius:50%}}
 .mx-stage .mk2.fac.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4)}
@@ -1020,7 +1028,14 @@ const FACILITIES=[
    txt:"On the ground floor of the Convention Centre, close to Goldfields Café (behind the Plenary stage on MCEC's map). Ask at the customer service desk if you need directions."}
 ];
 FACILITIES.forEach(f=>{if(f.pts)f.p=polyC(f.pts)});
-const FAC=Object.fromEntries(FACILITIES.map(f=>[f.k,f]));
+// CyberCon areas in the Exhibition Hall (Bays 1?20), along the wall between Bays 18 and 19, from the concourse end to Kiosk 5.
+const AREAS=[
+  {k:"careers",ic:"brief",t:"Careers Village",m:"P",p:[55.3,68.49],where:"Exhibition Hall, Bays 18?19 (concourse end)",txt:"Careers Village sessions are held here, at the concourse end of the wall between Bays 18 and 19.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1?20 hall."},
+  {k:"lego",ic:"brick",t:"LEGO",m:"P",p:[57.31,70.93],where:"Exhibition Hall, Bays 18?19",txt:"The LEGO area, along the wall between Bays 18 and 19, between the Careers Village and the Knowledge Hub.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1?20 hall."},
+  {k:"khub",ic:"bulb",t:"Knowledge Hub",m:"P",p:[59.32,73.37],where:"Exhibition Hall, Bays 18?19",txt:"Knowledge Hub sessions are held here, along the wall between Bays 18 and 19, towards Kiosk 5.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1?20 hall."},
+  {k:"podcast",ic:"mic",t:"Cyber Voices podcast",m:"P",p:[61.33,75.81],where:"Exhibition Hall, Bays 18?19 (Kiosk 5 end)",txt:"The Cyber Voices podcast booth, at the Kiosk 5 end of the wall between Bays 18 and 19.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1?20 hall."}
+];
+const FAC=Object.fromEntries([...FACILITIES,...AREAS].map(f=>[f.k,f]));
 // Area-weighted centre of a polygon, so numbers sit in the middle of the room.
 function polyC(P){let a=0,x=0,y=0;P.forEach((q,i)=>{const r=P[(i+1)%P.length],c=q[0]*r[1]-r[0]*q[1];a+=c;x+=(q[0]+r[0])*c;y+=(q[1]+r[1])*c});
   return a?[+(x/(3*a)).toFixed(2),+(y/(3*a)).toFixed(2)]:P[0]}
@@ -1128,6 +1143,10 @@ function pathR(P,r){
 const locLink=x=>placeOf(x.location)?`<a href="#" class="loclink" data-act="goto" data-id="${x.id}" title="Show ${esc(x.location)} on the venue map">${locHtml(x.location)}</a>`:locHtml(x.location);
 const locHtml=loc=>`${svg("pin").replace('class="ic"','class="ic lpin"')}${esc(loc)}${levelOf(loc)?` <span class="lv" title="${lvName(levelOf(loc))} (MCEC floor plan)">${levelOf(loc)}</span>`:""}`;
 const P={
+  brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/>',
+  brick:'<rect x="3" y="10" width="18" height="10" rx="1.5"/><path d="M6.5 10V7h4v3M13.5 10V7h4v3"/>',
+  bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.1V16h5v-.1c0-.8.4-1.5 1.1-2.1A6 6 0 0 0 12 3z"/>',
+  mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
   leaf:'<path d="M5 19c0-8.5 5.5-13.5 14-14-.5 8.5-5.5 14-14 14z"/><path d="M5 19l7.5-7.5"/>',
   hands:'<path d="M12 3.5v13M12 3.5c-1.6 2.2-3.6 6-3.6 9.6v3.4L5.5 20M12 3.5c1.6 2.2 3.6 6 3.6 9.6v3.4l2.9 3.5"/>',
   check:'<path d="M20 6 9 17l-5-5"/>',
@@ -1737,7 +1756,8 @@ function renderVenue(){
   const stopLocs=new Set(R.st.map(s2=>s2.x.location));
   const facs=FACILITIES.filter(f=>f.m===MX.m);
   const fboxes=facs.filter(f=>f.pts).map(f=>`<polygon class="fbox ${MX.fac===f.k?"sel":""}" points="${f.pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mfac" data-k="${f.k}" role="button" tabindex="0" aria-label="${f.t}: ${esc(f.where)}"/>`).join("");
-  const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" title="${f.t}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("");
+  const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" title="${f.t}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("")
+    +AREAS.filter(a=>a.m===MX.m).map(a=>`<button class="mk2 area ${MX.fac===a.k?"sel":""}" style="left:${a.p[0]}%;top:${a.p[1]}%" data-act="mfac" data-k="${a.k}" title="${a.t}" aria-label="${a.t}: ${esc(a.where)}">${svg(a.ic)}<span>${a.t}</span></button>`).join("");
   const boxes=locs.filter(l=>SHAPEM[l]&&(l!=="Melbourne Room"||stopLocs.has(l)||MX.sel===l)).map(l=>{const day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day)),mine=day.some(x=>plan[x.id]==="go");
     return `<polygon class="rbox ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""} ${APPROX.has(l)?"approx":""}" points="${SHAPEM[l].pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" role="button" tabindex="0" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"/>`}).join("");
   const dots=locs.filter(l=>!SHAPEM[l]&&l!=="Melbourne Room").map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
@@ -1768,7 +1788,7 @@ function renderVenue(){
     ${mxPopHtml()}${legBar(R)}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a room for sessions</div></div>`;
   const unplaced=R.all.filter(s2=>!s2.pl);
-  html+=`<div class="mx-legend" tabindex="0" role="group" aria-label="Map legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
+  html+=`<div class="mx-legend" tabindex="0" role="group" aria-label="Map legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}${AREAS.some(a=>a.m===MX.m)?`<span><i class="lg-area">${svg("brick")}</i>CyberCon areas</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
     +(unplaced.length?`<div class="mx-note">Not drawn (location not on MCEC's plans): ${unplaced.map(s2=>`${s2.n}. ${esc(s2.x.location)}`).join(", ")}</div>`:"")+`</div>`;
   if(gl.length){
     const di=MX.day,g=di==null?[]:gl.filter(x=>x.dayIdx===di);
@@ -1806,7 +1826,7 @@ function legBar(R){
 function mxPopHtml(){
   if(!MX.sel&&MX.fac&&FAC[MX.fac]){const f=FAC[MX.fac];
     return `<div class="mx-pop" role="dialog" aria-label="${f.t}"><div class="ph"><div><b>${svg(f.ic)} ${f.t}</b><div class="sub">${esc(f.where)}</div></div><button class="icon muted" data-act="mclose" title="Close" aria-label="Close">${svg("x")}</button></div>
-      <p style="margin:8px 0 6px">${esc(f.txt)}</p><p class="sub" style="margin:0">From the attendee information CyberCon emailed out.</p></div>`}
+      <p style="margin:8px 0 6px">${esc(f.txt)}</p><p class="sub" style="margin:0">${esc(f.src||"From the attendee information CyberCon emailed out.")}</p></div>`}
   if(!MX.sel)return "";
   const loc=MX.sel,r=ROOMS[loc]||{},lv=levelOf(loc);
   const all=S.filter(x=>x.location===loc&&!hidden.has(x.id)&&!muted(x)),list=all.filter(x=>MX.day==null||x.dayIdx===MX.day);
@@ -1820,7 +1840,9 @@ function mxPopHtml(){
 // ---- pan / zoom ----
 function mxDims(){const v=$("#mxView");if(!v)return null;const r=v.getBoundingClientRect();return {v,w:r.width,h:r.height,M:MAPS[MX.m]}}
 function mxClamp(k){return Math.min(MX.fitK*5,Math.max(MX.fitK*.8,k))}
-function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));mxLanes(st);if(TIP.anchor)tipPos()}
+const areaGap=()=>{const M=MAPS[MX.m],a=AREAS.filter(x=>x.m===MX.m);if(a.length<2)return 1e9;
+  return Math.min(...a.slice(1).map((x,i)=>Math.abs(x.p[1]-a[i].p[1])*M.h/100))};
+function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));st.classList.toggle("zin",areaGap()*MX.k>=28);mxLanes(st);if(TIP.anchor)tipPos()}
 function mxLanes(st){
   const L=MX.legs;if(!L||!L.length||MX.laneK===MX.k)return;MX.laneK=MX.k;
   const k=MX.k,step=52/k,edge=14/k,h=2/k,w=2.5/k,f=v=>v.toFixed(2);
