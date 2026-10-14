@@ -50,11 +50,26 @@ def test_no_corridor_cuts_through_a_room():
         for a, b in edges:
             assert a in nodes and b in nodes, f"{floor}: edge {a}-{b} uses an unknown point"
             (ax, ay), (bx, by) = nodes[a], nodes[b]
+            # h* points are walkways inside the Exhibition Hall (to the Knowledge Hub and Careers Village).
+            in_hall = floor == "P" and (a.startswith("h") or b.startswith("h"))
             for i in range(1, 60):
                 q = (ax + (bx - ax) * i / 60, ay + (by - ay) * i / 60)
                 for room, (f, poly) in SHAPES.items():
                     near_door = room in DOORS and math.dist(q, DOORS[room]) < 1.2
-                    assert f != floor or near_door or not _inside(q, poly), f"{floor} {a}-{b} cuts through {room}"
+                    allowed = near_door or (in_hall and room == "Exhibition Hall")
+                    assert f != floor or allowed or not _inside(q, poly), f"{floor} {a}-{b} cuts through {room}"
+
+
+def test_hall_walkway_reaches_the_hall_areas():
+    nodes, edges = _nav("P")
+    assert ["h0", "h1"] in edges and _inside(nodes["h0"], SHAPES["Exhibition Hall"][1])
+    areas = re.findall(r'k:"(khub|careers)",ic:"\w+",t:"[^"]+",m:"P",p:\[([\d.]+),([\d.]+)\]', PAGE)
+    (ax, ay), (bx, by) = nodes["h0"], nodes["h1"]
+    for k, x, y in areas:
+        x, y = float(x), float(y)
+        t = ((x - ax) * (bx - ax) + (y - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2)
+        d = math.hypot(x - ax - t * (bx - ax), y - ay - t * (by - ay))
+        assert 0 <= t <= 1 and d < 0.2, f"{k} is not on the hall walkway"
 
 
 def test_stairs_exist_on_every_floor():
