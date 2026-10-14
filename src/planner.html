@@ -726,6 +726,21 @@ details.msel[open]>summary [data-ic] svg{transform:rotate(180deg)}
 #xfer .xqr svg{display:block;width:100%;height:auto}
 #xfer .xa{display:flex;gap:8px}#xfer .xa button{flex:1}
 #xfer p{margin:0}
+#xfer.xbingo .xbox{width:min(560px,100%)}
+.bg-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.bg-grid .bgc{height:auto;aspect-ratio:1;padding:3px;border-radius:10px;font-size:clamp(10px,2.7vw,13px);font-weight:650;line-height:1.15;white-space:normal;text-align:center;overflow-wrap:normal;hyphens:manual;flex-direction:column;gap:2px;transition:transform .12s,background .15s,color .15s}
+.bg-grid .bgc:active{transform:scale(.93)}
+.bg-grid .bgc[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.bg-grid .bgc.free{background:color-mix(in srgb,var(--maybe) 22%,var(--card));border-style:dashed;color:var(--text);opacity:1;cursor:default}
+.bg-grid .bgc.free svg{width:20px;height:20px}
+.bg-grid .bgc.win{background:var(--go);border-color:var(--go);color:var(--on-go);animation:bgpop .45s}
+.bg-win{min-height:24px;text-align:center;font-weight:600;color:var(--muted)}
+.bg-win.on{color:var(--go);font-size:20px;font-weight:800;animation:bgpop .5s}
+.bg-conf{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.bg-conf i{position:absolute;top:-16px;width:8px;height:14px;border-radius:2px;animation:bgfall 1.7s cubic-bezier(.3,.6,.6,1) forwards}
+@keyframes bgfall{to{transform:translate(var(--dx),105vh) rotate(var(--r))}}
+@keyframes bgpop{50%{transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.bg-grid .bgc.win,.bg-win.on{animation:none}}
 #xfer .xsec{display:flex;flex-direction:column;gap:6px;margin-top:4px}
 #xfer .xsec h3{margin:0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 #xfer .xa.wrap{flex-wrap:wrap}#xfer .xa.wrap button{flex:1 1 140px}
@@ -1208,6 +1223,7 @@ const P={
   contrast:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',
   swap:'<path d="M7 4 3 8l4 4"/><path d="M3 8h14"/><path d="m17 20 4-4-4-4"/><path d="M21 16H7"/>',
   users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
   star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/>',
   route:'<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/>'
 };
@@ -1431,8 +1447,9 @@ function statusBtns(x){
 function acts(x,o={}){
   const isH=hidden.has(x.id);
   const left=isH?`<button data-act="unhide" data-id="${x.id}" title="Show this session again">${svg("undo")}Unhide</button>`:x.logi?"":statusBtns(x)+(o.cl?bkBtn(x,o.cl):"");
-  return `<div class="acts">${left}<span class="sp"></span>${gotoBtn(x)}${detailsBtn(x)}${o.hide&&!isH&&!plan[x.id]?hideBtn(x):""}</div>`;
+  return `<div class="acts">${left}<span class="sp"></span>${bingoFor(x)&&!isH?bingoBtn(x):""}${gotoBtn(x)}${detailsBtn(x)}${o.hide&&!isH&&!plan[x.id]?hideBtn(x):""}</div>`;
 }
+const bingoBtn=x=>`<button class="icon muted bgb" data-act="bingo" data-id="${x.id}" title="Buzzword bingo" aria-label="Buzzword bingo: ${esc(x.title)}">${svg("target")}</button>`;
 const hideBtn=x=>`<button class="icon muted hide" data-act="hide" data-id="${x.id}" title="Not interested — hide" aria-label="Hide ${esc(x.title)}">${svg("x")}</button>`;
 const gotoBtn=x=>placeOf(x.location)?`<button class="icon muted" data-act="goto" data-id="${x.id}" title="Show ${esc(x.location)} on the venue map" aria-label="Go to room: ${esc(x.location)}">${svg("pin")}</button>`:"";
 const detailsBtn=x=>x.url?`<a class="btn icon muted" href="${esc(x.url)}" target="_blank" rel="noopener" title="Session details (official site)" aria-label="Details: ${esc(x.title)}">${svg("ext")}</a>`:"";
@@ -1471,7 +1488,7 @@ function nowBar(di,t,gl){
 const nwBody=(x,big)=>`<div class="meta"><span class="tag" style="--c:${colOf(x)}">${esc(x.format)}</span><span>${fmt(x.s)} – ${fmt(x.f)}</span>${chgBadges(x)}</div>
   <h3>${esc(x.title)}${intHits(x).length?` <span class="int" title="Matches your interests">★</span>`:""}</h3>${x.speakers?`<div class="sub">${esc(x.speakers)}</div>`:""}
   <div class="nwroom">${locLink(x)}</div>${friendLine(x)}`;
-const nwActs=(x,leg)=>`<div class="nwact">${placeOf(x.location)?`<button class="primary" data-act="goto" data-id="${x.id}"${leg?` data-leg="${leg}"`:""}>${svg("pin")}Directions</button>`:""}${x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${svg("ext")}Details</a>`:""}</div>`;
+const nwActs=(x,leg)=>`<div class="nwact">${bingoFor(x)?`<button data-act="bingo" data-id="${x.id}">${svg("target")}Bingo</button>`:""}${placeOf(x.location)?`<button class="primary" data-act="goto" data-id="${x.id}"${leg?` data-leg="${leg}"`:""}>${svg("pin")}Directions</button>`:""}${x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${svg("ext")}Details</a>`:""}</div>`;
 function nwRow(x,from){
   const w=from&&from!==wloc(x)?walkMin(from,wloc(x)):null,st=plan[x.id];
   return `<div class="nrow"><span class="tm">${fmt(x.s)}</span><div class="ttl"><b>${esc(x.title)}</b>${intHits(x).length?` <span class="int">★</span>`:""}${friendLine(x)}<div class="sub">${locLink(x)}${w!=null?` · ${svg("walk")}${w} min`:""}</div></div>
@@ -2125,6 +2142,64 @@ function xferStats(get){
 const xferLine=s=>[`${s.go} going`,s.maybe?`${s.maybe} maybe`:"",s.locks?`${s.locks} lock${s.locks>1?"s":""}`:"",s.hidden?`${s.hidden} hidden`:"",
   s.friends?`${s.friends} colleague${s.friends>1?"s":""}`:"",s.interests?`${s.interests} interest${s.interests>1?"s":""}`:"",s.mute?`${s.mute} hidden keyword${s.mute>1?"s":""}`:""].filter(Boolean).join(" · ");
 const xferClose=()=>document.getElementById("xfer")?.remove();
+// ---------- Buzzword bingo (keynotes and featured talks) ----------
+const BINGO_WORDS=["Agentic AI","Zero trust","Shift left","Human in the loop","Halluci\u00ADnation","Prompt injection","Supply chain","Post-quantum",
+  "Resilience","Threat landscape","Deepfake","Guardrails","Defence in depth","The board","Cyber hygiene","Essential Eight","Identity peri\u00ADmeter",
+  "Ransom\u00ADware","Nation-state","SOCI","Shadow AI","Assume breach","Attack surface","Skills shortage","Security culture","Game changer",
+  "Secure by design","Machine speed","Vibe coding","MCP","Red team","Phishing","MFA","Insider threat","Explain\u00ADability","Respon\u00ADsible AI",
+  "Digital trust","Multi-agent","Crown jewels","Single pane of glass","Paradigm shift","Data sover\u00ADeignty","LLM","Copilot",
+  "Social engi\u00ADneering","Living off the land","Privacy Act","Trust but verify","Data poisoning","AI gover\u00ADnance","Low-hanging fruit",
+  "At scale","Move fast","Moving the needle","North star","Deep dive","Double-edged sword","Arms race"];
+const BG_LINES=[0,1,2,3,4].flatMap(r=>[[0,1,2,3,4].map(c=>r*5+c),[0,1,2,3,4].map(c=>c*5+r)]).concat([[0,6,12,18,24],[4,8,12,16,20]]);
+const KEY_BG="cybercon2026-bingo-v1";
+let bingo;try{bingo=JSON.parse(localStorage.getItem(KEY_BG))||{}}catch{bingo={}}
+const saveBG=()=>lsSet(KEY_BG,bingo);
+const bingoFor=x=>!!x&&(x.format==="Keynote"||x.format==="Featured");
+function bgRand(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+// Each talk keeps its own card: 24 shuffled words with a free square in the middle.
+function bgCard(id){
+  let st=bingo[id];if(!st||!Number.isInteger(st.seed)){st=bingo[id]={seed:Math.floor(Math.random()*2**32),m:[]};saveBG()}
+  const r=bgRand(st.seed),w=BINGO_WORDS.slice();for(let i=w.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[w[i],w[j]]=[w[j],w[i]]}
+  const c=w.slice(0,24);c.splice(12,0,null);return {st,c};
+}
+const bgLines=m=>{const h=new Set([...m,12]);return BG_LINES.filter(l=>l.every(i=>h.has(i)))};
+function bingoOpen(id){
+  const x=BY.get(id);if(!x)return;xferClose();
+  const {c}=bgCard(id),el=document.createElement("div");el.id="xfer";el.className="xbingo";el.dataset.id=id;
+  el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","Buzzword bingo");
+  el.innerHTML=`<div class="xbox"><div class="xh"><b>${svg("target")}Buzzword bingo</b><button class="icon muted" data-act="xclose" aria-label="Close">${svg("x")}</button></div>
+    <div class="sub"><b>${esc(x.title)}</b>${x.speakers?` · ${esc(x.speakers)}`:""}</div>
+    <p class="sub">Tap a square when you hear it. Five in a row, column or diagonal wins.</p>
+    <div class="bg-grid" role="group" aria-label="Bingo card">${c.map((w,i)=>w==null?`<button class="bgc free" aria-pressed="true" disabled aria-label="Free square">${svg("star")}<span>Free</span></button>`
+      :`<button class="bgc" data-act="bgo" data-i="${i}" aria-pressed="false">${esc(w)}</button>`).join("")}</div>
+    <div class="bg-win" role="status" aria-live="polite"></div>
+    <div class="xa"><button data-act="bgnew">${svg("reset")}New card</button><button data-act="bgshare" class="primary" disabled>${svg("ext")}Share my bingo</button></div></div>`;
+  document.body.appendChild(el);bingoRefresh(false);el.querySelector('[data-act="bgo"]').focus();
+}
+function bingoRefresh(cheer){
+  const el=document.getElementById("xfer");if(!el||!el.classList.contains("xbingo"))return;
+  const st=bingo[el.dataset.id],m=new Set(st.m),L=bgLines(st.m),win=new Set(L.flat());
+  el.querySelectorAll(".bgc[data-i]").forEach(b=>{const i=+b.dataset.i;b.setAttribute("aria-pressed",m.has(i));b.classList.toggle("win",win.has(i))});
+  el.querySelector(".bgc.free").classList.toggle("win",win.has(12));
+  const box=el.querySelector(".bg-win"),all=st.m.length===24;
+  box.classList.toggle("on",L.length>0);
+  box.textContent=all?"Blackout! You heard every buzzword 🏆":L.length?`BINGO! ${L.length} line${L.length>1?"s":""} 🎉`:st.m.length?`${st.m.length} of 24 heard`:"";
+  el.querySelector('[data-act="bgshare"]').disabled=!L.length;
+  if(cheer)bingoCheer();
+}
+function bingoCheer(){
+  try{navigator.vibrate&&navigator.vibrate([40,40,80])}catch{}
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const c=document.createElement("div");c.className="bg-conf";c.setAttribute("aria-hidden","true");
+  const cols=["#7c9cff","#2ecc71","#f1c40f","#ff5c7a","#b45309","#6d28d9"];
+  c.innerHTML=Array.from({length:60},(_,i)=>`<i style="left:${Math.random()*100}%;background:${cols[i%cols.length]};--dx:${(Math.random()*160-80).toFixed(0)}px;--r:${(Math.random()*720-360).toFixed(0)}deg;animation-delay:${(Math.random()*.35).toFixed(2)}s"></i>`).join("");
+  document.body.appendChild(c);setTimeout(()=>c.remove(),2200);
+}
+function bingoTap(i){
+  const el=document.getElementById("xfer");if(!el)return;const st=bingo[el.dataset.id];if(!st||i===12)return;
+  const before=bgLines(st.m).length;st.m=st.m.includes(i)?st.m.filter(v=>v!==i):[...st.m,i];saveBG();
+  bingoRefresh(bgLines(st.m).length>before);
+}
 async function xferSend(){
   xferClose();
   const link=xferBase()+"#x="+(await xferEncode()),qr=link.length<=XFER_QR_MAX?qrSvg(link):null;
@@ -2356,6 +2431,12 @@ document.addEventListener("click",e=>{
   if(a==="mstyle"){mapStyle={auto:"dark",dark:"light",light:"auto"}[mapStyle];lsSet(KEY_MS,mapStyle);return renderVenue()}
   if(a==="fb"){e.preventDefault();window.open(fbUrl(t.dataset.t||"bug"),"_blank","noopener");return}
   if(a==="xdata"){xferData();return}
+  if(a==="bingo"){bingoOpen(id);return}
+  if(a==="bgo"){bingoTap(+t.dataset.i);return}
+  if(a==="bgnew"){const el=document.getElementById("xfer"),bid=el&&el.dataset.id;if(!bid)return;if(bingo[bid]?.m.length&&!confirm("Start a new card? This one will be cleared."))return;delete bingo[bid];saveBG();bingoOpen(bid);return}
+  if(a==="bgshare"){const el=document.getElementById("xfer"),x=el&&BY.get(el.dataset.id);if(!x)return;const {st,c}=bgCard(x.id),L=bgLines(st.m);if(!L.length)return;
+    const words=L[0].filter(i=>i!==12).map(i=>c[i].replace(/\u00AD/g,"")).join(" · "),txt=`🎯 BINGO at CyberCon 2026 during "${x.title}": ${words}`,url=location.origin+"/";
+    if(navigator.share)navigator.share({title:"Buzzword bingo",text:txt,url}).catch(()=>{});else navigator.clipboard?.writeText(txt+" "+url).then(()=>{t.innerHTML=`${svg("check")}Copied`},()=>prompt("Copy this:",txt+" "+url));return}
   if(a==="xsend"){xferSend();return}
   if(a==="xrecv"){const v=prompt("Paste the transfer link from your other device:");if(v)xferReceive(v);return}
   if(a==="xclose"){xferClose();return}
