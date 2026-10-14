@@ -248,12 +248,21 @@ details.more .menu button:hover{background:var(--card);border-color:var(--border
 .mx-stage .stopm.onarea{z-index:4;gap:5px;white-space:nowrap}
 .mx-stage .stopm.onarea .an{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:11.5px;padding-left:5px;border-left:1px solid rgba(255,255,255,.5)}
 .mx-stage .stopm.onarea .an svg{width:13px;height:13px}
-.mx-stage:not(.zin) .stopm.onarea .an{display:none}
+.mx-stage:not(.zin) .stopm.onarea:not(.ontt) .an{display:none}
+.mx-stage:not(.zin2) .stopm.ontt .an{display:none}
 .mx-stage .mk2.area{height:26px;padding:0 9px 0 7px;border-radius:13px;background:#b45309;color:#fff;border:2px solid #fff;font-size:11.5px;font-weight:700;gap:4px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:2}
 .mx-stage .mk2.area:hover{background:#92400e;border-color:#fff}
 .mx-stage .mk2.area svg{width:14px;height:14px}
 .mx-stage .mk2.area.sel{box-shadow:0 0 0 3px var(--accent),0 2px 8px rgba(0,0,0,.4);z-index:5}
 .mx-stage:not(.zin) .mk2.area span{display:none}
+.mx-stage .mk2.area.tt{background:#6d28d9}.mx-stage .mk2.area.tt:hover{background:#5b21b6}
+.mx-stage .mk2.area .ttn{display:none;font-size:12px}
+.mx-stage:not(.zin2) .mk2.area.tt{width:24px;height:24px;padding:0;border-radius:50%;justify-content:center}
+.mx-stage:not(.zin2) .mk2.area.tt svg,.mx-stage:not(.zin2) .mk2.area.tt span{display:none}
+.mx-stage:not(.zin2) .mk2.area.tt .ttn{display:inline}
+.mx-stage.zin:not(.zin2) .mk2.area.tt span{display:none}
+.mx-stage.zin2 .mk2.area.tt span{display:inline}.mx-stage.zin2 .mk2.area.tt{width:auto;height:26px;padding:0 9px 0 7px;border-radius:13px}
+.lg-tt{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#6d28d9;color:#fff;font-style:normal}.lg-tt svg{width:12px;height:12px}
 .mx-stage:not(.zin) .mk2.area{width:24px;height:24px;padding:0;border-radius:50%;justify-content:center}
 .lg-area{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:9px;background:#b45309;color:#fff;font-style:normal}.lg-area svg{width:12px;height:12px}
 /* Phones: facilities show just their symbol; the name is in the popup and the legend. */
@@ -945,11 +954,11 @@ const ROOMS={
 const ZONES=[
   {k:"conv",t:"Convention Centre",d:"Plenary Theatre on the ground floor; rooms 101–112 on Level 1; rooms 203–220 and the Melbourne Rooms on Level 2 (per MCEC's floor plan guide). Stairs 1–3 and escalators link the levels."},
   {k:"exhib",t:"Exhibition Centre",d:"Two halls: Bays 1–20 (Doors 1–10, Clarendon Street end) and Bays 21–26 (Doors 11–21, Goldfields Theatre end). The program says Exhibition Hall but not which bays."},
-  {k:"unk",t:"Location not published",d:"Think Tanks and Ask an Expert don't appear on MCEC's floor plans. Check on-site signage."},
+  {k:"unk",t:"Location not published",d:"Ask an Expert doesn't appear on MCEC's floor plans. Check on-site signage."},
   {k:"out",t:"South Wharf Promenade",d:"Outdoor evening event along the river."}
 ];
 function zoneOf(loc){
-  if(AREA_LOC[loc])return "exhib";
+  if(AREA_LOC[loc])return /^Think Tank/.test(loc)?"conv":"exhib";
   if(ROOMS[loc]||/\bRoom \d{3}\b|^Plenary/.test(loc||""))return "conv";
   if(/^Exhibition/.test(loc))return "exhib";
   if(/Promenade/.test(loc))return "out";
@@ -981,8 +990,8 @@ const GROUND={"Plenary Theatre":[46.8,54.9],"Plenary Foyer":[48,36.8],"Exhibitio
 // Walkway networks traced over each plan: nodes are corridor/foyer points (% of image); edges are walkable links.
 // s1–s3 are the Stair 1–3 cores (stairs + escalators), present on every level.
 const NAV={
-  P:{n:{ent:[39,57],fs:[42.5,56],fsE:[50,56.5],fw:[40.16,49.91],fnw:[41.5,41.5],s1:[43.2,37.5],fn:[48.5,37.5],d78:[49.12,41.56],s2:[50.4,36],fne:[56,43.5],s3:[60,45.5],tp:[61.5,48.7],c1:[62.31,50.8],c2:[66.27,44.07],c3:[71.28,35.57],c0:[57.26,59.36],nwx:[40,35.8],pr1:[39.5,30],pr2:[22,29],d9:[53.2,65.94],h0:[54.25,67.22],h1:[61.94,76.55]},
-     e:"ent-fs fs-fw fw-fnw fnw-s1 fnw-nwx nwx-pr1 pr1-pr2 s1-fn fn-s2 fn-d78 fn-fne s2-fne fne-s3 s3-tp tp-c1 c1-c2 c2-c3 c1-c0 c0-fsE fsE-fs c0-d9 d9-h0 h0-h1"},
+  P:{n:{ent:[39,57],fs:[42.5,56],fsE:[50,56.5],fw:[40.16,49.91],fnw:[41.5,41.5],s1:[43.2,37.5],fn:[48.5,37.5],d78:[49.12,41.56],s2:[50.4,36],fne:[56,43.5],s3:[60,45.5],tp:[61.5,48.7],c1:[62.31,50.8],c2:[66.27,44.07],c3:[71.28,35.57],c0:[57.26,59.36],nwx:[40,35.8],pr1:[39.5,30],pr2:[22,29],d9:[53.2,65.94],h0:[54.25,67.22],h1:[61.94,76.55],t1:[57.6,42.4],t2:[55,42.6],t3:[47,40.2],t4:[43.4,39.6]},
+     e:"ent-fs fs-fw fw-fnw fnw-s1 fnw-nwx nwx-pr1 pr1-pr2 s1-fn fn-s2 fn-d78 fn-fne s2-fne fne-s3 s3-tp tp-c1 c1-c2 c2-c3 c1-c0 c0-fsE fsE-fs c0-d9 d9-h0 h0-h1 fne-t1 fne-t2 fn-t3 fnw-t4"},
   L1:{n:{n1:[16,28],n2:[22.28,26.35],n3:[26.72,22.86],n4:[33.19,17.77],n5:[37,24.5],k:[39,32],j:[46,30],s1:[51.5,27],c1:[24,40.5],c2:[30,39],c3:[36,37],c4:[42,36.5],j2:[47,36],f1:[54,41],f2:[61,38],f3:[67,37],f3n:[67.5,30],s2:[68,23],f4:[75,41],f5:[80,48],s3:[90,47.5]},
      e:"n1-n2 n2-n3 n3-n4 n4-n5 n5-k k-c4 k-j j-s1 j-j2 c1-c2 c2-c3 c3-c4 c4-j2 j2-f1 f1-s1 f1-f2 f2-f3 f3-f3n f3n-s2 f3-f4 f4-f5 f5-s3"},
   L2:{n:{s1:[37.5,33.5],a1:[41,33],a2:[46,31.5],a3:[51.87,28.54],a4:[57.08,23.55],s2:[63.5,21.5],b1:[67,25.5],b2:[72,30],b3:[77,33.5],b4:[84,36.5],s3:[91,40.5],m4:[26,25],m3:[28.15,31.95],m2:[30.31,38.9],m1:[33.5,42],w1:[52.23,26.64],w2:[59.9,21.76]},
@@ -1038,11 +1047,15 @@ const AREAS=[
   {k:"careers",ic:"brief",t:"Careers Village",m:"P",p:[55.3,68.49],where:"Exhibition Hall, Bays 18–19 (concourse end)",txt:"Careers Village sessions are held here, at the concourse end of the wall between Bays 18 and 19.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1–20 hall."},
   {k:"lego",ic:"brick",t:"LEGO",m:"P",p:[57.31,70.93],where:"Exhibition Hall, Bays 18–19",txt:"The LEGO area, along the wall between Bays 18 and 19, between the Careers Village and the Knowledge Hub.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1–20 hall."},
   {k:"khub",ic:"bulb",t:"Knowledge Hub",m:"P",p:[59.32,73.37],where:"Exhibition Hall, Bays 18–19",txt:"Knowledge Hub sessions are held here, along the wall between Bays 18 and 19, towards Kiosk 5.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1–20 hall."},
+  {k:"tt1",ic:"chat",t:"Think Tank 1",m:"P",p:[57.6,42.4],where:"Plenary Foyer, by Stair 3 and Kiosk C (nearest the Plenary Cafe)",txt:"Think Tank 1 is in the Plenary Foyer by Stair 3 and Kiosk C, the closest Think Tank to the Plenary Cafe.",src:"Spotted on site, 14 Oct: the four Think Tanks are around the Plenary Foyer, Think Tank 1 nearest the Plenary Cafe."},
+  {k:"tt2",ic:"chat",t:"Think Tank 2",m:"P",p:[55,42.6],where:"Plenary Foyer, by Door 9",txt:"Think Tank 2 is in the Plenary Foyer by Door 9 of the Plenary Theatre.",src:"Spotted on site, 14 Oct: the four Think Tanks are around the Plenary Foyer, Think Tank 1 nearest the Plenary Cafe."},
+  {k:"tt3",ic:"chat",t:"Think Tank 3",m:"P",p:[47,40.2],where:"Plenary Foyer, by Kiosk B (Doors 7–8)",txt:"Think Tank 3 is in the Plenary Foyer by Kiosk B, outside Doors 7 and 8 of the Plenary Theatre.",src:"Spotted on site, 14 Oct: the four Think Tanks are around the Plenary Foyer, Think Tank 1 nearest the Plenary Cafe."},
+  {k:"tt4",ic:"chat",t:"Think Tank 4",m:"P",p:[43.4,39.6],where:"Plenary Foyer, by Stair 1",txt:"Think Tank 4 is in the Plenary Foyer by Stair 1, at the far end from the Plenary Cafe.",src:"Spotted on site, 14 Oct: the four Think Tanks are around the Plenary Foyer, Think Tank 1 nearest the Plenary Cafe."},
   {k:"podcast",ic:"mic",t:"Cyber Voices podcast",m:"P",p:[61.33,75.81],where:"Exhibition Hall, Bays 18–19 (Kiosk 5 end)",txt:"The Cyber Voices podcast booth, at the Kiosk 5 end of the wall between Bays 18 and 19.",src:"Spotted on site, 14 Oct. All four sit along the wall between Bays 18 and 19 in the Bays 1–20 hall."}
 ];
 const FAC=Object.fromEntries([...FACILITIES,...AREAS].map(f=>[f.k,f]));
 // Knowledge Hub and Careers Village sessions are listed as "Exhibition Hall"; on the map they go to their area by the Bay 18/19 wall.
-const AREA_LOC=Object.fromEntries(AREAS.filter(a=>a.k==="khub"||a.k==="careers").map(a=>[a.t,a]));
+const AREA_LOC=Object.fromEntries(AREAS.filter(a=>a.k==="khub"||a.k==="careers"||/^tt\d$/.test(a.k)).map(a=>[a.t,a]));
 const wloc=x=>x&&x.location==="Exhibition Hall"&&AREA_LOC[x.format]?x.format:x&&x.location;
 // Area-weighted centre of a polygon, so numbers sit in the middle of the room.
 function polyC(P){let a=0,x=0,y=0;P.forEach((q,i)=>{const r=P[(i+1)%P.length],c=q[0]*r[1]-r[0]*q[1];a+=c;x+=(q[0]+r[0])*c;y+=(q[1]+r[1])*c});
@@ -1155,6 +1168,7 @@ const P={
   brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/>',
   brick:'<rect x="3" y="10" width="18" height="10" rx="1.5"/><path d="M6.5 10V7h4v3M13.5 10V7h4v3"/>',
   bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.1V16h5v-.1c0-.8.4-1.5 1.1-2.1A6 6 0 0 0 12 3z"/>',
+  chat:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4H5.5A1.5 1.5 0 0 1 4 14.5z"/><path d="M8.5 10h.01M12 10h.01M15.5 10h.01"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
   leaf:'<path d="M5 19c0-8.5 5.5-13.5 14-14-.5 8.5-5.5 14-14 14z"/><path d="M5 19l7.5-7.5"/>',
   hands:'<path d="M12 3.5v13M12 3.5c-1.6 2.2-3.6 6-3.6 9.6v3.4L5.5 20M12 3.5c1.6 2.2 3.6 6 3.6 9.6v3.4l2.9 3.5"/>',
@@ -1352,7 +1366,7 @@ const friendLine=x=>{const fs=frShown().filter(f=>f.plan[x.id]).map(f=>esc(f.nam
 const pxLen=(m,pts)=>{const M=MAPS[m];return pts.reduce((t,q,i)=>i?t+Math.hypot((q[0]-pts[i-1][0])*M.w/100,(q[1]-pts[i-1][1])*M.h/100):0,0)};
 const MPP=(()=>{const span=m=>{const n=NAV[m].n;return (pxLen(m,[n.s1,n.s2])+pxLen(m,[n.s2,n.s3]))/2},ref=0.33*span("L1");return {P:ref/span("P"),L1:0.33,L2:ref/span("L2")}})();
 const WALKC=new Map();
-// Think Tanks and Ask an Expert aren't on MCEC's plans: assume this long a walk and say so.
+// Ask an Expert isn't on MCEC's plans: assume this long a walk and say so.
 const UNK_WALK=8;
 const unmapped=(a,b)=>[a,b].find(l=>l&&!placeOf(l))||null;
 function walkMin(la,lb){
@@ -1768,10 +1782,11 @@ function renderVenue(){
   const stopAt=new Set(R.st.filter(s2=>s2.pl.m===MX.m).map(s2=>wloc(s2.x)));
   const fboxes=facs.filter(f=>f.pts).map(f=>`<polygon class="fbox ${MX.fac===f.k?"sel":""}" points="${f.pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mfac" data-k="${f.k}" role="button" tabindex="0" aria-label="${f.t}: ${esc(f.where)}"/>`).join("");
   const fmarks=facs.map(f=>`<button class="mk2 fac ${MX.fac===f.k?"sel":""}" style="left:${f.p[0]}%;top:${f.p[1]}%" data-act="mfac" data-k="${f.k}" title="${f.t}" aria-label="${f.t}: ${esc(f.where)}">${svg(f.ic)}${f.pts?"":`<span>${f.t}</span>`}</button>`).join("")
-    +AREAS.filter(a=>a.m===MX.m&&!stopAt.has(a.t)).map(a=>`<button class="mk2 area ${MX.fac===a.k?"sel":""}" style="left:${a.p[0]}%;top:${a.p[1]}%" data-act="mfac" data-k="${a.k}" title="${a.t}" aria-label="${a.t}: ${esc(a.where)}">${svg(a.ic)}<span>${a.t}</span></button>`).join("");
+    +AREAS.filter(a=>a.m===MX.m&&!stopAt.has(a.t)).map(a=>{const tt=/^tt\d$/.test(a.k),ses=!!AREA_LOC[a.t],on=ses?MX.sel===a.t:MX.fac===a.k;
+      return `<button class="mk2 area ${tt?"tt":""} ${on?"sel":""}" style="left:${a.p[0]}%;top:${a.p[1]}%" ${ses?`data-act="mroom" data-loc="${esc(a.t)}"`:`data-act="mfac" data-k="${a.k}"`} title="${a.t}" aria-label="${a.t}: ${esc(a.where)}">${svg(a.ic)}${tt?`<b class="ttn">${a.t.slice(-1)}</b>`:""}<span>${a.t}</span></button>`}).join("");
   const boxes=locs.filter(l=>SHAPEM[l]&&(l!=="Melbourne Room"||stopLocs.has(l)||MX.sel===l)).map(l=>{const day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day)),mine=day.some(x=>plan[x.id]==="go");
     return `<polygon class="rbox ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""} ${APPROX.has(l)?"approx":""}" points="${SHAPEM[l].pts.map(q=>px(q).map(v=>v.toFixed(1)).join(",")).join(" ")}" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" role="button" tabindex="0" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"/>`}).join("");
-  const dots=locs.filter(l=>!SHAPEM[l]&&l!=="Melbourne Room").map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
+  const dots=locs.filter(l=>!SHAPEM[l]&&!AREA_LOC[l]&&l!=="Melbourne Room").map(l=>{const pl=placeOf(l),day=S.filter(x=>x.location===l&&!hidden.has(x.id)&&!muted(x)&&(MX.day==null||x.dayIdx===MX.day));
     const mine=day.some(x=>plan[x.id]==="go");
     return `<button class="mk2 pin rdot ${day.length?"":"dim"} ${mine?"mine":""} ${MX.sel===l?"sel":""}" style="left:${pl.p[0]}%;--py:${pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-tip="r:${esc(l)}" aria-label="${esc(l)}, ${day.length} session${day.length===1?"":"s"}"></button>`}).join("");
   // Tapping a stop (or its step) highlights the legs into and out of it.
@@ -1791,7 +1806,7 @@ function renderVenue(){
     const dimP=MX.leg&&!arr.some(q=>q.n===MX.leg);
     return `<button class="mk2 portal ${dimP?"dim":""}" style="left:${lead.p[0]}%;top:${lead.p[1]}%" data-act="mfloor" data-m="${lead.to}" title="${esc(label)}. Switch to ${MAPS[lead.to].t}" aria-label="${esc(label)}">${svg(lead.up?"up":"down")}<span class="pl">${esc(label)}</span><span class="ps">${esc(short)}</span></button>`}).join("");
   const byLoc=new Map();for(const s2 of R.st.filter(s2=>s2.pl.m===MX.m)){const l=wloc(s2.x);if(!byLoc.has(l))byLoc.set(l,[]);byLoc.get(l).push(s2)}
-  const stops=[...byLoc].map(([l,arr])=>`<button class="mk2 ${SHAPEM[l]||AREA_LOC[l]?"ctr":"pin"} ${AREA_LOC[l]?"onarea":""} stopm ${MX.sel===l?"sel":""}" style="left:${arr[0].pl.p[0]}%;${SHAPEM[l]||AREA_LOC[l]?"top":"--py"}:${arr[0].pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-id="${arr[0].x.id}" data-tip="r:${esc(l)}" aria-label="Stop ${arr.map(s2=>s2.n).join(", ")}: ${esc(l)}">${arr.map(s2=>s2.n).join(",")}${AREA_LOC[l]?`<span class="an">${svg(AREA_LOC[l].ic)}${esc(l)}</span>`:""}</button>`).join("");
+  const stops=[...byLoc].map(([l,arr])=>`<button class="mk2 ${SHAPEM[l]||AREA_LOC[l]?"ctr":"pin"} ${AREA_LOC[l]?"onarea":""} ${/^Think Tank/.test(l)?"ontt":""} stopm ${MX.sel===l?"sel":""}" style="left:${arr[0].pl.p[0]}%;${SHAPEM[l]||AREA_LOC[l]?"top":"--py"}:${arr[0].pl.p[1]}%" data-act="mroom" data-loc="${esc(l)}" data-id="${arr[0].x.id}" data-tip="r:${esc(l)}" aria-label="Stop ${arr.map(s2=>s2.n).join(", ")}: ${esc(l)}">${arr.map(s2=>s2.n).join(",")}${AREA_LOC[l]?`<span class="an">${svg(AREA_LOC[l].ic)}${esc(l)}</span>`:""}</button>`).join("");
   html+=`<div class="mx-view ${mapDark()?"mx-dark":""}" id="mxView" tabindex="0" style="background:${M.bg}" aria-label="${esc(M.t)} map. Scroll or pinch to zoom, drag to pan, arrow keys to move.">
     <div class="mx-stage" id="mxStage" style="width:${M.w}px;height:${M.h}px;--lift:${M.lift}px">${M.src?`<div class="mx-clip"><img src="${M.src.url}" style="width:${M.src.pw}px;height:${M.src.ph}px;left:${-M.src.x}px;top:${-M.src.y}px" alt="${esc(M.t)} map (MCEC)" draggable="false" crossorigin="anonymous" referrerpolicy="no-referrer"><div class="mx-err">The ${esc(M.t.toLowerCase())} plan couldn't load from MCEC's guide. Check your connection.</div></div>`:`<img src="${M.img}" alt="${esc(M.t)} map" draggable="false">`}
       <svg class="mx-svg mx-rooms" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}">${boxes}${fboxes}</svg><svg class="mx-svg" viewBox="0 0 ${M.w} ${M.h}" width="${M.w}" height="${M.h}" aria-hidden="true">${segs}</svg>${dots}${fmarks}${portals}${stops}</div>
@@ -1799,7 +1814,7 @@ function renderVenue(){
     ${mxPopHtml()}${legBar(R)}
     <div class="mx-hint">Scroll or pinch to zoom · drag to pan · tap a room for sessions</div></div>`;
   const unplaced=R.all.filter(s2=>!s2.pl);
-  html+=`<div class="mx-legend" tabindex="0" role="group" aria-label="Map legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}${AREAS.some(a=>a.m===MX.m)?`<span><i class="lg-area">${svg("brick")}</i>CyberCon areas</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
+  html+=`<div class="mx-legend" tabindex="0" role="group" aria-label="Map legend"><span><i class="lg-box"></i>Room</span>${dots?`<span><i class="lg-dot"></i>Other area</span>`:""}<span><i class="lg-box mine"></i>Room with your session</span>${MX.m==="P"?`<span><i class="lg-box approx"></i>Exhibition Hall (bays not published)</span>`:""}${facs.length?`<span><i class="lg-fac">${svg("leaf")}</i>Facilities</span>`:""}${AREAS.some(a=>a.m===MX.m&&!/^tt\d$/.test(a.k))?`<span><i class="lg-area">${svg("brick")}</i>CyberCon areas</span>`:""}${AREAS.some(a=>a.m===MX.m&&/^tt\d$/.test(a.k))?`<span><i class="lg-tt">${svg("chat")}</i>Think Tanks</span>`:""}<span><i class="lg-stop">1</i>Your stops in order</span><span><i class="lg-line"></i>Walk</span><span><i class="lg-line xf"></i>Change floors</span></div>`
     +(unplaced.length?`<div class="mx-note">Not drawn (location not on MCEC's plans): ${unplaced.map(s2=>`${s2.n}. ${esc(s2.x.location)}`).join(", ")}</div>`:"")+`</div>`;
   if(gl.length){
     const di=MX.day,g=di==null?[]:gl.filter(x=>x.dayIdx===di);
@@ -1842,7 +1857,7 @@ function mxPopHtml(){
   const loc=MX.sel,r=ROOMS[loc]||{},lv=levelOf(loc);
   const all=S.filter(x=>(x.location===loc||wloc(x)===loc)&&!hidden.has(x.id)&&!muted(x)),list=all.filter(x=>MX.day==null||x.dayIdx===MX.day);
   const other=all.length-list.length;
-  return `<div class="mx-pop" role="dialog" aria-label="${esc(loc)}"><div class="ph"><div><b>${esc(loc)}</b> ${lv?`<span class="lv">${lv}</span>`:""}<div class="sub">${lv?lvName(lv)+" · ":""}${zoneName(zoneOf(loc))}${r.cap?` · seats ${r.cap.toLocaleString()} (theatre)`:""}</div></div><button class="icon muted" data-act="mclose" title="Close" aria-label="Close">${svg("x")}</button></div>
+  return `<div class="mx-pop" role="dialog" aria-label="${esc(loc)}"><div class="ph"><div><b>${esc(loc)}</b> ${lv?`<span class="lv">${lv}</span>`:""}<div class="sub">${lv?lvName(lv)+" · ":""}${zoneName(zoneOf(loc))}${AREA_LOC[loc]?` · ${esc(AREA_LOC[loc].where)}`:""}${r.cap?` · seats ${r.cap.toLocaleString()} (theatre)`:""}</div></div><button class="icon muted" data-act="mclose" title="Close" aria-label="Close">${svg("x")}</button></div>
     ${APPROX.has(loc)?`<div class="note">Somewhere in this hall: the program doesn't say which bays CyberCon uses, so check signage on the day.</div>`:""}
     <div class="sub">${MX.day!=null?DAYS[MX.day].label:"All days"} · ${list.length} session${list.length===1?"":"s"}${other?` (${other} on other days)`:""}</div>
     ${list.map(x=>`<div class="pi ${plan[x.id]||""} ${x.id===MX.selId?"hl":""}"><div class="sub"><span class="tag" style="--c:${esc(COLORS[x.format]||"#999")}">${esc(x.format)}</span> ${MX.day==null?DAYS[x.dayIdx].label.slice(0,3)+" ":""}${fmt(x.s)} – ${fmt(x.f)}</div><b>${esc(x.title)}</b>${x.speakers?`<div class="sub">${esc(x.speakers)}</div>`:""}${acts(x)}</div>`).join("")||`<p class="sub">Nothing on here${MX.day!=null?" this day":""}.</p>`}
@@ -1851,9 +1866,11 @@ function mxPopHtml(){
 // ---- pan / zoom ----
 function mxDims(){const v=$("#mxView");if(!v)return null;const r=v.getBoundingClientRect();return {v,w:r.width,h:r.height,M:MAPS[MX.m]}}
 function mxClamp(k){return Math.min(MX.fitK*5,Math.max(MX.fitK*.8,k))}
-const areaGap=()=>{const M=MAPS[MX.m],a=AREAS.filter(x=>x.m===MX.m);if(a.length<2)return 1e9;
+const ttGap=()=>{const M=MAPS[MX.m],a=AREAS.filter(x=>x.m===MX.m&&/^tt\d$/.test(x.k));if(a.length<2)return 1e9;
+  return Math.min(...a.flatMap((x,i)=>a.slice(i+1).map(y=>Math.hypot((x.p[0]-y.p[0])*M.w/100,(x.p[1]-y.p[1])*M.h/100))))};
+const areaGap=()=>{const M=MAPS[MX.m],a=AREAS.filter(x=>x.m===MX.m&&!/^tt\d$/.test(x.k));if(a.length<2)return 1e9;
   return Math.min(...a.slice(1).map((x,i)=>Math.abs(x.p[1]-a[i].p[1])*M.h/100))};
-function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));st.classList.toggle("zin",areaGap()*MX.k>=28);mxLanes(st);if(TIP.anchor)tipPos()}
+function mxApply(anim){const st=$("#mxStage");if(!st)return;st.classList.toggle("anim",!!anim);st.style.transform=`translate(${MX.tx}px,${MX.ty}px) scale(${MX.k})`;st.style.setProperty("--ik",(1/MX.k).toFixed(4));st.classList.toggle("zin",areaGap()*MX.k>=28);st.classList.toggle("zin2",ttGap()*MX.k>=120);mxLanes(st);if(TIP.anchor)tipPos()}
 function mxLanes(st){
   const L=MX.legs;if(!L||!L.length||MX.laneK===MX.k)return;MX.laneK=MX.k;
   const k=MX.k,step=52/k,edge=14/k,h=2/k,w=2.5/k,f=v=>v.toFixed(2);
