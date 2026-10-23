@@ -1,2 +1,2 @@
 # Build dependencies (tools/build.py). Pinned; Dependabot proposes updates.
-pillow==12.3.0
+pillow==13.0.0
